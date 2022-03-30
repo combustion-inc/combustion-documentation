@@ -2,10 +2,7 @@
 Predictive Probe BLE Spec
 *************************
 
-:Authors: Jesse Johnston, Jason Machacek
 :status: DRAFT
-:version: 0.1h
-:date: March 29, 2022
 
 This document describes how the Predictive Probe sends and receives data over
 BLE.

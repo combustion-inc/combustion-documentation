@@ -14,10 +14,6 @@ We build nice things that make cooking more enjoyable. Like a thermometer that's
 
 Our Predictive Thermometer's eight temperature sensors measure the temp outside and inside the food, in the center and at the surface, and nearly everywhere in between. So you know what’s really happening in and around your food. There's a display Timer that's big and bold—legible even through tears of joy and chopped onions—and a mobile app.
 
-Or you can create your own mobile app to work with the Predictive Thermometer using this open source library.
-
-<img src="https://combustion.inc/assets/img/product_rendering/probe-and-timer-large.jp2" alt="Probe and Timer" width="400"/>
-
 Visit [www.combustion.inc](https://www.combustion.inc) to sign up to be notified when they're available to order in early 2022.
 
 Head on over to our [FAQ](https://combustion.inc/faq.html) for more product details.
