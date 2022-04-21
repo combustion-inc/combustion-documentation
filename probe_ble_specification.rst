@@ -182,11 +182,70 @@ Payload length uint8_t  1     Length of the message payload in bytes.
 Messages
 --------
 
-Request Logs (``0x04``)
+Set Probe ID (``0x01``)
 ***********************
 
-The Request Logs message has the following payload. The Predictive Probe
-responds with a sequence of Log Contents messages.
+After receiving this message, the probe will update the Probe ID in both its
+Advertising packet and its status characteristic.
+
+Request Payload
+~~~~~~~~~~~~~~~
+
+===================== ======== ===== ========================
+Value                 Format   Bytes Description
+===================== ======== ===== ========================
+New Probe Color       uint8_t  1     Probe identifier # (0-7)
+===================== ======== ===== ========================
+
+Response Payload
+~~~~~~~~~~~~~~~~
+
+The Set Probe ID Response message has no payload.
+
+
+Set Probe Color (``0x02``)
+***********************
+
+After receiving this message, the probe will update the Probe Color in both its
+Advertising packet and its status characteristic.
+
+Request Payload
+~~~~~~~~~~~~~~~
+
+===================== ======== ===== ========================
+Value                 Format   Bytes Description
+===================== ======== ===== ========================
+New Probe ID          uint8_t  1     Probe color # (0-7)
+===================== ======== ===== ========================
+
+Response Payload
+~~~~~~~~~~~~~~~~
+
+The Set Probe ID Response message has no payload.
+
+Read Session Information (``0x03``)
+***********************
+
+Request Payload
+~~~~~~~~~~~~~~~
+
+The Read Session Information Request message has no payload.
+
+Response Payload
+~~~~~~~~~~~~~~~~
+
+==================== ======== ===== ==================================================
+Value                Format   Bytes Description
+==================== ======== ===== ==================================================
+Session ID           uint16_t 2     Random number that is genrated when Probe is removed from charger.
+Sample Period        uint16_t 2     Number of milliseconds between each log.
+==================== ======== ===== ==================================================
+
+Read Logs (``0x04``)
+***********************
+
+After successfully receiving the request message, the Predictive Probe responds
+with a sequence of Read Log Response messages.
 
 Request Payload
 ~~~~~~~~~~~~~~~
