@@ -237,7 +237,7 @@ Response Payload
 ==================== ======== ===== ==================================================
 Value                Format   Bytes Description
 ==================== ======== ===== ==================================================
-Session ID           uint16_t 2     Random number that is genrated when Probe is removed from charger.
+Session ID           uint32_t 4     Random number that is genrated when Probe is removed from charger.
 Sample Period        uint16_t 2     Number of milliseconds between each log.
 ==================== ======== ===== ==================================================
 
