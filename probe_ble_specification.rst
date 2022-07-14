@@ -300,10 +300,10 @@ Bits   Description
 92-104 Thermistor 8 raw reading
 ====== ========================
 
-The range for each thermistor is -40°C - 369°C. Temperature is represented in
+The range for each thermistor is -20°C - 369°C. Temperature is represented in
 steps of 0.05°C::
 
-    Temperature = (raw value * 0.05) - 40
+    Temperature = (raw value * 0.05) - 20
 
 Mode and ID Data
 ----------------
