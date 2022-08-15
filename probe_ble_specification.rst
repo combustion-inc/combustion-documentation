@@ -159,7 +159,7 @@ payload. The payload of each message type is described below.
 Value          Format   Bytes Description
 ============== ======== ===== ===================================================================
 Sync Bytes     uint8_t  2     ``{ 0xCA, 0xFE }``
-CRC            uint16_t 2     CRC for message type, payload length + payload bytes.
+CRC            uint16_t 2     CRC of message type, payload length, and payload bytes.
                               CRC-16-CCITT (polynomial 0x1021) with 0xFFFF initial value.
 Message type   uint8_t  1
 Payload length uint8_t  1     Length of the message payload in bytes.
@@ -174,7 +174,7 @@ Each response message will include a 7 byte header with the following format.
 Value          Format   Bytes Description
 ============== ======== ===== ===================================================================
 Sync Bytes     uint8_t  2     ``{ 0xCA, 0xFE }``
-CRC            uint16_t 2     CRC for message type, payload length + payload bytes.
+CRC            uint16_t 2     CRC of message type, payload length, and payload bytes.
                               CRC-16-CCITT (polynomial 0x1021) with 0xFFFF initial value.
 Message type   uint8_t  1
 Success        uint8_t  1     1 for success, 0 for failure
