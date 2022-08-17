@@ -196,7 +196,7 @@ Request Payload
 ===================== ======== ===== ========================
 Value                 Format   Bytes Description
 ===================== ======== ===== ========================
-New Probe Color       uint8_t  1     Probe identifier # (0-7)
+New Probe ID          uint8_t  1     Probe identifier # (0-7)
 ===================== ======== ===== ========================
 
 Response Payload
@@ -217,7 +217,7 @@ Request Payload
 ===================== ======== ===== ========================
 Value                 Format   Bytes Description
 ===================== ======== ===== ========================
-New Probe ID          uint8_t  1     Probe color # (0-7)
+New Probe Color       uint8_t  1     Probe color # (0-7)
 ===================== ======== ===== ========================
 
 Response Payload
