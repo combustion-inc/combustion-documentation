@@ -399,26 +399,27 @@ Device Status
 
 The device status is expressed in a packed 8-bit (1-byte) field:
 
-+------+--------------------------+
-| Bits | Description              |
-+======+==========================+
-|| 1   || Battery Status:         |
-||     || * ``0``: Battery OK     |
-||     || * ``1``: Low battery    |
-+------+--------------------------+
-|| 2-6 || `Virtual Sensors`_      |
-||     || 5 bit field             |
-+------+--------------------------+
-|| 7-8 || Hop Count:              |
-||     || * ``1``: 2 hops         |
-||     || * ``2``: 3 hops         |
-||     || * ``3``: 4 or more hops |
-+------+--------------------------+
++------+--------------------------------------+
+| Bits | Description                          |
++======+======================================+
+|| 1   || Battery Status:                     |
+||     || * ``0``: Battery OK                 |
+||     || * ``1``: Low battery                |
++------+--------------------------------------+
+|| 2-6 || `Virtual Sensors`_                  |
+||     || 5 bit field                         |
++------+--------------------------------------+
+|| 7-8 || Hop Count:                          |
+||     || * ``0``: 1 hop (connected)          |
+||     || * ``1``: 2 hops                     |
+||     || * ``2``: 3 hops                     |
+||     || * ``3``: 4 or more hops             |
++------+--------------------------------------+
 
 Hop Count
 *********
 
-The number of Repeater Network hops from the Probe for which this data pertains.
+The number of Repeater Network hops from the Probe for which this data pertains.  This value will always be 0 from a probe.
 
 Virtual Sensors and State Log
 ------------------------------
