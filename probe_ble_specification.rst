@@ -116,6 +116,7 @@ Log Range                    uint32_t 8     Range of logs available on the probe
 Current Raw Temperature Data uint8_t  13    See `Raw Temperature Data`_.
 Mode/ID                      uint8_t  1     See `Mode and ID Data`_.
 Status                       uint8_t  1     See `Device Status`_.
+Prediction Status            uint8_t  7     See `Prediction Status`_.
 ============================ ======== ===== ===========================================================================================
 
 UART Service
@@ -173,7 +174,7 @@ Each response message will include a 7 byte header with the following format.
 ============== ======== ===== ===================================================================
 Value          Format   Bytes Description
 ============== ======== ===== ===================================================================
-Sync Bytes     uint8_t  2     ``{ 0xCA, 0xFE }``
+Sync bytes     uint8_t  2     ``{ 0xCA, 0xFE }``
 CRC            uint16_t 2     CRC of message type, payload length, and payload bytes.
                               CRC-16-CCITT (polynomial 0x1021) with 0xFFFF initial value.
 Message type   uint8_t  1
@@ -206,7 +207,7 @@ The Set Probe ID Response message has no payload.
 
 
 Set Probe Color (``0x02``)
-***********************
+**************************
 
 After receiving this message, the probe will update the Probe Color in both its
 Advertising packet and its status characteristic.
@@ -217,7 +218,7 @@ Request Payload
 ===================== ======== ===== ========================
 Value                 Format   Bytes Description
 ===================== ======== ===== ========================
-New Probe Color       uint8_t  1     Probe color # (0-7)
+New probe color       uint8_t  1     Probe color # (0-7)
 ===================== ======== ===== ========================
 
 Response Payload
@@ -226,7 +227,7 @@ Response Payload
 The Set Probe ID Response message has no payload.
 
 Read Session Information (``0x03``)
-***********************
+***********************************
 
 Request Payload
 ~~~~~~~~~~~~~~~
@@ -239,12 +240,12 @@ Response Payload
 ==================== ======== ===== ==================================================
 Value                Format   Bytes Description
 ==================== ======== ===== ==================================================
-Session ID           uint32_t 4     Random number that is genrated when Probe is removed from charger.
-Sample Period        uint16_t 2     Number of milliseconds between each log.
+Session ID           uint32_t 4     Random number that is generated when Probe is removed from charger.
+Sample period        uint16_t 2     Number of milliseconds between each log.
 ==================== ======== ===== ==================================================
 
 Read Logs (``0x04``)
-***********************
+********************
 
 After successfully receiving the request message, the Predictive Probe responds
 with a sequence of Read Log Response messages.
@@ -255,19 +256,44 @@ Request Payload
 ===================== ======== ===== =======================
 Value                 Format   Bytes Description
 ===================== ======== ===== =======================
-Start Sequence number uint32_t 4     The first log requested
-End Sequence number   uint32_t 4     The last log requested
+Start sequence number uint32_t 4     The first log requested
+End sequence number   uint32_t 4     The last log requested
 ===================== ======== ===== =======================
 
 Response Payload
 ~~~~~~~~~~~~~~~~
 
-==================== ======== ===== ==============================
-Value                Format   Bytes Description
-==================== ======== ===== ==============================
-Sequence number      uint32_t 4     Sequence number of the record.
-Raw Temperature Data uint8_t  13    See `raw temperature data`_.
-==================== ======== ===== ==============================
+========================= ======== ===== ======================================
+Value                     Format   Bytes Description
+========================= ======== ===== ======================================
+Sequence number           uint32_t 4     Sequence number of the record.
+Raw temperature data      uint8_t  13    See `raw temperature data`_.
+Virtual sensors and state uint16_t 2     See `Virtual Sensors and State Log`_.
+========================= ======== ===== ======================================
+
+
+Set Prediction (``0x05``)
+*************************
+
+After receiving this message and successful response, the probe will enter the 
+specified prediction mode with the specified set point temperature.  The probe 
+will update the fields in the `Prediction Status`_ of its status characteristic.
+
+Request Payload
+~~~~~~~~~~~~~~~
+
+===================== ======== ===== =============================
+Value                 Format   Bytes Description
+===================== ======== ===== =============================
+Set Prediction Data   uint16_t 2     See `Set Prediction Data`_
+===================== ======== ===== =============================
+
+
+Response Payload
+~~~~~~~~~~~~~~~~
+
+The Set Prediction Response message has no payload.
+
 
 Common Data Formats
 ###################
@@ -332,17 +358,198 @@ Mode and ID data are expressed in a packed 8-bit (1-byte) field:
 ||     || * etc.                        |
 +------+--------------------------------+
 
+Virtual Sensors
+---------------
+
+Virtual sensors are expressed in a packed 5-bit field.
+
++------+----------------------------+
+| Bits | Description                |
++======+============================+
+|| 1-3 || `Virtual Core Sensor`_    |
+||     || 3 bit enumeration         |
++------+----------------------------+
+|| 4-5 || `Virtual Surface Sensor`_ |
+||     || 2 bit enumeration         |
++------+----------------------------+
+
+Virtual Core Sensor 
+*******************
+
+Identifies the sensor that the Probe has determined is the "core" of the food.
+
+- ``0``: T1 Sensor (tip)    
+- ``1``: T2 Sensor
+- ``2``: T3 Sensor
+- ``3``: T4 Sensor
+- ``4``: T5 Sensor
+- ``5``: T6 Sensor
+
+Virtual Surface Sensor 
+**********************
+- ``0``: T4 Sensor
+- ``1``: T5 Sensor
+- ``2``: T6 Sensor
+- ``3``: T7 Sensor
+
+Identifies the sensor that the Probe has determined is the "surface" of the food.
+
 Device Status
 -------------
 
 The device status is expressed in a packed 8-bit (1-byte) field:
 
-+------+-----------------------+
-| Bits | Description           |
-+======+=======================+
-|| 1   || Battery Status:      |
-||     || * ``0``: Battery OK  |
-||     || * ``1``: Low battery |
-+------+-----------------------+
-| 2-8  | Reserved              |
-+------+-----------------------+
++------+--------------------------+
+| Bits | Description              |
++======+==========================+
+|| 1   || Battery Status:         |
+||     || * ``0``: Battery OK     |
+||     || * ``1``: Low battery    |
++------+--------------------------+
+|| 2-6 || `Virtual Sensors`_      |
+||     || 5 bit field             |
++------+--------------------------+
+|| 7-8 || Hop Count:              |
+||     || * ``1``: 2 hops         |
+||     || * ``2``: 3 hops         |
+||     || * ``3``: 4 or more hops |
++------+--------------------------+
+
+Hop Count
+*********
+
+The number of Repeater Network hops from the Probe for which this data pertains.
+
+Virtual Sensors and State Log
+------------------------------
+
+The virtual sensors and prediction state log are expressed as a 16-bit (2-byte) field.
+
++--------+----------------------+
+| Bits   | Description          |
++========+======================+
+|| 1-5   || `Virtual Sensors`_  |
+||       || 5 bit field         |
++--------+----------------------+
+|| 6-10  || `Prediction State`_ |
+||       || 4 bit enumeration   |
++--------+----------------------+
+|| 11-16 || Reserved            |
++--------+----------------------+
+
+Prediction Status
+-----------------
+
+The prediction status is expressed in a packed 56-bit (7-byte) field:
+
++--------+--------------------------------------+
+| Bits   | Description                          |
++========+======================================+
+|| 1-4   || `Prediction State`_                 |
+||       || 4 bit enumeration                   |
++--------+--------------------------------------+
+|| 5-6   || `Prediction Mode`_                  |
+||       || 2 bit enumeration                   |
++--------+--------------------------------------+
+|| 7-8   || `Prediction Type`_                  |
+||       || 2 bit enumeration                   |
++--------+--------------------------------------+
+|| 9-18  || `Prediction Set Point Temperature`_ |
+||       || 10 bit field (0 to 1023)            |
++--------+--------------------------------------+
+|| 19-28 || `Heat Start Temperature`_           |
+||       || 10 bit field (0 - 1023)             |
++--------+--------------------------------------+
+|| 29-45 || `Prediction Value Seconds`_         |
+||       || 17 bit field (0 - 131071)           |
++--------+--------------------------------------+
+|| 46-56 || `Estimated Core Temperature`_       |
+||       || 11 bit field (0 - 1023)             |
++--------+--------------------------------------+
+
+Set Prediction Data
+-------------------
+
+The set prediction data is expressed in a packed 16-bit (2-byte) field:
+
++--------+--------------------------------------+
+| Bits   | Description                          |
++========+======================================+
+|| 1-10  || `Prediction Set Point Temperature`_ |
+||       || 10 bit field (0 to 1023)            |
++--------+--------------------------------------+
+|| 11-12 || `Prediction Mode`_                  |
+||       || 2 bit enumeration                   |
++--------+--------------------------------------+
+
+Prediction Data Types
+---------------------
+
+Prediction State 
+****************
+
+The prediction state is expressed as a 4-bit enumerated field.
+
++------+------------------------------------+
+| Bits | Description                        |
++======+====================================+
+|| 1-4 || Prediction State:                 |
+||     || * ``0``: Probe Not Inserted       |
+||     || * ``1``: Probe Inserted           |
+||     || * ``2``: Warming                  |
+||     || * ``3``: Predicting               |
+||     || * ``4``: Removal Prediction Done  |
+||     || * ``5``: Reserved State 5         |
+||     || * ``6``: Reserved State 6         |
+||     || ...                               |
+||     || * ``14``: Reserved State 14       |
+||     || * ``15``: Reserved State 15       |
++------+------------------------------------+
+
+Prediction Mode 
+***************
+
+2 bit enumeration, enumerating the input mode of prediction.
+
+- ``0``: None                     
+- ``1``: Time to Removal         
+- ``2``: Removal and Resting      
+- ``3``: Reserved                 
+
+Prediction Type
+***************
+
+2 bit enumeration, enumerating the type of prediction provided in the "Prediction Value Seconds" field.
+
+- ``0``: None 
+- ``1``: Removal 
+- ``2``: Resting 
+- ``3``: Reserved 
+
+Prediction Set Point Temperature 
+********************************
+
+10-bit value.  Input set point of the prediction from 0 to 1023 in units of 1/10 degree Celsius.  Prediction Set Point = (raw value * 0.1 C).
+
+Heat Start Temperature
+**********************
+
+10-bit value.  The measured core temperature at heat start from 0 to 1023 in units of 1/10 degree Celsius:: 
+
+    Heat Start Temperature = (raw value * 0.1 C)
+    
+Additionally::
+
+    Percentage to Removal = Virtual Core Temperature / (Prediction Set Point - Heat Start Temperature)
+
+Prediction Value Seconds
+************************
+
+17 bit value.  The current value of the prediction in seconds from now.
+
+Estimated Core Temperature 
+**************************
+
+11-bit value.  The estimated current core temperature from -200 to 1847 in units of 1/10 degree Celsius::
+
+    Core Temperature = (raw value * 0.1 C) - 20 C.
