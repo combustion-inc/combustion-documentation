@@ -504,7 +504,7 @@ The prediction state is expressed as a 4-bit enumerated field.
 ||     || * ``6``: Reserved State 6         |
 ||     || ...                               |
 ||     || * ``14``: Reserved State 14       |
-||     || * ``15``: Reserved State 15       |
+||     || * ``15``: Unknown                 |
 +------+------------------------------------+
 
 Prediction Mode 
@@ -530,7 +530,9 @@ Prediction Type
 Prediction Set Point Temperature 
 ********************************
 
-10-bit value.  Input set point of the prediction from 0 to 1023 in units of 1/10 degree Celsius.  Prediction Set Point = (raw value * 0.1 C).
+10-bit value.  Input set point of the prediction from 0 to 1023 in units of 1/10 degree Celsius::
+
+    Prediction Set Point = (raw value * 0.1 C).
 
 Heat Start Temperature
 **********************
