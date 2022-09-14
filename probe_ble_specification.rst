@@ -543,7 +543,7 @@ Heat Start Temperature
     
 Additionally::
 
-    Percentage to Removal = Virtual Core Temperature / (Prediction Set Point - Heat Start Temperature)
+    Percentage to Removal = (Estimated Core Temperature - Heat Start Temperature) / (Prediction Set Point - Heat Start Temperature)
 
 Prediction Value Seconds
 ************************
@@ -555,4 +555,4 @@ Estimated Core Temperature
 
 11-bit value.  The estimated current core temperature from -200 to 1847 in units of 1/10 degree Celsius::
 
-    Core Temperature = (raw value * 0.1 C) - 20 C.
+    Estimated Core Temperature = (raw value * 0.1 C) - 20 C.
