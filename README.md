@@ -8,6 +8,8 @@ This repository contains information on how to interface with Combustion Inc.'s 
 
 The [Predictive Probe BLE Specification](probe_ble_specification.rst) describes how the Predictive Probe sends and receives data over BLE.
 
+The [Kitchen Timer BLE Specification](timer_ble_specification.rst) describes how the Kitchen Timer sends and receives data over BLE.
+
 ## About Combustion Inc.
 
 We build nice things that make cooking more enjoyable. Like a thermometer that's wireless, oven-safe, and uses machine learning to do what no other thermometer can: predict your food’s cooking and resting times with uncanny accuracy.
