@@ -47,16 +47,16 @@ Manufacturer Specific Data
 
 .. _bluetooth company ids: https://www.bluetooth.com/specifications/assigned-numbers/company-identifiers/
 
-========================== ===== =========================================
-Field                      Bytes Value
-========================== ===== =========================================
-Vendor ID                  2     ``0x09C7`` (see `Bluetooth company IDs`_)
-Product Type & Hop Count   1     See `Product Type`_.
-Serial Number              4     Device serial number
-Raw Temperature Data       13    See `Raw Temperature Data`_.
-Mode/ID                    1     See `Mode and ID Data`_.
-Status                     1     See `Device Status`_.
-========================== ===== =========================================
+=================================== ===== ==========================================
+Field                               Bytes Value
+=================================== ===== ==========================================
+Vendor ID                           2     ``0x09C7`` (see `Bluetooth company IDs`_)
+Product Type                        1     See `Product Type`_.
+Serial Number                       4     Device serial number
+Raw Temperature Data                13    See `Raw Temperature Data`_.
+Mode/ID                             1     See `Mode and ID Data`_.
+Battery Status and Virtual Sensors  1     See `Battery Status and Virtual Sensors`_.
+=================================== ===== ==========================================
 
 GATT Services and Characteristics
 #################################
@@ -101,22 +101,22 @@ temperature from each sensor.
 ============== ======================================== ==================== ============
 Characteristic UUID                                     Description          Properties
 ============== ======================================== ==================== ============
-Status         ``00000101-CAAB-3792-3D44-97AE51C1407A`` See `Probe status`_. Read, Notify
+Probe Status   ``00000101-CAAB-3792-3D44-97AE51C1407A`` See `Probe status`_. Read, Notify
 ============== ======================================== ==================== ============
 
 The probe status mentioned in the above service is described here:
 
 .. _probe status:
 
-============================ ======== ===== ===========================================================================================
-Value                        Format   Bytes Description
-============================ ======== ===== ===========================================================================================
-Log Range                    uint32_t 8     Range of logs available on the probe. Two ``uint32_t`` sequence numbers (``min``, ``max``).
-Current Raw Temperature Data uint8_t  13    See `Raw Temperature Data`_.
-Mode/ID                      uint8_t  1     See `Mode and ID Data`_.
-Status                       uint8_t  1     See `Device Status`_.
-Prediction Status            uint8_t  7     See `Prediction Status`_.
-============================ ======== ===== ===========================================================================================
+=================================== ======== ===== ===========================================================================================
+Value                               Format   Bytes Description
+=================================== ======== ===== ===========================================================================================
+Log Range                           uint32_t 8     Range of logs available on the probe. Two ``uint32_t`` sequence numbers (``min``, ``max``).
+Current Raw Temperature Data        uint8_t  13    See `Raw Temperature Data`_.
+Mode/ID                             uint8_t  1     See `Mode and ID Data`_.
+Battery Status and Virtual Sensors  uint8_t  1     See `Battery Status and Virtual Sensors`_.
+Prediction Status                   uint8_t  7     See `Prediction Status`_.
+=================================== ======== ===== ===========================================================================================
 
 UART Service
 ------------
@@ -299,34 +299,14 @@ Common Data Formats
 This document defines several data formats that are common between advertising
 data and characteristic data.
 
-Product & Hop Count Type
-------------------------
-
-Product type and hop count are expressed in a packed 8-bit (1-byte) field:
-
-+------+--------------------------------------+
-| Bits | Description                          |
-+======+======================================+
-|| 1-6 || Product Type:                       |
-||     || * ``0``: Unknown                    |
-||     || * ``1``: Predictive Probe           |
-||     || * ``2``: Kitchen Timer              |
-+------+--------------------------------------+
-|| 7-8 || Hop Count:                          |
-||     || * ``0``: 1 hop (connected)          |
-||     || * ``1``: 2 hops                     |
-||     || * ``2``: 3 hops                     |
-||     || * ``3``: 4 or more hops             |
-+------+--------------------------------------+
-
 Product Type
-************
-The product type is an enumerated value in a 6-bit field representing the type of product producing the data.
+------------
+ 
+The product type is an enumerated value in an 8-bit (1-byte) field:
 
-Hop Count
-*********
-
-Hop count is an enumerated value in a 2-bit field representing the number of Repeater Network hops from the Probe for which this data pertains.  This value will always be 0 from a probe.
+- * ``0``: Unknown  
+- * ``1``: Predictive Probe 
+- * ``2``: Kitchen Timer  
 
 Raw Temperature Data
 --------------------
@@ -424,10 +404,10 @@ Virtual Ambient Sensor
 
 Identifies the sensor that the Probe has determined measures the ambient temperature around the found.
 
-Device Status
--------------
+Battery Status and Virtual Sensors
+----------------------------------
 
-The device status is expressed in a packed 8-bit (1-byte) field:
+Battery status and virtual sensors are expressed in a packed 8-bit (1-byte) field:
 
 +------+--------------------------------------+
 | Bits | Description                          |
