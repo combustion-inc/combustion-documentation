@@ -416,7 +416,7 @@ Battery status and virtual sensors are expressed in a packed 8-bit (1-byte) fiel
 ||     || * ``0``: Battery OK                 |
 ||     || * ``1``: Low battery                |
 +------+--------------------------------------+
-|| 2-7 || `Virtual Sensors`_                  |
+|| 2-8 || `Virtual Sensors`_                  |
 ||     || 7 bit field                         |
 +------+--------------------------------------+
 
@@ -431,10 +431,10 @@ The virtual sensors and prediction state log are expressed as a 16-bit (2-byte) 
 || 1-7   || `Virtual Sensors`_  |
 ||       || 7 bit field         |
 +--------+----------------------+
-|| 8-12  || `Prediction State`_ |
+|| 8-11  || `Prediction State`_ |
 ||       || 4 bit enumeration   |
 +--------+----------------------+
-|| 13-16 || Reserved            |
+|| 12-16 || Reserved            |
 +--------+----------------------+
 
 Prediction Status
