@@ -611,7 +611,7 @@ Virtual Surface Sensor
 Identifies the sensor that the Probe has determined is the "surface" of the food.
 
 Virtual Ambient Sensor 
- **********************
+**********************
  - ``0``: T5 Sensor
  - ``1``: T6 Sensor
  - ``2``: T7 Sensor
@@ -624,16 +624,16 @@ Battery Status and Virtual Sensors
 
 The device status is expressed in a packed 8-bit (1-byte) field:
 
-+------+--------------------------------------+
-| Bits | Description                          |
-+======+======================================+
-|| 1   || Battery Status:                     |
-||     || * ``0``: Battery OK                 |
-||     || * ``1``: Low battery                |
-+------+--------------------------------------+
-|| 2-8 || `Virtual Sensors`_                  |
-||     || 5 bit field                         |
-+------+--------------------------------------+
++------+-----------------------+
+| Bits | Description           |
++======+=======================+
+|| 1   || Battery Status:      |
+||     || * ``0``: Battery OK  |
+||     || * ``1``: Low battery |
++------+-----------------------+
+|| 2-8 || `Virtual Sensors`_   |
+||     || 5 bit field          |
++------+-----------------------+
 
 Virtual Sensors and State Log
 ------------------------------
