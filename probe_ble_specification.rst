@@ -30,8 +30,7 @@ Legacy (BLE 4.0) Advertisement Packet
 ========================== ===== ==================================
 Field                      Bytes Value
 ========================== ===== ==================================
-Device Name                2     ``CP``
-Manufacturer Specific Data 20    See `Manufacturer Specific Data`_.
+Manufacturer Specific Data 24    See `Manufacturer Specific Data`_.
 ========================== ===== ==================================
 
 Legacy (BLE 4.0) Scan Response
@@ -48,16 +47,17 @@ Manufacturer Specific Data
 
 .. _bluetooth company ids: https://www.bluetooth.com/specifications/assigned-numbers/company-identifiers/
 
-===================== ===== =========================================
-Field                 Bytes Value
-===================== ===== =========================================
-Vendor ID             2     ``0x09C7`` (see `Bluetooth company IDs`_)
-Product Type          1     See `Product Type`_.
-Serial Number         4     Device serial number
-Raw Temperature Data  13    See `Raw Temperature Data`_.
-Mode/ID               1     See `Mode and ID Data`_.
-Status                1     See `Device Status`_.
-===================== ===== =========================================
+=================================== ===== ==========================================
+Field                               Bytes Value
+=================================== ===== ==========================================
+Vendor ID                           2     ``0x09C7`` (see `Bluetooth company IDs`_)
+Product Type                        1     See `Product Type`_.
+Serial Number                       4     Device serial number
+Raw Temperature Data                13    See `Raw Temperature Data`_.
+Mode/ID                             1     See `Mode and ID Data`_.
+Battery Status and Virtual Sensors  1     See `Battery Status and Virtual Sensors`_.
+Reserved                            2     Reserved 
+=================================== ===== ==========================================
 
 GATT Services and Characteristics
 #################################
@@ -102,22 +102,22 @@ temperature from each sensor.
 ============== ======================================== ==================== ============
 Characteristic UUID                                     Description          Properties
 ============== ======================================== ==================== ============
-Status         ``00000101-CAAB-3792-3D44-97AE51C1407A`` See `Probe status`_. Read, Notify
+Probe Status   ``00000101-CAAB-3792-3D44-97AE51C1407A`` See `Probe status`_. Read, Notify
 ============== ======================================== ==================== ============
 
 The probe status mentioned in the above service is described here:
 
 .. _probe status:
 
-============================ ======== ===== ===========================================================================================
-Value                        Format   Bytes Description
-============================ ======== ===== ===========================================================================================
-Log Range                    uint32_t 8     Range of logs available on the probe. Two ``uint32_t`` sequence numbers (``min``, ``max``).
-Current Raw Temperature Data uint8_t  13    See `Raw Temperature Data`_.
-Mode/ID                      uint8_t  1     See `Mode and ID Data`_.
-Status                       uint8_t  1     See `Device Status`_.
-Prediction Status            uint8_t  7     See `Prediction Status`_.
-============================ ======== ===== ===========================================================================================
+=================================== ======== ===== ===========================================================================================
+Value                               Format   Bytes Description
+=================================== ======== ===== ===========================================================================================
+Log Range                           uint32_t 8     Range of logs available on the probe. Two ``uint32_t`` sequence numbers (``min``, ``max``).
+Current Raw Temperature Data        uint8_t  13    See `Raw Temperature Data`_.
+Mode/ID                             uint8_t  1     See `Mode and ID Data`_.
+Battery Status and Virtual Sensors  uint8_t  1     See `Battery Status and Virtual Sensors`_.
+Prediction Status                   uint8_t  7     See `Prediction Status`_.
+=================================== ======== ===== ===========================================================================================
 
 UART Service
 ------------
@@ -294,7 +294,6 @@ Response Payload
 
 The Set Prediction Response message has no payload.
 
-
 Common Data Formats
 ###################
 
@@ -303,12 +302,12 @@ data and characteristic data.
 
 Product Type
 ------------
-
+ 
 The product type is an enumerated value in an 8-bit (1-byte) field:
 
-* ``0``: Unknown
-* ``1``: Predictive Probe
-* ``2``: Kitchen Timer
+- * ``0``: Unknown  
+- * ``1``: Predictive Probe 
+- * ``2``: Kitchen Timer  
 
 Raw Temperature Data
 --------------------
@@ -372,6 +371,9 @@ Virtual sensors are expressed in a packed 5-bit field.
 || 4-5 || `Virtual Surface Sensor`_ |
 ||     || 2 bit enumeration         |
 +------+----------------------------+
+|| 6-7 || `Virtual Ambient Sensor`_ |
+||     || 2 bit enumeration         |
++------+----------------------------+
 
 Virtual Core Sensor 
 *******************
@@ -391,13 +393,22 @@ Virtual Surface Sensor
 - ``1``: T5 Sensor
 - ``2``: T6 Sensor
 - ``3``: T7 Sensor
-
+ 
 Identifies the sensor that the Probe has determined is the "surface" of the food.
 
-Device Status
--------------
+Virtual Ambient Sensor 
+**********************
+- ``0``: T5 Sensor
+- ``1``: T6 Sensor
+- ``2``: T7 Sensor
+- ``3``: T8 Sensor
 
-The device status is expressed in a packed 8-bit (1-byte) field:
+Identifies the sensor that the Probe has determined measures the ambient temperature around the found.
+
+Battery Status and Virtual Sensors
+----------------------------------
+
+Battery status and virtual sensors are expressed in a packed 8-bit (1-byte) field:
 
 +------+--------------------------------------+
 | Bits | Description                          |
@@ -406,20 +417,9 @@ The device status is expressed in a packed 8-bit (1-byte) field:
 ||     || * ``0``: Battery OK                 |
 ||     || * ``1``: Low battery                |
 +------+--------------------------------------+
-|| 2-6 || `Virtual Sensors`_                  |
-||     || 5 bit field                         |
+|| 2-8 || `Virtual Sensors`_                  |
+||     || 7 bit field                         |
 +------+--------------------------------------+
-|| 7-8 || Hop Count:                          |
-||     || * ``0``: 1 hop (connected)          |
-||     || * ``1``: 2 hops                     |
-||     || * ``2``: 3 hops                     |
-||     || * ``3``: 4 or more hops             |
-+------+--------------------------------------+
-
-Hop Count
-*********
-
-The number of Repeater Network hops from the Probe for which this data pertains.  This value will always be 0 from a probe.
 
 Virtual Sensors and State Log
 ------------------------------
@@ -429,13 +429,13 @@ The virtual sensors and prediction state log are expressed as a 16-bit (2-byte) 
 +--------+----------------------+
 | Bits   | Description          |
 +========+======================+
-|| 1-5   || `Virtual Sensors`_  |
-||       || 5 bit field         |
+|| 1-7   || `Virtual Sensors`_  |
+||       || 7 bit field         |
 +--------+----------------------+
-|| 6-10  || `Prediction State`_ |
+|| 8-11  || `Prediction State`_ |
 ||       || 4 bit enumeration   |
 +--------+----------------------+
-|| 11-16 || Reserved            |
+|| 12-16 || Reserved            |
 +--------+----------------------+
 
 Prediction Status
