@@ -30,7 +30,7 @@ Legacy (BLE 4.0) Advertisement Packet
 ========================== ===== ==================================
 Field                      Bytes Value
 ========================== ===== ==================================
-Manufacturer Specific Data 22    See `Manufacturer Specific Data`_.
+Manufacturer Specific Data 24    See `Manufacturer Specific Data`_.
 ========================== ===== ==================================
 
 Legacy (BLE 4.0) Scan Response
@@ -56,6 +56,7 @@ Serial Number                       4     Device serial number
 Raw Temperature Data                13    See `Raw Temperature Data`_.
 Mode/ID                             1     See `Mode and ID Data`_.
 Battery Status and Virtual Sensors  1     See `Battery Status and Virtual Sensors`_.
+Reserved                            2     Reserved 
 =================================== ===== ==========================================
 
 GATT Services and Characteristics
