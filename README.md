@@ -14,7 +14,7 @@ The [Kitchen Timer BLE Specification](timer_ble_specification.rst) describes how
 
 We build nice things that make cooking more enjoyable. Like a thermometer that's wireless, oven-safe, and uses machine learning to do what no other thermometer can: predict your food’s cooking and resting times with uncanny accuracy.
 
-Our Predictive Thermometer's eight temperature sensors measure the temp outside and inside the food, in the center and at the surface, and nearly everywhere in between. So you know what’s really happening in and around your food. There's a display Timer that's big and bold—legible even through tears of joy and chopped onions—and a mobile app.
+Our Predictive Thermometer's eight temperature sensors measure the temp outside and inside the food, in the center and at the surface, and nearly everywhere in between. So you know what’s really happening in and around your food. There's a display Timer that's big and bold—legible even through tears of joy and chopped onions.
 
 <img src="https://github.com/combustion-inc/combustion-documentation/blob/main/images/Predictive%20Thermometer%20+%20Display%20&%20Range%20Extender%201024x1024.png?raw=true" alt="Probe and Timer" width="400"/>
 
