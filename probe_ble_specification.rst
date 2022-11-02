@@ -150,7 +150,7 @@ UART Messages
 The section describes the protocol that will be sent and received over the
 Nordic UART Service.
 
-Command Header
+Request Header
 --------------
 
 Each message will begin with the same 5 byte header, followed by the message
