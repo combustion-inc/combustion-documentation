@@ -42,7 +42,7 @@ BLE 4.0 Scan Response
 ============ ===== ============================
 Field        Bytes Value
 ============ ===== ============================
-Service UUID 16    `Node Status Service`_ UUID
+Service UUID 16    `Device Firmware Update Service`_ UUID
 ============ ===== ============================
 
 Manufacturer Specific Data
@@ -95,42 +95,6 @@ Hardware Revision String ``0x2A27`` Hardware revision                   Read
 Firmware Revision String ``0x2A26`` Firmware revision                   Read
 ======================== ========== =================================== ==========
 
-Node Status Service
---------------------
-
-Node Status is a custom service that provides the current status of the
-Kitchen Timer's repeater network. The UUID for the Node Status service is
-``00000200-CAAB-3792-3D44-97AE51C1407A``.
-
-This service has a single characteristic that supports BLE notifications. Each
-time a new set of measurements is received for a Probe on the repeater network, 
-the status is sent to each connected device that has subscribed to these 
-notifications.  The probe status includes the sequence number for first and 
-last record on the probe and the current temperature from each sensor.
-
-============== ======================================== ==================== ============
-Characteristic UUID                                     Description          Properties
-============== ======================================== ==================== ============
-Status         ``00000201-CAAB-3792-3D44-97AE51C1407A`` See `Node status`_.  Read, Notify
-============== ======================================== ==================== ============
-
-The Node Status mentioned in the above service is described here:
-
-.. _node status:
-
-================================== ======== ===== ===========================================================================================
-Value                              Format   Bytes Description
-================================== ======== ===== ===========================================================================================
-Message ID                         uint32_t 4     Random unique ID for this message, for repeater network propagation
-Probe Serial Number                uint32_t 4     Serial number of Probe for which this the following data pertains.
-Log Range                          uint32_t 8     Range of logs available on the probe. Two ``uint32_t`` sequence numbers (``min``, ``max``).
-Current Raw Temperature Data       uint8_t  13    See `Raw Temperature Data`_.
-Mode/ID                            uint8_t  1     See `Mode and ID Data`_.
-Battery Status and Virtual Sensors uint8_t  1     See `Battery Status and Virtual Sensors`_.
-Prediction Status                  uint8_t  1     See `Prediction Status`_.
-Network Information                uint8_t  1     See `Network Information`_.
-================================== ======== ===== ===========================================================================================
-
 UART Service
 ------------
 
@@ -163,7 +127,7 @@ UART Messages
 The section describes the protocol that will be sent and received over the
 Nordic UART Service.
 
-Command Header
+Request Header
 --------------
 
 Each message will begin with the same 5 byte header, followed by the message
@@ -357,7 +321,7 @@ Device Connected (``0x40``)
 ***************************
 
 Sent to notify other devices on the MeatNet Network that a device has connected
-to the network.
+to the network.  There is no response for this message.
 
 Request Payload
 ~~~~~~~~~~~~~~~
@@ -369,18 +333,13 @@ Product Type          uint8_t  1     Probe, Node etc.
 Probe Serial Number   uint32_t 4     Probe serial number, if applicable
 Node Serial Number    uint8_t  10    Node serial number, if applicable
 ===================== ======== ===== =======================
-
-Response Payload
-~~~~~~~~~~~~~~~~
-
-The response for this message has no payload.
 
 
 Device Disconnected (``0x41``)
 ******************************
 
 Sent to notify other devices on the MeatNet Network that a device has disconnected 
-from the network.
+from the network. There is no response for this message.
 
 Request Payload
 ~~~~~~~~~~~~~~~
@@ -392,11 +351,6 @@ Product Type          uint8_t  1     Probe, Node etc.
 Probe Serial Number   uint32_t 4     Probe serial number, if applicable
 Node Serial Number    uint8_t  10    Node serial number, if applicable
 ===================== ======== ===== =======================
-
-Response Payload
-~~~~~~~~~~~~~~~~
-
-The response for this message has no payload.
 
 
 Read Node List (``0x42``)
@@ -485,10 +439,10 @@ Outbound Device 4 RSSI int8_t   1     RSSI signal strength of this connection
 ====================== ======== ===== ==================================================
 
 
-Probe Session Changed (``0x43``)
+Probe Session Changed (``0x44``)
 ********************************
 
-Sends notification that a Probe's session information changed.
+Sends notification that a Probe's session information changed. There is no response for this message.
 
 Request Payload
 ~~~~~~~~~~~~~~~
@@ -501,10 +455,27 @@ Probe Serial Number  uint32_t 4     Probe serial number
 Probe Session ID     uint32_t 4     Random number that is genrated when Probe is removed from charger.
 ==================== ======== ===== =====================================================
 
-Response Payload
-~~~~~~~~~~~~~~~~
 
-This message has no Response payload.
+Probe Status (``0x45``)
+********************************
+
+Sends notification with a Probe's status. There is no response for this message.
+
+Request Payload
+~~~~~~~~~~~~~~~
+
+================================== ======== ===== ===========================================================================================
+Value                              Format   Bytes Description
+================================== ======== ===== ===========================================================================================
+Message ID                         uint32_t 4     Random unique ID for this message, for repeater network propagation
+Probe Serial Number                uint32_t 4     Serial number of Probe for which this the following data pertains.
+Log Range                          uint32_t 8     Range of logs available on the probe. Two ``uint32_t`` sequence numbers (``min``, ``max``).
+Current Raw Temperature Data       uint8_t  13    See `Raw Temperature Data`_.
+Mode/ID                            uint8_t  1     See `Mode and ID Data`_.
+Battery Status and Virtual Sensors uint8_t  1     See `Battery Status and Virtual Sensors`_.
+Prediction Status                  uint8_t  1     See `Prediction Status`_.
+Network Information                uint8_t  1     See `Network Information`_.
+================================== ======== ===== ===========================================================================================
 
 
 
