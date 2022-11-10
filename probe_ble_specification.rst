@@ -268,7 +268,7 @@ Value                     Format   Bytes Description
 ========================= ======== ===== ======================================
 Sequence number           uint32_t 4     Sequence number of the record.
 Raw temperature data      uint8_t  13    See `raw temperature data`_.
-Virtual sensors and state uint8_t  7     See `Virtual Sensors and State Log`_.
+Virtual sensors and state uint8_t  7     See `Prediction Log`_.
 ========================= ======== ===== ======================================
 
 
@@ -421,10 +421,10 @@ Battery status and virtual sensors are expressed in a packed 8-bit (1-byte) fiel
 ||     || 7 bit field                         |
 +------+--------------------------------------+
 
-Virtual Sensors and State Log
+Prediction Log
 ------------------------------
 
-The virtual sensors and prediction state log are expressed as a 16-bit (2-byte) field.
+The Prediction Log is expressed as a 56-bit (7-byte) field.
 
 +--------+--------------------------------------+
 | Bits   | Description                          |
