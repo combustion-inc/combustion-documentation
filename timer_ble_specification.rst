@@ -317,6 +317,33 @@ Response Payload
 The Set Prediction Response message has no payload.
 
 
+Read Over Tempearture (``0x06``)
+********************************
+
+After successfully receiving the request message, the Predictive Thermometer reads the 
+value from flash and sends the response message.
+
+Request Payload
+~~~~~~~~~~~~~~~
+
+===================== ======== ===== =============================
+Value                 Format   Bytes Description
+===================== ======== ===== =============================
+Probe Serial Number   uint32_t 4     Probe serial number
+===================== ======== ===== =============================
+
+
+Response Payload
+~~~~~~~~~~~~~~~~
+
+===================== ======== ===== =============================
+Value                 Format   Bytes Description
+===================== ======== ===== =============================
+Probe Serial Number   uint32_t 4     Probe serial number
+Over Temperature Flag uint8_t  1     1 if flag is set, otherwise 0
+===================== ======== ===== =============================
+
+
 Device Connected (``0x40``)
 ***************************
 
@@ -467,7 +494,6 @@ Request Payload
 ================================== ======== ===== ===========================================================================================
 Value                              Format   Bytes Description
 ================================== ======== ===== ===========================================================================================
-Message ID                         uint32_t 4     Random unique ID for this message, for repeater network propagation
 Probe Serial Number                uint32_t 4     Serial number of Probe for which this the following data pertains.
 Log Range                          uint32_t 8     Range of logs available on the probe. Two ``uint32_t`` sequence numbers (``min``, ``max``).
 Current Raw Temperature Data       uint8_t  13    See `Raw Temperature Data`_.
@@ -477,6 +503,75 @@ Prediction Status                  uint8_t  1     See `Prediction Status`_.
 Network Information                uint8_t  1     See `Network Information`_.
 ================================== ======== ===== ===========================================================================================
 
+
+
+Probe Firmware Revision (``0x46``)
+***********************************
+
+Requests information from the Probe's firmware version in its Device Information service. 
+The information will come back encoded in this UART message.
+
+Request Payload
+~~~~~~~~~~~~~~~
+
+===================== ======== ===== =============================
+Value                 Format   Bytes Description
+===================== ======== ===== =============================
+Probe Serial Number   uint32_t 4     Probe serial number
+===================== ======== ===== =============================
+
+Response Payload
+~~~~~~~~~~~~~~~~
+
+================================== ======== ===== ===========================================================================================
+Value                              Format   Bytes Description
+================================== ======== ===== ===========================================================================================
+Probe Serial Number                uint32_t 4     Serial number of Probe for which this the following data pertains.
+Firmware Revision String           uint8_t  20    Firmware revision
+================================== ======== ===== ===========================================================================================
+
+
+Probe Hardware Revision (``0x47``)
+***********************************
+
+Requests information from the Probe's hardware version in its Device Information service. 
+The information will come back encoded in this UART message.
+
+Request Payload
+~~~~~~~~~~~~~~~
+
+===================== ======== ===== =============================
+Value                 Format   Bytes Description
+===================== ======== ===== =============================
+Probe Serial Number   uint32_t 4     Probe serial number
+===================== ======== ===== =============================
+
+Response Payload
+~~~~~~~~~~~~~~~~
+
+================================== ======== ===== ===========================================================================================
+Value                              Format   Bytes Description
+================================== ======== ===== ===========================================================================================
+Probe Serial Number                uint32_t 4     Serial number of Probe for which this the following data pertains.
+Hardware Revision String           uint8_t  16    Hardware revision
+================================== ======== ===== ===========================================================================================
+
+
+Probe Model Information (``0x48``)
+***********************************
+
+Requests information from the Probe's model information in its Device Information service. 
+The information will come back encoded in this UART message.
+
+Request Payload
+~~~~~~~~~~~~~~~
+
+===================== ======== ===== =============================
+Value                 Format   Bytes Description
+===================== ======== ===== =============================
+Probe Serial Number   uint32_t 4     Probe serial number
+Model Number String   uint8_t  50    Model: Product model, SKU and lot number in string
+===================== ======== ===== =============================
 
 
 Common Data Formats
@@ -699,21 +794,21 @@ Prediction State
 
 The prediction state is expressed as a 4-bit enumerated field.
 
-+------+------------------------------------+
-| Bits | Description                        |
-+======+====================================+
-|| 1-4 || Prediction State:                 |
-||     || * ``0``: Probe Not Inserted       |
-||     || * ``1``: Probe Inserted           |
-||     || * ``2``: Warming                  |
-||     || * ``3``: Predicting               |
-||     || * ``4``: Removal Prediction Done  |
-||     || * ``5``: Reserved State 5         |
-||     || * ``6``: Reserved State 6         |
-||     || ...                               |
-||     || * ``14``: Reserved State 14       |
-||     || * ``15``: Unknown                 |
-+------+------------------------------------+
++------+-----------------------------------+
+| Bits | Description                       |
++======+===================================+
+|| 1-4 || Prediction State:                |
+||     || * ``0``: Probe Not Inserted      |
+||     || * ``1``: Probe Inserted          |
+||     || * ``2``: Warming                 |
+||     || * ``3``: Predicting              |
+||     || * ``4``: Removal Prediction Done |
+||     || * ``5``: Reserved State 5        |
+||     || * ``6``: Reserved State 6        |
+||     || ...                              |
+||     || * ``14``: Reserved State 14      |
+||     || * ``15``: Unknown                |
++------+-----------------------------------+
 
 Prediction Mode 
 ***************
