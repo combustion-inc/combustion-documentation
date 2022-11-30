@@ -294,6 +294,29 @@ Response Payload
 
 The Set Prediction Response message has no payload.
 
+Read Over Tempearture (``0x06``)
+*************************
+
+After successfully receiving the request message, the Predictive Probe reads the 
+value from flash and sends the response message.
+
+Request Payload
+~~~~~~~~~~~~~~~
+
+The Read Over Tempearture Request message has no payload.
+
+
+
+
+Response Payload
+~~~~~~~~~~~~~~~~
+
+===================== ======== ===== =============================
+Value                 Format   Bytes Description
+===================== ======== ===== =============================
+Over Temperature Flag uint8_t  1     1 if flag is set, otherwise 0
+===================== ======== ===== =============================
+
 Common Data Formats
 ###################
 
