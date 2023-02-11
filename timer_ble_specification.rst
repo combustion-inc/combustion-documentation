@@ -66,6 +66,8 @@ Serial Number                      4     Probe serial number
 Raw Temperature Data               13    See `Raw Temperature Data`_.
 Mode/ID                            1     See `Mode and ID Data`_.
 Battery Status and Virtual Sensors 1     See `Battery Status and Virtual Sensors`_.
+Network Information                1     See `Network Information`_.
+Reserved                           1     Reserved
 ================================== ===== =========================================
 
 GATT Services and Characteristics
@@ -499,7 +501,7 @@ Log Range                          uint32_t 8     Range of logs available on the
 Current Raw Temperature Data       uint8_t  13    See `Raw Temperature Data`_.
 Mode/ID                            uint8_t  1     See `Mode and ID Data`_.
 Battery Status and Virtual Sensors uint8_t  1     See `Battery Status and Virtual Sensors`_.
-Prediction Status                  uint8_t  1     See `Prediction Status`_.
+Prediction Status                  uint8_t  7     See `Prediction Status`_.
 Network Information                uint8_t  1     See `Network Information`_.
 ================================== ======== ===== ===========================================================================================
 
