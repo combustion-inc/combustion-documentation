@@ -220,7 +220,7 @@ This response has no payload.
 Read Session Information (``0x03``)
 ***********************************
 
-Gets session information for all Probes on the MeatNet repeater network.
+Gets session information for specified Probe on the MeatNet repeater network.
 
 Request Payload
 ~~~~~~~~~~~~~~~
@@ -228,7 +228,7 @@ Request Payload
 ===================== ======== ===== =====================================================
 Value                 Format   Bytes Description
 ===================== ======== ===== =====================================================
-Page                  uint8_t  1     Page number to request (0 = first page, 1 = second)
+Probe Serial Number   uint32_t 4     Probe serial number
 ===================== ======== ===== =====================================================
 
 Response Payload
@@ -237,30 +237,9 @@ Response Payload
 ====================== ======== ===== ==================================================
 Value                  Format   Bytes Description
 ====================== ======== ===== ==================================================
-Page                   uint8_t  1     Page number to request (0 = first page, 1 = second)
-Total Pages            uint8_t  1     Total number of pages that can be requested
-Probe Count            uint8_t  1     Number of Probes connected to the Network
-Probes on this Page    uint8_t  1     Number of Probes on this page
-Probe 1 Device Number  uint8_t  1     Device Number, used to index this Probe, shown on Timers etc.
-Probe 1 Serial Number  uint32_t 4     Probe serial number (0 = not present)
-Probe 1 Session ID     uint32_t 4     Random number that is genrated when Probe is removed from charger.
-Probe 1 Sample Period  uint16_t 2     Number of milliseconds between each log.
-Probe 2 Device Number  uint8_t  1     Device Number, used to index this Probe, shown on Timers etc.
-Probe 2 Serial Number  uint32_t 4     Probe serial number (0 = not present)
-Probe 2 Session ID     uint32_t 4     Random number that is genrated when Probe is removed from charger.
-Probe 2 Sample Period  uint16_t 2     Number of milliseconds between each log.
-Probe 3 Device Number  uint8_t  1     Device Number, used to index this Probe, shown on Timers etc.
-Probe 3 Serial Number  uint32_t 4     Probe serial number (0 = not present)
-Probe 3 Session ID     uint32_t 4     Random number that is genrated when Probe is removed from charger.
-Probe 3 Sample Period  uint16_t 2     Number of milliseconds between each log.
-Probe 4 Device Number  uint8_t  1     Device Number, used to index this Probe, shown on Timers etc.
-Probe 4 Serial Number  uint32_t 4     Probe serial number (0 = not present)
-Probe 4 Session ID     uint32_t 4     Random number that is genrated when Probe is removed from charger.
-Probe 4 Sample Period  uint16_t 2     Number of milliseconds between each log.
-Probe 5 Device Number  uint8_t  1     Device Number, used to index this Probe, shown on Timers etc.
-Probe 5 Serial Number  uint32_t 4     Probe serial number (0 = not present)
-Probe 5 Session ID     uint32_t 4     Random number that is genrated when Probe is removed from charger.
-Probe 5 Sample Period  uint16_t 2     Number of milliseconds between each log.
+Probe Serial Number    uint32_t 4     Probe serial number (0 = not present)
+Probe Session ID       uint32_t 4     Random number that is genrated when Probe is removed from charger.
+Probe Sample Period    uint16_t 2     Number of milliseconds between each log.
 ====================== ======== ===== ==================================================
 
 
@@ -468,21 +447,43 @@ Outbound Device 4 RSSI int8_t   1     RSSI signal strength of this connection
 ====================== ======== ===== ==================================================
 
 
-Probe Session Changed (``0x44``)
+Read Probe List (``0x44``)
 ********************************
 
-Sends notification that a Probe's session information changed. There is no response for this message.
+Reads list of Probes on the MeatNet repeater network.
 
 Request Payload
 ~~~~~~~~~~~~~~~
 
-==================== ======== ===== =====================================================
-Value                Format   Bytes Description
-==================== ======== ===== =====================================================
-Probe Device Number  uint8_t  1     Device Number, used to index this Probe, shown on Timers etc.
-Probe Serial Number  uint32_t 4     Probe serial number
-Probe Session ID     uint32_t 4     Random number that is genrated when Probe is removed from charger.
-==================== ======== ===== =====================================================
+This request has no payload.
+
+Response Payload
+~~~~~~~~~~~~~~~~
+
+====================== ======== ===== =====================================================
+Value                  Format   Bytes Description
+====================== ======== ===== =====================================================
+Probe 1 Device Number  uint8_t  1     Device Number, used to index this Probe, shown on Timers etc.
+Probe 1 Serial Number  uint32_t 4     Probe serial number
+Probe 2 Device Number  uint8_t  1     Device Number, used to index this Probe, shown on Timers etc.
+Probe 2 Serial Number  uint32_t 4     Probe serial number
+Probe 3 Device Number  uint8_t  1     Device Number, used to index this Probe, shown on Timers etc.
+Probe 3 Serial Number  uint32_t 4     Probe serial number
+Probe 4 Device Number  uint8_t  1     Device Number, used to index this Probe, shown on Timers etc.
+Probe 4 Serial Number  uint32_t 4     Probe serial number
+Probe 5 Device Number  uint8_t  1     Device Number, used to index this Probe, shown on Timers etc.
+Probe 5 Serial Number  uint32_t 4     Probe serial number
+Probe 6 Device Number  uint8_t  1     Device Number, used to index this Probe, shown on Timers etc.
+Probe 6 Serial Number  uint32_t 4     Probe serial number
+Probe 7 Device Number  uint8_t  1     Device Number, used to index this Probe, shown on Timers etc.
+Probe 7 Serial Number  uint32_t 4     Probe serial number
+Probe 8 Device Number  uint8_t  1     Device Number, used to index this Probe, shown on Timers etc.
+Probe 8 Serial Number  uint32_t 4     Probe serial number
+Probe 9 Device Number  uint8_t  1     Device Number, used to index this Probe, shown on Timers etc.
+Probe 9 Serial Number  uint32_t 4     Probe serial number
+Probe 10 Device Number uint8_t  1     Device Number, used to index this Probe, shown on Timers etc.
+Probe 10 Serial Number uint32_t 4     Probe serial number
+====================== ======== ===== =====================================================
 
 
 Probe Status (``0x45``)
