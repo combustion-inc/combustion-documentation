@@ -680,10 +680,10 @@ Identifies the sensor that the Probe has determined is the "surface" of the food
 
 Virtual Ambient Sensor 
 **********************
- - ``0``: T5 Sensor
- - ``1``: T6 Sensor
- - ``2``: T7 Sensor
- - ``3``: T8 Sensor
+- ``0``: T5 Sensor
+- ``1``: T6 Sensor
+- ``2``: T7 Sensor
+- ``3``: T8 Sensor
 
 Identifies the sensor that the Probe has determined measures the ambient temperature around the found.
 
