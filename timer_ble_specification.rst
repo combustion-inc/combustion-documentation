@@ -66,6 +66,8 @@ Serial Number                      4     Probe serial number
 Raw Temperature Data               13    See `Raw Temperature Data`_.
 Mode/ID                            1     See `Mode and ID Data`_.
 Battery Status and Virtual Sensors 1     See `Battery Status and Virtual Sensors`_.
+Network Information                1     See `Network Information`_.
+Reserved                           1     Reserved
 ================================== ===== =========================================
 
 GATT Services and Characteristics
@@ -218,7 +220,7 @@ This response has no payload.
 Read Session Information (``0x03``)
 ***********************************
 
-Gets session information for all Probes on the MeatNet repeater network.
+Gets session information for specified Probe on the MeatNet repeater network.
 
 Request Payload
 ~~~~~~~~~~~~~~~
@@ -226,7 +228,7 @@ Request Payload
 ===================== ======== ===== =====================================================
 Value                 Format   Bytes Description
 ===================== ======== ===== =====================================================
-Page                  uint8_t  1     Page number to request (0 = first page, 1 = second)
+Probe Serial Number   uint32_t 4     Probe serial number
 ===================== ======== ===== =====================================================
 
 Response Payload
@@ -235,30 +237,9 @@ Response Payload
 ====================== ======== ===== ==================================================
 Value                  Format   Bytes Description
 ====================== ======== ===== ==================================================
-Page                   uint8_t  1     Page number to request (0 = first page, 1 = second)
-Total Pages            uint8_t  1     Total number of pages that can be requested
-Probe Count            uint8_t  1     Number of Probes connected to the Network
-Probes on this Page    uint8_t  1     Number of Probes on this page
-Probe 1 Device Number  uint8_t  1     Device Number, used to index this Probe, shown on Timers etc.
-Probe 1 Serial Number  uint32_t 4     Probe serial number (0 = not present)
-Probe 1 Session ID     uint32_t 4     Random number that is genrated when Probe is removed from charger.
-Probe 1 Sample Period  uint16_t 2     Number of milliseconds between each log.
-Probe 2 Device Number  uint8_t  1     Device Number, used to index this Probe, shown on Timers etc.
-Probe 2 Serial Number  uint32_t 4     Probe serial number (0 = not present)
-Probe 2 Session ID     uint32_t 4     Random number that is genrated when Probe is removed from charger.
-Probe 2 Sample Period  uint16_t 2     Number of milliseconds between each log.
-Probe 3 Device Number  uint8_t  1     Device Number, used to index this Probe, shown on Timers etc.
-Probe 3 Serial Number  uint32_t 4     Probe serial number (0 = not present)
-Probe 3 Session ID     uint32_t 4     Random number that is genrated when Probe is removed from charger.
-Probe 3 Sample Period  uint16_t 2     Number of milliseconds between each log.
-Probe 4 Device Number  uint8_t  1     Device Number, used to index this Probe, shown on Timers etc.
-Probe 4 Serial Number  uint32_t 4     Probe serial number (0 = not present)
-Probe 4 Session ID     uint32_t 4     Random number that is genrated when Probe is removed from charger.
-Probe 4 Sample Period  uint16_t 2     Number of milliseconds between each log.
-Probe 5 Device Number  uint8_t  1     Device Number, used to index this Probe, shown on Timers etc.
-Probe 5 Serial Number  uint32_t 4     Probe serial number (0 = not present)
-Probe 5 Session ID     uint32_t 4     Random number that is genrated when Probe is removed from charger.
-Probe 5 Sample Period  uint16_t 2     Number of milliseconds between each log.
+Probe Serial Number    uint32_t 4     Probe serial number (0 = not present)
+Probe Session ID       uint32_t 4     Random number that is genrated when Probe is removed from charger.
+Probe Sample Period    uint16_t 2     Number of milliseconds between each log.
 ====================== ======== ===== ==================================================
 
 
@@ -282,15 +263,14 @@ End Sequence number   uint32_t 4     The last log requested
 Response Payload
 ~~~~~~~~~~~~~~~~
 
-==================== ======== ===== ==============================
-Value                Format   Bytes Description
-==================== ======== ===== ==============================
-Probe Serial Number  uint32_t 4     Probe serial number
-Sequence number      uint32_t 4     Sequence number of the record.
-Raw Temperature Data uint8_t  13    See `raw temperature data`_.
-Virtual Sensors      uint8_t  1     See `virtual sensors`_.
-Prediction State     uint8_t  1     See `prediction state`_.
-==================== ======== ===== ==============================
+========================= ======== ===== ==============================
+Value                     Format   Bytes Description
+========================= ======== ===== ==============================
+Probe Serial Number       uint32_t 4     Probe serial number
+Sequence number           uint32_t 4     Sequence number of the record.
+Raw temperature data      uint8_t  13    See `raw temperature data`_.
+Virtual sensors and state uint8_t  7     See `Prediction Log`_.
+========================= ======== ===== ==============================
 
 
 Set Prediction (``0x05``)
@@ -466,21 +446,43 @@ Outbound Device 4 RSSI int8_t   1     RSSI signal strength of this connection
 ====================== ======== ===== ==================================================
 
 
-Probe Session Changed (``0x44``)
+Read Probe List (``0x44``)
 ********************************
 
-Sends notification that a Probe's session information changed. There is no response for this message.
+Reads list of Probes on the MeatNet repeater network.
 
 Request Payload
 ~~~~~~~~~~~~~~~
 
-==================== ======== ===== =====================================================
-Value                Format   Bytes Description
-==================== ======== ===== =====================================================
-Probe Device Number  uint8_t  1     Device Number, used to index this Probe, shown on Timers etc.
-Probe Serial Number  uint32_t 4     Probe serial number
-Probe Session ID     uint32_t 4     Random number that is genrated when Probe is removed from charger.
-==================== ======== ===== =====================================================
+This request has no payload.
+
+Response Payload
+~~~~~~~~~~~~~~~~
+
+====================== ======== ===== =====================================================
+Value                  Format   Bytes Description
+====================== ======== ===== =====================================================
+Probe 1 Device Number  uint8_t  1     Device Number, used to index this Probe, shown on Timers etc.
+Probe 1 Serial Number  uint32_t 4     Probe serial number
+Probe 2 Device Number  uint8_t  1     Device Number, used to index this Probe, shown on Timers etc.
+Probe 2 Serial Number  uint32_t 4     Probe serial number
+Probe 3 Device Number  uint8_t  1     Device Number, used to index this Probe, shown on Timers etc.
+Probe 3 Serial Number  uint32_t 4     Probe serial number
+Probe 4 Device Number  uint8_t  1     Device Number, used to index this Probe, shown on Timers etc.
+Probe 4 Serial Number  uint32_t 4     Probe serial number
+Probe 5 Device Number  uint8_t  1     Device Number, used to index this Probe, shown on Timers etc.
+Probe 5 Serial Number  uint32_t 4     Probe serial number
+Probe 6 Device Number  uint8_t  1     Device Number, used to index this Probe, shown on Timers etc.
+Probe 6 Serial Number  uint32_t 4     Probe serial number
+Probe 7 Device Number  uint8_t  1     Device Number, used to index this Probe, shown on Timers etc.
+Probe 7 Serial Number  uint32_t 4     Probe serial number
+Probe 8 Device Number  uint8_t  1     Device Number, used to index this Probe, shown on Timers etc.
+Probe 8 Serial Number  uint32_t 4     Probe serial number
+Probe 9 Device Number  uint8_t  1     Device Number, used to index this Probe, shown on Timers etc.
+Probe 9 Serial Number  uint32_t 4     Probe serial number
+Probe 10 Device Number uint8_t  1     Device Number, used to index this Probe, shown on Timers etc.
+Probe 10 Serial Number uint32_t 4     Probe serial number
+====================== ======== ===== =====================================================
 
 
 Probe Status (``0x45``)
@@ -499,7 +501,7 @@ Log Range                          uint32_t 8     Range of logs available on the
 Current Raw Temperature Data       uint8_t  13    See `Raw Temperature Data`_.
 Mode/ID                            uint8_t  1     See `Mode and ID Data`_.
 Battery Status and Virtual Sensors uint8_t  1     See `Battery Status and Virtual Sensors`_.
-Prediction Status                  uint8_t  1     See `Prediction Status`_.
+Prediction Status                  uint8_t  7     See `Prediction Status`_.
 Network Information                uint8_t  1     See `Network Information`_.
 ================================== ======== ===== ===========================================================================================
 
@@ -678,10 +680,10 @@ Identifies the sensor that the Probe has determined is the "surface" of the food
 
 Virtual Ambient Sensor 
 **********************
- - ``0``: T5 Sensor
- - ``1``: T6 Sensor
- - ``2``: T7 Sensor
- - ``3``: T8 Sensor
+- ``0``: T5 Sensor
+- ``1``: T6 Sensor
+- ``2``: T7 Sensor
+- ``3``: T8 Sensor
 
 Identifies the sensor that the Probe has determined measures the ambient temperature around the found.
 
@@ -716,6 +718,39 @@ The virtual sensors and prediction state log are expressed as a 16-bit (2-byte) 
 ||       || 4 bit enumeration                   |
 +--------+--------------------------------------+
 || 12-16 || Reserved                            |
++--------+--------------------------------------+
+
+
+Prediction Log
+------------------------------
+
+The Prediction Log is expressed as a 56-bit (7-byte) field.
+
++--------+--------------------------------------+
+| Bits   | Description                          |
++========+======================================+
+|| 1-7   || `Virtual Sensors`_                  |
+||       || 7 bit field                         |
++--------+--------------------------------------+
+|| 8-11  || `Prediction State`_                 |
+||       || 4 bit enumeration                   |
++--------+--------------------------------------+
+|| 12-13 || `Prediction Mode`_                  |
+||       || 2 bit enumeration                   |
++--------+--------------------------------------+
+|| 14-15 || `Prediction Type`_                  |
+||       || 2 bit enumeration                   |
++--------+--------------------------------------+
+|| 16-25 || `Prediction Set Point Temperature`_ |
+||       || 10 bit field (0 to 1023)            |
++--------+--------------------------------------+
+|| 26-42 || `Prediction Value Seconds`_         |
+||       || 17 bit field (0 - 131071)           |
++--------+--------------------------------------+
+|| 43-53 || `Estimated Core Temperature`_       |
+||       || 11 bit field (0 - 1023)             |
++--------+--------------------------------------+
+|| 54-56 || Reserved                            |
 +--------+--------------------------------------+
 
 
