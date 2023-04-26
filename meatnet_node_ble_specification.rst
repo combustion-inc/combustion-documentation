@@ -1,27 +1,27 @@
-*************************
-Kitchen Timer BLE Spec
-*************************
+********************************************
+MeatNet Node Bluetooth Low Energy (BLE) Spec
+********************************************
 
 :status: DRAFT
 
-This document describes how the Combustion Inc. Kitchen Timer sends and receives data over
-BLE.
+This document describes how Combustion Inc. MeatNet Nodes
+(Kitchen Timer/Display, Charger/Repeater, etc.) send and receive data over BLE.
 
 .. contents:: Table of Contents
 
 Advertising
 ###########
 
-When the timer is powered on, it continuously transmits advertising
-packets.  The timer supports up to 4 simultaneous incoming BLE connections,
-and up to 4 simultaneous outgoing BLE connections. If the timer
+When the Node is powered on, it continuously transmits advertising
+packets.  The Node supports up to 4 simultaneous incoming BLE connections,
+and up to 4 simultaneous outgoing BLE connections. If the Node
 has less than 4 incoming BLE connections, it will transmit Connectable 
 advertising packets, otherwise it will transmit Unconnectable advertising 
 packets.
 
-The timer's advertising interval is dependent on its mode of operation. While
+The Node's advertising interval is dependent on its mode of operation. While
 at least one Probe connected to the MeatNet network is in Instant Read mode, 
-the timer has an advertising interval of 100ms. Otherwise, the timer has an 
+the Node has an advertising interval of 100ms. Otherwise, the Node has an
 advertising interval of 250ms.
 
 The format of the Advertising packet and scan response are shown in the
@@ -50,7 +50,7 @@ Manufacturer Specific Data
 
 .. _bluetooth company ids: https://www.bluetooth.com/specifications/assigned-numbers/company-identifiers/
 
-The Timer advertises the current state of all Combustion Inc. Probes connected
+The Node advertises the current state of all Combustion Inc. Probes connected
 to its network.
 
 It continually interleaves advertisements with the manufacturing data for
@@ -73,18 +73,17 @@ Reserved                           1     Reserved
 GATT Services and Characteristics
 #################################
 
-The timer's connection interval is dependent on its mode of operation.  During
+The Node's connection interval is dependent on its mode of operation.  During
 normal operation the probe expects a connection interval between 400ms and 500ms.
-While in Instant Read mode, the timer updates its status more often and expects
+While in Instant Read mode, the Node updates its status more often and expects
 a connection interval between 10ms and 30ms.
 
-The Kitchen Timer implements the following GATT Services and
-Characteristics.
+MeatNet Nodes implement the following GATT Services and Characteristics.
 
 Device Information Service
 --------------------------
 
-This standard BLE service provides static information about the Kitchen Timer. 
+This standard BLE service provides static information about the Node.
 The UUID for the Device Information Service is ``0x181A``.
 
 ======================== ========== =================================== ==========
@@ -107,18 +106,18 @@ The RX characteristic is used to receive data and the TX characteristic is used
 to transmit data via BLE notifications. The format of the data sent and
 received over this service is described in the `UART Messages`_ section.
 
-============== ======================================== ========================================================== ===========
+============== ======================================== ========================================================= ===========
 Characteristic UUID                                     Description                                                Properties
-============== ======================================== ========================================================== ===========
-RX             ``6E400002-B5A3-F393-E0A9-E50E24DCCA9E`` Peer device can send data to Timer on RX characteristic.   Write
-TX             ``6E400003-B5A3-F393-E0A9-E50E24DCCA9E`` Timer can send data to a peer device on TX characteristic. Read/Notify
-============== ======================================== ========================================================== ===========
+============== ======================================== ========================================================= ===========
+RX             ``6E400002-B5A3-F393-E0A9-E50E24DCCA9E`` Peer device can send data to Node on RX characteristic.   Write
+TX             ``6E400003-B5A3-F393-E0A9-E50E24DCCA9E`` Node can send data to a peer device on TX characteristic. Read/Notify
+============== ======================================== ========================================================= ===========
 
 Device Firmware Update Service
 ------------------------------
 
 The Device Firmware Update (DFU) Service is a custom service provided by Nordic
-service for updating the firmware on the Kitchen Timer.
+service for updating the firmware on the Node.
 
 Details TBD.
 
@@ -174,7 +173,7 @@ Messages
 Set Probe ID (``0x01``)
 ***********************
 
-After receiving this message, the Timer will propagate this message across
+After receiving this message, the Node will propagate this message across
 the MeatNet repeater network in order to get it to the Probe referenced by the
 serial number in the message.
 
@@ -197,7 +196,7 @@ This response has no payload.
 Set Probe Color (``0x02``)
 **************************
 
-After receiving this message, the Timer will propagate this message across
+After receiving this message, the Node will propagate this message across
 the MeatNet repeater network in order to get it to the Probe referenced by the
 serial number in the message.
 
@@ -246,7 +245,7 @@ Probe Sample Period    uint16_t 2     Number of milliseconds between each log.
 Read Logs (``0x04``)
 ********************
 
-After successfully receiving the request message, the Kitchen Timer responds
+After successfully receiving the request message, the Node responds
 with a sequence of Read Log Response messages.
 
 Request Payload
@@ -459,30 +458,30 @@ This request has no payload.
 Response Payload
 ~~~~~~~~~~~~~~~~
 
-====================== ======== ===== =====================================================
+====================== ======== ===== ========================================================
 Value                  Format   Bytes Description
-====================== ======== ===== =====================================================
-Probe 1 Device Number  uint8_t  1     Device Number, used to index this Probe, shown on Timers etc.
+====================== ======== ===== ========================================================
+Probe 1 Device Number  uint8_t  1     Device Number, used to index this Probe, shown on Nodes.
 Probe 1 Serial Number  uint32_t 4     Probe serial number
-Probe 2 Device Number  uint8_t  1     Device Number, used to index this Probe, shown on Timers etc.
+Probe 2 Device Number  uint8_t  1     Device Number, used to index this Probe, shown on Nodes.
 Probe 2 Serial Number  uint32_t 4     Probe serial number
-Probe 3 Device Number  uint8_t  1     Device Number, used to index this Probe, shown on Timers etc.
+Probe 3 Device Number  uint8_t  1     Device Number, used to index this Probe, shown on Nodes.
 Probe 3 Serial Number  uint32_t 4     Probe serial number
-Probe 4 Device Number  uint8_t  1     Device Number, used to index this Probe, shown on Timers etc.
+Probe 4 Device Number  uint8_t  1     Device Number, used to index this Probe, shown on Nodes.
 Probe 4 Serial Number  uint32_t 4     Probe serial number
-Probe 5 Device Number  uint8_t  1     Device Number, used to index this Probe, shown on Timers etc.
+Probe 5 Device Number  uint8_t  1     Device Number, used to index this Probe, shown on Nodes.
 Probe 5 Serial Number  uint32_t 4     Probe serial number
-Probe 6 Device Number  uint8_t  1     Device Number, used to index this Probe, shown on Timers etc.
+Probe 6 Device Number  uint8_t  1     Device Number, used to index this Probe, shown on Nodes.
 Probe 6 Serial Number  uint32_t 4     Probe serial number
-Probe 7 Device Number  uint8_t  1     Device Number, used to index this Probe, shown on Timers etc.
+Probe 7 Device Number  uint8_t  1     Device Number, used to index this Probe, shown on Nodes.
 Probe 7 Serial Number  uint32_t 4     Probe serial number
-Probe 8 Device Number  uint8_t  1     Device Number, used to index this Probe, shown on Timers etc.
+Probe 8 Device Number  uint8_t  1     Device Number, used to index this Probe, shown on Nodes.
 Probe 8 Serial Number  uint32_t 4     Probe serial number
-Probe 9 Device Number  uint8_t  1     Device Number, used to index this Probe, shown on Timers etc.
+Probe 9 Device Number  uint8_t  1     Device Number, used to index this Probe, shown on Nodes.
 Probe 9 Serial Number  uint32_t 4     Probe serial number
-Probe 10 Device Number uint8_t  1     Device Number, used to index this Probe, shown on Timers etc.
+Probe 10 Device Number uint8_t  1     Device Number, used to index this Probe, shown on Nodes.
 Probe 10 Serial Number uint32_t 4     Probe serial number
-====================== ======== ===== =====================================================
+====================== ======== ===== ========================================================
 
 
 Probe Status (``0x45``)
@@ -589,7 +588,7 @@ The product type is an enumerated value in an 8-bit (1-byte) field:
 
 * ``0``: Unknown
 * ``1``: Predictive Probe
-* ``2``: MeatNet Repeater Node (Kitchen Timer etc.)
+* ``2``: MeatNet Repeater Node (Kitchen Timer, Charger, etc.)
 
 Raw Temperature Data
 --------------------
