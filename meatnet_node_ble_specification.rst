@@ -602,10 +602,10 @@ Inbound/Outbound        uint8_t  1     Boolean set to true if the connections in
 Connection Detail Records
 """""""""""""""""""""""""
 
-Probe and node serial numbers are constructed differently; if the `Product Type` field is a Probe,
-the serial number will be encoded as a `uint32_t` located in the first 4 bytes of the
-`Serial Number` field, with the remaining 6 bytes being unpopulated. If it's a node serial number,
-it will be encoded as a 10-byte `uint8_t` array.
+Probe and node serial numbers are constructed differently; if the *Product Type* field is a Probe,
+the serial number will be encoded as a ``uint32_t`` located in the first 4 bytes of the
+*Serial Number* field, with the remaining 6 bytes being unpopulated. If it's a node serial number,
+it will be encoded as a 10-byte ``uint8_t`` array.
 
 ===================== ======== ===== ==================================================
 Value                 Format   Bytes Description
