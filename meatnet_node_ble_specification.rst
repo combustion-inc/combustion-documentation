@@ -575,6 +575,43 @@ Model Number String   uint8_t  50    Model: Product model, SKU and lot number in
 ===================== ======== ===== =============================
 
 
+Heartbeat Message (``0x49``)
+****************************
+
+Message sent by each node indicating connection status to other devices in the MeatNet network.
+Outbound and inbound messages are interleaved.
+
+Response Payload
+~~~~~~~~~~~~~~~~
+
+This message is comprised of a header followed by four connection detail records. A serial number of
+`0` indicates that the connection is not in use.
+
+Header
+""""""
+
+===================== ======== ===== ==========================================================
+Value                 Format   Bytes Description
+===================== ======== ===== ==========================================================
+Node Serial Number    uint8_t  4     Node serial number
+MAC Address           uint8_t  6     Node's MAC address
+Product Type          uint8_t  1     Node's product type.
+Hop Count             uint8_t  1     The number of hops this message has taken in the network.
+Inbound/Outbound      uint8_t  1     Whether the following connections are inbound or outbound.
+===================== ======== ===== ==========================================================
+
+Connection Records
+""""""""""""""""""
+
+===================== ======== ===== ==================================================
+Value                 Format   Bytes Description
+===================== ======== ===== ==================================================
+Serial Number         uint8_t  10    Serial number of the device connected to the Node.
+Product Type          uint8_t  1     This device's product type.
+RSSI                  uint8_t  1     The RSSI of the connection to this device.
+===================== ======== ===== ==================================================
+
+
 Common Data Formats
 ###################
 
