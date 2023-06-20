@@ -613,7 +613,7 @@ Value                 Format   Bytes Description
 Serial Number         uint8_t  10    Serial number of the device connected to the Node.
 Product Type          uint8_t  1     This device's product type.
 Attributes            uint8_t  1     See `Attributes Field Definition`_.
-RSSI                  uint8_t  1     The RSSI of the connection to this device.
+RSSI                  int8_t   1     The RSSI of the connection to this device.
 ===================== ======== ===== ==================================================
 
 Attributes Field Definition
