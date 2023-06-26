@@ -575,6 +575,15 @@ Model Number String   uint8_t  50    Model: Product model, SKU and lot number in
 ===================== ======== ===== =============================
 
 
+Associate Node (``0x4A``)
+***********************************
+
+Requests one directly-connected Node to associate with the Node sending this message.
+Neither Request nor Response have payload data. A 'success' Response will indicate the
+Node receiving the message has associated with the Node sending the message (either newly
+associated, or was previously associated).
+
+
 Common Data Formats
 ###################
 
