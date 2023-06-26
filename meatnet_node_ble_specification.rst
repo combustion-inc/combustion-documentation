@@ -575,6 +575,58 @@ Model Number String   uint8_t  50    Model: Product model, SKU and lot number in
 ===================== ======== ===== =============================
 
 
+Heartbeat Message (``0x49``)
+****************************
+
+Message sent by each node indicating connection status to other devices in the MeatNet network.
+Outbound and inbound messages are interleaved.
+
+Response Payload
+~~~~~~~~~~~~~~~~
+
+This message is comprised of a header followed by four connection detail records.
+
+Header
+""""""
+
+======================= ======== ===== ===================================================================
+Value                   Format   Bytes Description
+======================= ======== ===== ===================================================================
+Node Serial Number      uint8_t  10    This node's serial number.
+MAC Address             uint8_t  6     This node's MAC address.
+Product Type            uint8_t  1     This node's product type.
+Hop Count               uint8_t  1     The number of hops this message has taken in the network.
+Inbound/Outbound        uint8_t  1     Boolean set to true if the connections in this message are inbound.
+======================= ======== ===== ===================================================================
+
+Connection Detail Records
+"""""""""""""""""""""""""
+
+Probe and node serial numbers are constructed differently; if the *Product Type* field is a Probe,
+the serial number will be encoded as a ``uint32_t`` located in the first 4 bytes of the
+*Serial Number* field, with the remaining 6 bytes being unpopulated. If it's a node serial number,
+it will be encoded as a 10-byte ``uint8_t`` array.
+
+===================== ======== ===== ==================================================
+Value                 Format   Bytes Description
+===================== ======== ===== ==================================================
+Serial Number         uint8_t  10    Serial number of the device connected to the Node.
+Product Type          uint8_t  1     This device's product type.
+Attributes            uint8_t  1     See `Attributes Field Definition`_.
+RSSI                  int8_t   1     The RSSI of the connection to this device.
+===================== ======== ===== ==================================================
+
+Attributes Field Definition
+"""""""""""""""""""""""""""
+
+==== ==================================================
+Bits Description
+==== ==================================================
+1    Set if this connection detail record is populated.
+2-8  Reserved.
+==== ==================================================
+
+
 Common Data Formats
 ###################
 

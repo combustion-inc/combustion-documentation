@@ -8,7 +8,7 @@ This repository contains information on how to interface with Combustion Inc.'s 
 
 The [Predictive Probe BLE Specification](probe_ble_specification.rst) describes how the Predictive Probe sends and receives data over BLE.
 
-The [Kitchen Timer BLE Specification](timer_ble_specification.rst) describes how the Kitchen Timer sends and receives data over BLE.
+The [Node BLE Specification](meatnet_node_ble_specification.rst) describes how MeatNet nodes (Displays, Boosters, etc.) send and receive data over BLE.
 
 ## About Combustion Inc.
 
