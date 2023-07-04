@@ -646,6 +646,30 @@ Response payload
 This response has no payload.
 
 
+Sync Thermometer List (``0x4B``)
+********************************
+
+Message sent by each Node indicating which Therometers are assigned to the available positions in
+MeatNet. Used for synchronizing this list across multiple Node devices.
+
+Request Payload
+~~~~~~~~~~~~~~~
+
+This message contains information about which thermometer serial number is in each position in MeatNet's
+data module.
+
+=========================== ======== ===== ===================================================================
+Value                       Format   Bytes Description
+=========================== ======== ===== ===================================================================
+Thermometer 1 data present  uint8_t  1     Boolean, true if thermometer data is present in this position.
+Thermometer 1 serial number uint32_t 4     Thermometer serial number, if present.
+Thermometer 2 data present  uint8_t  1     Boolean, true if thermometer data is present in this position.
+Thermometer 2 serial number uint32_t 4     Thermometer serial number, if present.
+Thermometer 3 data present  uint8_t  1     Boolean, true if thermometer data is present in this position.
+Thermometer 3 serial number uint32_t 4     Thermometer serial number, if present.
+Thermometer 4 data present  uint8_t  1     Boolean, true if thermometer data is present in this position.
+Thermometer 4 serial number uint32_t 4     Thermometer serial number, if present.
+=========================== ======== ===== ===================================================================
 
 Response Payload
 ~~~~~~~~~~~~~~~~
@@ -827,7 +851,7 @@ The Prediction Log is expressed as a 56-bit (7-byte) field.
 || 43-53 || `Estimated Core Temperature`_       |
 ||       || 11 bit field (0 - 1023)             |
 +--------+--------------------------------------+
-|| 54-56 || Reserved                            |
+| 54-56  | Reserved                             |
 +--------+--------------------------------------+
 
 
