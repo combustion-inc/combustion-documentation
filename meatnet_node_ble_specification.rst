@@ -579,9 +579,9 @@ Heartbeat Message (``0x49``)
 ****************************
 
 Message sent by each node indicating connection status to other devices in the MeatNet network.
-Outbound and inbound messages are interleaved.
+Outbound and inbound messages are interleaved. It has no response.
 
-Response Payload
+Request Payload
 ~~~~~~~~~~~~~~~~
 
 This message is comprised of a header followed by four connection detail records.
@@ -625,6 +625,32 @@ Bits Description
 1    Set if this connection detail record is populated.
 2-8  Reserved.
 ==== ==================================================
+
+
+Associate Node (``0x4A``)
+*************************
+
+Requests one directly-connected Node to associate with the Node sending this message.
+Neither Request nor Response have payload data. A 'success' Response will indicate the
+Node receiving the message has associated with the Node sending the message (either newly
+associated, or was previously associated).
+
+Request payload
+~~~~~~~~~~~~~~~
+
+This request has no payload.
+
+Response payload
+~~~~~~~~~~~~~~~~
+
+This response has no payload.
+
+
+
+Response Payload
+~~~~~~~~~~~~~~~~
+
+This response has no payload.
 
 
 Common Data Formats
