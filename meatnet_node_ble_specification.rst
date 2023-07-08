@@ -661,6 +661,7 @@ data module.
 =========================== ======== ===== ===================================================================
 Value                       Format   Bytes Description
 =========================== ======== ===== ===================================================================
+MAC Address                 uint8_t  6     MAC address of the Node that sent this list.
 Thermometer 1 data present  uint8_t  1     Boolean, true if thermometer data is present in this position.
 Thermometer 1 serial number uint32_t 4     Thermometer serial number, if present.
 Thermometer 2 data present  uint8_t  1     Boolean, true if thermometer data is present in this position.
