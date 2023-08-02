@@ -18,7 +18,7 @@ Our Predictive Thermometer's eight temperature sensors measure the temp outside 
 
 <img src="https://github.com/combustion-inc/combustion-documentation/blob/main/images/Predictive%20Thermometer%20+%20Display%20&%20Range%20Extender%201024x1024.png?raw=true" alt="Probe and Timer" width="400"/>
 
-Visit [www.combustion.inc](https://www.combustion.inc) to sign up to be notified when they're available to order now.
+Visit [www.combustion.inc](https://www.combustion.inc) to purchase or learn more about the Predictive Thermometer.
 
 Head on over to our [FAQ](https://combustion.inc/pages/faq) for more product details.
 
