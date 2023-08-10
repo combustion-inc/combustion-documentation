@@ -64,9 +64,9 @@ GATT Services and Characteristics
 #################################
 
 The probe's connection interval is dependent on its mode of operation.  During
-normal operation the probe expects a connection interval between TBD and TBD.
+normal operation the probe expects a connection interval between 400 ms and 500 ms.
 While in Instant Read mode, the probe updates its status more often and expects
-a connection interval between TBD and TBD.
+a connection interval between 7.5 ms and 75 ms.
 
 The Predictive Probe implements the following GATT Services and
 Characteristics.
