@@ -18,8 +18,9 @@ has less than 3 BLE connections, it will transmit Connectable advertising
 packets, otherwise it will transmit Unconnectable advertising packets.
 
 The probe's advertising interval is dependent on its mode of operation. While
-in Instant Read mode, the probe has an advertising interval of TBD. Otherwise,
-the probe has an advertising interval of 250ms.
+in Instant Read mode, the probe will advertise with a pattern of 100ms, 100ms and 50ms
+delay between messages, repeating every 3 advertisements. Otherwise, the probe has an 
+advertising interval of 250ms.
 
 The format of the Advertising packet and scan response are shown in the
 following tables.
