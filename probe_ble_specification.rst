@@ -654,30 +654,30 @@ Configuration parameters for the Food Safe (USDA Safe) feature, in a packed TBD-
 || 10-13 || `Form`_                                  |
 ||       || 4 bit enumeration                        |
 +--------+-------------------------------------------+
-|| 14-15 || `Serving`_                               |
-||       || 2 bit enumeration                        |
+|| 14-16 || `Serving`_                               |
+||       || 3 bit enumeration                        |
 +--------+-------------------------------------------+
-|| 16-29 || Selected threshold reference temperature |
+|| 17-30 || Selected threshold reference temperature |
 ||       || 13 bit encoded decimal                   |
 +--------+-------------------------------------------+
-|| 30-42 || Z-value                                  |
+|| 31-43 || Z-value                                  |
 ||       || 13 bit encoded decimal                   |
 +--------+-------------------------------------------+
-|| 43-55 || Reference Temperature (RT)               |
+|| 44-56 || Reference Temperature (RT)               |
 ||       || 13 bit encoded decimal                   |
 +--------+-------------------------------------------+
-|| 56-68 || D-value at RT                            |
+|| 57-69 || D-value at RT                            |
 ||       || 13 bit encoded decimal                   |
 +--------+-------------------------------------------+
 
 Food Safe Mode 
 **************
 
-2 bit enumeration, enumerating the mode of food safety calculations.
+3 bit enumeration, enumerating the mode of food safety calculations.
 
 - ``0``: Simplified                     
 - ``1``: Integrated
-- ``2-3``: Reserved
+- ``2-7``: Reserved
 
 Protein
 *******
@@ -734,24 +734,25 @@ status of the configured Food Safe program:
 +--------+--------------------------+
 | Bits   | Description              |
 +========+==========================+
-|| 1-2   || `Food Safe State`_      |
-||       || 2 bit enumeration       |
+|| 1-3   || `Food Safe State`_      |
+||       || 3 bit enumeration       |
 +--------+--------------------------+
-|| 3-10  || `Log Reduction`_        |
+|| 4-11  || `Log Reduction`_        |
 ||       || 8 bit encoded decimal   |
 +--------+--------------------------+
-|| 11-26 || Seconds above threshold |
+|| 12-27 || Seconds above threshold |
 ||       || 16 bit unsigned integer |
 +--------+--------------------------+
 
 Food Safe State
 ***************
 
-2 bit enumeration, enumerating the current state of the food safe program.
+3 bit enumeration, enumerating the current state of the food safe program.
 
 - ``0``: Not Safe
 - ``1``: Safe
-- ``2-3``: Reserved
+- ``2``: Safety Impossible
+- ``3-7``: Reserved
 
 Log Reduction
 *************
