@@ -118,6 +118,8 @@ Current Raw Temperature Data        uint8_t  13    See `Raw Temperature Data`_.
 Mode/ID                             uint8_t  1     See `Mode and ID Data`_.
 Battery Status and Virtual Sensors  uint8_t  1     See `Battery Status and Virtual Sensors`_.
 Prediction Status                   uint8_t  7     See `Prediction Status`_.
+Food Safe Data                      uint8_t  9     See `Food Safe Data`_
+Food Safe Status                    uint8_t  4     See `Food Safe Status`_
 =================================== ======== ===== ===========================================================================================
 
 UART Service
@@ -289,11 +291,11 @@ Value                 Format   Bytes Description
 Set Prediction Data   uint16_t 2     See `Set Prediction Data`_
 ===================== ======== ===== =============================
 
-
 Response Payload
 ~~~~~~~~~~~~~~~~
 
 The Set Prediction Response message has no payload.
+
 
 Read Over Tempearture (``0x06``)
 ********************************
@@ -306,9 +308,6 @@ Request Payload
 
 The Read Over Tempearture Request message has no payload.
 
-
-
-
 Response Payload
 ~~~~~~~~~~~~~~~~
 
@@ -317,6 +316,47 @@ Value                 Format   Bytes Description
 ===================== ======== ===== =============================
 Over Temperature Flag uint8_t  1     1 if flag is set, otherwise 0
 ===================== ======== ===== =============================
+
+
+Configure Food Safe (``0x07``)
+******************************
+
+Configures the Food Safety (USDA Safe) feature.
+
+Request Payload
+~~~~~~~~~~~~~~~
+
+===================== ======== ===== =============================
+Value                 Format   Bytes Description
+===================== ======== ===== =============================
+Food Safe Data        uint8_t  TBD   See `Food Safe Data`_
+===================== ======== ===== =============================
+
+Response Payload
+~~~~~~~~~~~~~~~~
+
+The Configure Food Safe Response message has no payload.
+
+
+Reset Food Safe (``0x08``)
+**************************
+
+Resets the Food Safe (USDA Safe) program's calculations. This will
+clear the log reduction and seconds above threshold values, and reset the
+prediction state to "Not Safe". It does not clear the Food Safe program
+parameters, so potentially a Simplified program could immediately 
+transition to 'Safe' if conditions are met (e.g. Core above 165 F).
+
+Request Payload
+~~~~~~~~~~~~~~~
+
+The Reset Food Safe Request message has no payload.
+
+Response Payload
+~~~~~~~~~~~~~~~~
+
+The Reset Food Safe Response message has no payload.
+
 
 Common Data Formats
 ###################
@@ -595,3 +635,131 @@ Estimated Core Temperature
 11-bit value.  The estimated current core temperature from -200 to 1847 in units of 1/10 degree Celsius::
 
     Estimated Core Temperature = (raw value * 0.1 C) - 20 C.
+
+
+Food Safe Data
+--------------
+
+Configuration parameters for the Food Safe (USDA Safe) feature, in a packed TBD-bit (TBD-byte) field.
+
++--------+-------------------------------------------+
+| Bits   | Description                               |
++========+===========================================+
+|| 1-3   || `Food Safe Mode`_                        |
+||       || 3 bit enumeration                        |
++--------+-------------------------------------------+
+|| 4-9   || `Protein`_                               |
+||       || 6 bit enumeration                        |
++--------+-------------------------------------------+
+|| 10-13 || `Form`_                                  |
+||       || 4 bit enumeration                        |
++--------+-------------------------------------------+
+|| 14-16 || `Serving`_                               |
+||       || 3 bit enumeration                        |
++--------+-------------------------------------------+
+|| 17-30 || Selected threshold reference temperature |
+||       || 13 bit encoded decimal                   |
++--------+-------------------------------------------+
+|| 31-43 || Z-value                                  |
+||       || 13 bit encoded decimal                   |
++--------+-------------------------------------------+
+|| 44-56 || Reference Temperature (RT)               |
+||       || 13 bit encoded decimal                   |
++--------+-------------------------------------------+
+|| 57-69 || D-value at RT                            |
+||       || 13 bit encoded decimal                   |
++--------+-------------------------------------------+
+
+Food Safe Mode 
+**************
+
+3 bit enumeration, enumerating the mode of food safety calculations.
+
+- ``0``: Simplified                     
+- ``1``: Integrated
+- ``2-7``: Reserved
+
+Protein
+*******
+
+6 bit enumeration, enumerating the various protein categories for which safety
+calculations are available.
+
+- ``0``: Default                     
+- ``1``: Chicken
+- ``2``: Beef
+- ``3``: Pork
+- ``4``: Fish
+- ``5``: Shellfish
+- ``6``: Turkey
+- ``7``: Lamb
+- ``8``: Veal
+- ``9``: Eggs
+- ``10``: Dairy
+- ``11``: Vegetables
+- ``12``: Game, Wild
+- ``13``: Game, Farmed
+- ``14``: Ostrich & Emu
+- ``15-63``: Reserved
+
+Form
+****
+
+4 bit enumeration, enumerating the various forms of the food for which safety
+calculations are available.
+
+- ``0``: Intact Cut
+- ``1``: Not Intact
+- ``2``: Ground
+- ``3``: Stuffed
+- ``4``: Liquid
+- ``5-15``: Reserved
+
+Serving
+*******
+
+3 bit enumeration, enumerating the various serving options for which safety 
+calculations are available.
+
+- ``0``: Served Immediately
+- ``1``: Cooked and Chilled
+- ``2-7``: Reserved
+
+Food Safe Status
+----------------
+
+The food safe status is expressed in a packed 4-byte field, indicating the current
+status of the configured Food Safe program:
+
++--------+--------------------------+
+| Bits   | Description              |
++========+==========================+
+|| 1-3   || `Food Safe State`_      |
+||       || 3 bit enumeration       |
++--------+--------------------------+
+|| 4-11  || `Log Reduction`_        |
+||       || 8 bit encoded decimal   |
++--------+--------------------------+
+|| 12-27 || Seconds above threshold |
+||       || 16 bit unsigned integer |
++--------+--------------------------+
+
+Food Safe State
+***************
+
+3 bit enumeration, enumerating the current state of the food safe program.
+
+- ``0``: Not Safe
+- ``1``: Safe
+- ``2``: Safety Impossible
+- ``3-7``: Reserved
+
+Log Reduction
+*************
+
+8 bit encoded decimal, indicating the log reduction achieved by the current
+Integrated food safe program. The log reduction is expressed in units of 
+0.1 log reduction steps. Representable values are 0.0 to 25.5 log reduction steps.
+In Simplified mode, this value will always be 0.
+
+    Log Reduction = (raw value * 0.1)
