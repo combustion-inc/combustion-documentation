@@ -329,7 +329,7 @@ Request Payload
 ===================== ======== ===== =============================
 Value                 Format   Bytes Description
 ===================== ======== ===== =============================
-Food Safe Data        uint8_t  TBD   See `Food Safe Data`_
+Food Safe Data        uint8_t  9     See `Food Safe Data`_
 ===================== ======== ===== =============================
 
 Response Payload
@@ -640,7 +640,7 @@ Estimated Core Temperature
 Food Safe Data
 --------------
 
-Configuration parameters for the Food Safe (USDA Safe) feature, in a packed TBD-bit (TBD-byte) field.
+Configuration parameters for the Food Safe (USDA Safe) feature, in a packed 9-byte field.
 
 +--------+-------------------------------------------+
 | Bits   | Description                               |
@@ -657,16 +657,16 @@ Configuration parameters for the Food Safe (USDA Safe) feature, in a packed TBD-
 || 14-16 || `Serving`_                               |
 ||       || 3 bit enumeration                        |
 +--------+-------------------------------------------+
-|| 17-30 || Selected threshold reference temperature |
+|| 17-29 || Selected threshold reference temperature |
 ||       || 13 bit encoded decimal                   |
 +--------+-------------------------------------------+
-|| 31-43 || Z-value                                  |
+|| 30-42 || Z-value                                  |
 ||       || 13 bit encoded decimal                   |
 +--------+-------------------------------------------+
-|| 44-56 || Reference Temperature (RT)               |
+|| 43-55 || Reference Temperature (RT)               |
 ||       || 13 bit encoded decimal                   |
 +--------+-------------------------------------------+
-|| 57-69 || D-value at RT                            |
+|| 56-68 || D-value at RT                            |
 ||       || 13 bit encoded decimal                   |
 +--------+-------------------------------------------+
 
@@ -695,12 +695,11 @@ calculations are available.
 - ``7``: Lamb
 - ``8``: Veal
 - ``9``: Eggs
-- ``10``: Dairy
-- ``11``: Vegetables
-- ``12``: Game, Wild
-- ``13``: Game, Farmed
-- ``14``: Ostrich & Emu
-- ``15-63``: Reserved
+- ``10``: Vegetables
+- ``11``: Game, Wild
+- ``12``: Game, Farmed
+- ``13``: Ostrich & Emu
+- ``14-63``: Reserved
 
 Form
 ****
@@ -724,6 +723,14 @@ calculations are available.
 - ``0``: Served Immediately
 - ``1``: Cooked and Chilled
 - ``2-7``: Reserved
+
+Decimal Encoding
+****************
+
+The 13-bit encoded decimal format used for the threshold temperature,
+Z-value, reference temperature, and D-value @ reference temperature is:
+
+    value = (raw value * 0.05)
 
 Food Safe Status
 ----------------
