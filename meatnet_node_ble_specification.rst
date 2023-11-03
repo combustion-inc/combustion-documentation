@@ -1076,6 +1076,9 @@ Configuration parameters for the Food Safe (USDA Safe) feature, in a packed 9-by
 || 56-68 || D-value at RT                            |
 ||       || 13 bit encoded decimal                   |
 +--------+-------------------------------------------+
+|| 69-76 || Target `Log Reduction`_                  |
+||       || 8 bit encoded decimal                    |
++--------+-------------------------------------------+
 
 Food Safe Mode 
 **************
@@ -1139,6 +1142,7 @@ The 13-bit encoded decimal format used for the threshold temperature,
 Z-value, reference temperature, and D-value @ reference temperature is:
 
     value = (raw value * 0.05)
+
 
 Food Safe Status
 ----------------

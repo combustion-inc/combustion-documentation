@@ -669,6 +669,9 @@ Configuration parameters for the Food Safe (USDA Safe) feature, in a packed 9-by
 || 56-68 || D-value at RT                            |
 ||       || 13 bit encoded decimal                   |
 +--------+-------------------------------------------+
+|| 69-76 || Target `Log Reduction`_                  |
+||       || 8 bit encoded decimal                    |
++--------+-------------------------------------------+
 
 Food Safe Mode 
 **************
