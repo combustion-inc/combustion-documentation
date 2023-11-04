@@ -1095,6 +1095,25 @@ Protein
 6 bit enumeration, enumerating the various protein categories for which safety
 calculations are available.
 
+**Simplified Mode**
+
+- ``0``: Default
+- ``1``: Any poultry
+- ``2``: Beef cuts
+- ``3``: Pork cuts
+- ``4``: Veal cuts
+- ``5``: Lamb cuts
+- ``6``: Ground meats
+- ``7``: Ham, fresh or smoked
+- ``8``: Ham, cooked and reheated
+- ``9``: Eggs
+- ``10``: Fish & shellfish
+- ``11``: Leftovers
+- ``12``: Casseroles
+- ``13-63``: Reserved
+
+**Integrated Mode**
+
 - ``0``: Default                     
 - ``1``: Chicken
 - ``2``: Beef
@@ -1105,12 +1124,12 @@ calculations are available.
 - ``7``: Lamb
 - ``8``: Veal
 - ``9``: Eggs
-- ``10``: Dairy
-- ``11``: Vegetables
-- ``12``: Game, Wild
-- ``13``: Game, Farmed
-- ``14``: Ostrich & Emu
-- ``15-63``: Reserved
+- ``10``: Vegetables
+- ``11``: Game, Wild
+- ``12``: Game, Farmed
+- ``13``: Ostrich & Emu
+- ``14-62``: Reserved
+- ``63``: Custom
 
 Form
 ****
