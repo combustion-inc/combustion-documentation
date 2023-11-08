@@ -648,11 +648,8 @@ Configuration parameters for the Food Safe (USDA Safe) feature, in a packed 9-by
 || 1-3   || `Food Safe Mode`_                        |
 ||       || 3 bit enumeration                        |
 +--------+-------------------------------------------+
-|| 4-9   || `Protein`_                               |
-||       || 6 bit enumeration                        |
-+--------+-------------------------------------------+
-|| 10-13 || `Form`_                                  |
-||       || 4 bit enumeration                        |
+|| 4-13  || `Product`_                               |
+||       || 10 bit enumeration                       |
 +--------+-------------------------------------------+
 || 14-16 || `Serving`_                               |
 ||       || 3 bit enumeration                        |
@@ -682,14 +679,17 @@ Food Safe Mode
 - ``1``: Integrated
 - ``2-7``: Reserved
 
-Protein
+Product
 *******
 
-6 bit enumeration, enumerating the various protein categories for which safety
+10 bit enumeration, enumerating the various food categories for which safety
 calculations are available. These values have different encodings in Simplified
-and Integrated modes.
+and Integrated modes. 
 
 **Simplified Mode**
+
+The Simplified values are used by firmware to determine the food safety rules to
+follow. 
 
 - ``0``: Default
 - ``1``: Any poultry
@@ -704,39 +704,24 @@ and Integrated modes.
 - ``10``: Fish & shellfish
 - ``11``: Leftovers
 - ``12``: Casseroles
-- ``13-63``: Reserved
 
 **Integrated Mode**
 
+For Integrated mode, while this value is stored in firmware, it's only for 
+sync purposes. The values are interpreted exclusively by the client in 
+Integrated mode; the firmware performs the food safety calculations based on
+the other values supplied.
+
 - ``0``: Default                     
-- ``1``: Chicken
-- ``2``: Beef
+- ``1``: Beef
+- ``2``: Chicken
 - ``3``: Pork
-- ``4``: Fish
-- ``5``: Shellfish
-- ``6``: Turkey
-- ``7``: Lamb
-- ``8``: Veal
-- ``9``: Eggs
-- ``10``: Vegetables
-- ``11``: Game, Wild
-- ``12``: Game, Farmed
-- ``13``: Ostrich & Emu
-- ``14-62``: Reserved
-- ``63``: Custom
-
-Form
-****
-
-4 bit enumeration, enumerating the various forms of the food for which safety
-calculations are available.
-
-- ``0``: Intact Cut
-- ``1``: Not Intact
-- ``2``: Ground
-- ``3``: Stuffed
-- ``4``: Liquid
-- ``5-15``: Reserved
+- ``4``: Ham
+- ``5``: Turkey
+- ``6``: Lamb
+- ``7``: Fish
+- ``8``: Dairy - Milk (<10% fat)
+- ``1023``: Custom
 
 Serving
 *******
