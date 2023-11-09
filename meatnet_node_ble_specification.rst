@@ -1047,7 +1047,7 @@ Estimated Core Temperature
 Food Safe Data
 --------------
 
-Configuration parameters for the Food Safe (USDA Safe) feature, in a packed 9-byte field.
+Configuration parameters for the Food Safe (USDA Safe) feature, in a packed 10-byte field.
 
 +--------+-------------------------------------------+
 | Bits   | Description                               |
