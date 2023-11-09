@@ -334,7 +334,7 @@ Request Payload
 Value                 Format   Bytes Description
 ===================== ======== ===== =============================
 Probe Serial Number   uint32_t 4     Probe serial number
-Food Safe Data        uint8_t  TBD   See `Food Safe Data`_
+Food Safe Data        uint8_t  10    See `Food Safe Data`_
 ===================== ======== ===== =============================
 
 Response Payload
@@ -546,7 +546,7 @@ Mode/ID                            uint8_t  1     See `Mode and ID Data`_.
 Battery Status and Virtual Sensors uint8_t  1     See `Battery Status and Virtual Sensors`_.
 Prediction Status                  uint8_t  7     See `Prediction Status`_.
 Network Information                uint8_t  1     See `Network Information`_.
-Food Safe Data                     uint8_t  9     See `Food Safe Data`_.    
+Food Safe Data                     uint8_t  10    See `Food Safe Data`_.    
 Food Safe Status                   uint8_t  4     See `Food Safe Status`_.
 ================================== ======== ===== ===========================================================================================
 
