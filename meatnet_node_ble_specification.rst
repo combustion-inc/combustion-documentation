@@ -1047,7 +1047,7 @@ Estimated Core Temperature
 Food Safe Data
 --------------
 
-Configuration parameters for the Food Safe (USDA Safe) feature, in a packed TBD-bit (TBD-byte) field.
+Configuration parameters for the Food Safe (USDA Safe) feature, in a packed 10-byte field.
 
 +--------+-------------------------------------------+
 | Bits   | Description                               |
@@ -1055,26 +1055,26 @@ Configuration parameters for the Food Safe (USDA Safe) feature, in a packed TBD-
 || 1-3   || `Food Safe Mode`_                        |
 ||       || 3 bit enumeration                        |
 +--------+-------------------------------------------+
-|| 4-9   || `Protein`_                               |
-||       || 6 bit enumeration                        |
-+--------+-------------------------------------------+
-|| 10-13 || `Form`_                                  |
-||       || 4 bit enumeration                        |
+|| 4-13  || `Product`_                               |
+||       || 10 bit enumeration                       |
 +--------+-------------------------------------------+
 || 14-16 || `Serving`_                               |
 ||       || 3 bit enumeration                        |
 +--------+-------------------------------------------+
-|| 17-30 || Selected threshold reference temperature |
+|| 17-29 || Selected threshold reference temperature |
 ||       || 13 bit encoded decimal                   |
 +--------+-------------------------------------------+
-|| 31-43 || Z-value                                  |
+|| 30-42 || Z-value                                  |
 ||       || 13 bit encoded decimal                   |
 +--------+-------------------------------------------+
-|| 44-56 || Reference Temperature (RT)               |
+|| 43-55 || Reference Temperature (RT)               |
 ||       || 13 bit encoded decimal                   |
 +--------+-------------------------------------------+
-|| 57-69 || D-value at RT                            |
+|| 56-68 || D-value at RT                            |
 ||       || 13 bit encoded decimal                   |
++--------+-------------------------------------------+
+|| 69-76 || Target `Log Reduction`_                  |
+||       || 8 bit encoded decimal                    |
 +--------+-------------------------------------------+
 
 Food Safe Mode 
@@ -1086,41 +1086,49 @@ Food Safe Mode
 - ``1``: Integrated
 - ``2-7``: Reserved
 
-Protein
+Product
 *******
 
-6 bit enumeration, enumerating the various protein categories for which safety
-calculations are available.
+10 bit enumeration, enumerating the various food categories for which safety
+calculations are available. These values have different encodings in Simplified
+and Integrated modes. 
+
+**Simplified Mode**
+
+The Simplified values are used by firmware to determine the food safety rules to
+follow. 
+
+- ``0``: Default
+- ``1``: Any poultry
+- ``2``: Beef cuts
+- ``3``: Pork cuts
+- ``4``: Veal cuts
+- ``5``: Lamb cuts
+- ``6``: Ground meats
+- ``7``: Ham, fresh or smoked
+- ``8``: Ham, cooked and reheated
+- ``9``: Eggs
+- ``10``: Fish & shellfish
+- ``11``: Leftovers
+- ``12``: Casseroles
+
+**Integrated Mode**
+
+For Integrated mode, while this value is stored in firmware, it's only for 
+sync purposes. The values are interpreted exclusively by the client in 
+Integrated mode; the firmware performs the food safety calculations based on
+the other values supplied.
 
 - ``0``: Default                     
-- ``1``: Chicken
-- ``2``: Beef
+- ``1``: Beef
+- ``2``: Chicken
 - ``3``: Pork
-- ``4``: Fish
-- ``5``: Shellfish
-- ``6``: Turkey
-- ``7``: Lamb
-- ``8``: Veal
-- ``9``: Eggs
-- ``10``: Dairy
-- ``11``: Vegetables
-- ``12``: Game, Wild
-- ``13``: Game, Farmed
-- ``14``: Ostrich & Emu
-- ``15-63``: Reserved
-
-Form
-****
-
-4 bit enumeration, enumerating the various forms of the food for which safety
-calculations are available.
-
-- ``0``: Intact Cut
-- ``1``: Not Intact
-- ``2``: Ground
-- ``3``: Stuffed
-- ``4``: Liquid
-- ``5-15``: Reserved
+- ``4``: Ham
+- ``5``: Turkey
+- ``6``: Lamb
+- ``7``: Fish
+- ``8``: Dairy - Milk (<10% fat)
+- ``1023``: Custom
 
 Serving
 *******
@@ -1131,6 +1139,15 @@ calculations are available.
 - ``0``: Served Immediately
 - ``1``: Cooked and Chilled
 - ``2-7``: Reserved
+
+Decimal Encoding
+****************
+
+The 13-bit encoded decimal format used for the threshold temperature,
+Z-value, reference temperature, and D-value @ reference temperature is:
+
+    value = (raw value * 0.05)
+
 
 Food Safe Status
 ----------------
