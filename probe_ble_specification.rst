@@ -714,13 +714,20 @@ the other values supplied.
 
 - ``0``: Default                     
 - ``1``: Beef
-- ``2``: Chicken
-- ``3``: Pork
-- ``4``: Ham
-- ``5``: Turkey
-- ``6``: Lamb
-- ``7``: Fish
-- ``8``: Dairy - Milk (<10% fat)
+- ``2``: Beef (Ground)
+- ``3``: Chicken
+- ``4``: Chicken (Ground)
+- ``5``: Pork
+- ``6``: Pork (Ground)
+- ``7``: Ham
+- ``8``: Ham (Ground)
+- ``9``: Turkey
+- ``10``: Turkey (Ground)
+- ``11``: Lamb
+- ``12``: Lamb (Ground)
+- ``13``: Fish
+- ``14``: Fish (Ground)
+- ``15``: Dairy - Milk (<10% fat)
 - ``1023``: Custom
 
 Serving
