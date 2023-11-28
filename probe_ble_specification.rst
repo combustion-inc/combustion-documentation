@@ -754,18 +754,21 @@ Food Safe Status
 The food safe status is expressed in a packed 4-byte field, indicating the current
 status of the configured Food Safe program:
 
-+--------+--------------------------+
-| Bits   | Description              |
-+========+==========================+
-|| 1-3   || `Food Safe State`_      |
-||       || 3 bit enumeration       |
-+--------+--------------------------+
-|| 4-11  || `Log Reduction`_        |
-||       || 8 bit encoded decimal   |
-+--------+--------------------------+
-|| 12-27 || Seconds above threshold |
-||       || 16 bit unsigned integer |
-+--------+--------------------------+
++--------+--------------------------------+
+| Bits   | Description                    |
++========+================================+
+|| 1-3   || `Food Safe State`_            |
+||       || 3 bit enumeration             |
++--------+--------------------------------+
+|| 4-11  || `Log Reduction`_              |
+||       || 8 bit encoded decimal         |
++--------+--------------------------------+
+|| 12-27 || Seconds above threshold       |
+||       || 16 bit unsigned integer       |
++--------+--------------------------------+
+|| 28-59 || Food Safe log sequence number |
+||       || 32 bit unsigned integer       |
++--------+--------------------------------+
 
 Food Safe State
 ***************
