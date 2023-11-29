@@ -751,7 +751,7 @@ Z-value, reference temperature, and D-value @ reference temperature is:
 Food Safe Status
 ----------------
 
-The food safe status is expressed in a packed 4-byte field, indicating the current
+The food safe status is expressed in a packed 8-byte field, indicating the current
 status of the configured Food Safe program:
 
 +--------+--------------------------------+
