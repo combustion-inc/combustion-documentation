@@ -725,8 +725,8 @@ the other values supplied.
 - ``10``: Turkey (Ground)
 - ``11``: Lamb
 - ``12``: Lamb (Ground)
-- ``13``: Fish
-- ``14``: Fish (Ground)
+- ``13``: Fish & Shellfish
+- ``14``: Fish & Shellfish (Ground)
 - ``15``: Dairy - Milk (<10% fat)
 - ``1023``: Custom
 
