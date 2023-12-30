@@ -762,6 +762,11 @@ steps of 0.05°C::
 
     Temperature = (raw value * 0.05) - 20
 
+Note: If the message's `Mode and ID Data`_ Mode field is Normal, this field will 
+contain all 8 sensors' raw readings. If the Mode field is Instant Read, the
+"Thermistor 1 raw reading" field will contain the Instant Read temperature, and
+the other sensors will have a value of 0.
+
 Mode and ID Data
 ----------------
 
