@@ -131,7 +131,7 @@ Nordic UART Service.
 Request Header
 --------------
 
-Each message will begin with the same 5 byte header, followed by the message
+Each message will begin with the same 10 byte header, followed by the message
 payload. The payload of each message type is described below.
 
 ============== ======== ===== ===================================================================
@@ -148,7 +148,7 @@ Payload length uint8_t  1     Length of the message payload in bytes.
 Response Header
 ---------------
 
-Each response message will include a 7 byte header with the following format.
+Each response message will include a 15 byte header with the following format.
 
 ============== ======== ===== ===================================================================
 Value          Format   Bytes Description
