@@ -733,6 +733,7 @@ the other values supplied.
 - ``13``: Fish & Shellfish
 - ``14``: Fish & Shellfish (Ground)
 - ``15``: Dairy - Milk (<10% fat)
+- ``16``: Game
 - ``1023``: Custom
 
 Serving
