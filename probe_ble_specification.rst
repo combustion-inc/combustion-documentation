@@ -156,7 +156,7 @@ Nordic UART Service.
 Request Header
 --------------
 
-Each message will begin with the same 5 byte header, followed by the message
+Each message will begin with the same 6 byte header, followed by the message
 payload. The payload of each message type is described below.
 
 ============== ======== ===== ===================================================================
