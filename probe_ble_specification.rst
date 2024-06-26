@@ -715,7 +715,9 @@ follow.
 For Integrated mode, while this value is stored in firmware, it's only for 
 sync purposes. The values are interpreted exclusively by the client in 
 Integrated mode; the firmware performs the food safety calculations based on
-the other values supplied.
+the other values supplied. Note: The missing values are for deprecated food categories.
+The deprecated categories, while covered by a new category, are still supported for
+backward compatibility.
 
 - ``0``: Poultry (Default)
 - ``1``: Meats
