@@ -715,25 +715,24 @@ follow.
 For Integrated mode, while this value is stored in firmware, it's only for 
 sync purposes. The values are interpreted exclusively by the client in 
 Integrated mode; the firmware performs the food safety calculations based on
-the other values supplied.
+the other values supplied. Note: The missing values are for deprecated food categories.
+The deprecated categories, while covered by a new category, are still supported for
+backward compatibility.
 
-- ``0``: Default                     
-- ``1``: Beef
-- ``2``: Beef (Ground)
-- ``3``: Chicken
-- ``4``: Chicken (Ground)
-- ``5``: Pork
-- ``6``: Pork (Ground)
-- ``7``: Ham
-- ``8``: Ham (Ground)
-- ``9``: Turkey
-- ``10``: Turkey (Ground)
-- ``11``: Lamb
-- ``12``: Lamb (Ground)
-- ``13``: Fish & Shellfish
-- ``14``: Fish & Shellfish (Ground)
+- ``0``: Poultry (Default)
+- ``1``: Meats
+- ``2``: Meats (Ground, Chopped, or Stuffed)
+- ``4``: Poultry (Ground, Chopped, or Stuffed)
+- ``13``: Seafood
+- ``14``: Seafood (Ground or Chopped)
 - ``15``: Dairy - Milk (<10% fat)
-- ``16``: Game
+- ``16``: Other
+- ``17``: Seafood (Stuffed)
+- ``18``: Eggs
+- ``19``: Eggs yolk
+- ``20``: Eggs white
+- ``21``: Dairy - Creams (>10% fat)
+- ``22``: Dairy - Ice Cream Mix, Eggnog
 - ``1023``: Custom
 
 Serving
