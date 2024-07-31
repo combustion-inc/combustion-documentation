@@ -838,7 +838,7 @@ Virtual Ambient Sensor
 - ``2``: T7 Sensor
 - ``3``: T8 Sensor
 
-Identifies the sensor that the Probe has determined measures the ambient temperature around the found.
+Identifies the sensor that the Probe has determined measures the ambient temperature around the food.
 
 Battery Status and Virtual Sensors
 ----------------------------------
