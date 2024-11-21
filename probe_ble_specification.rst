@@ -120,7 +120,7 @@ Mode/ID                             uint8_t  1     See `Mode and ID Data`_.
 Battery Status and Virtual Sensors  uint8_t  1     See `Battery Status and Virtual Sensors`_.
 Prediction Status                   uint8_t  7     See `Prediction Status`_.
 Food Safe Data                      uint8_t  10    See `Food Safe Data`_
-Food Safe Status                    uint8_t  4     See `Food Safe Status`_
+Food Safe Status                    uint8_t  8     See `Food Safe Status`_
 Overheating Sensors                 uint8_t  1     See `Overheating Sensors`_.
 =================================== ======== ===== ===========================================================================================
 
