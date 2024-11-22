@@ -57,7 +57,8 @@ Serial Number                       4     Device serial number
 Raw Temperature Data                13    See `Raw Temperature Data`_.
 Mode/ID                             1     See `Mode and ID Data`_.
 Battery Status and Virtual Sensors  1     See `Battery Status and Virtual Sensors`_.
-Reserved                            2     Reserved 
+Network Information                 1     Unused by Probe, D/C
+Overheating Sensors                 1     See `Overheating Sensors`_.
 =================================== ===== ==========================================
 
 GATT Services and Characteristics
@@ -119,7 +120,8 @@ Mode/ID                             uint8_t  1     See `Mode and ID Data`_.
 Battery Status and Virtual Sensors  uint8_t  1     See `Battery Status and Virtual Sensors`_.
 Prediction Status                   uint8_t  7     See `Prediction Status`_.
 Food Safe Data                      uint8_t  10    See `Food Safe Data`_
-Food Safe Status                    uint8_t  4     See `Food Safe Status`_
+Food Safe Status                    uint8_t  8     See `Food Safe Status`_
+Overheating Sensors                 uint8_t  1     See `Overheating Sensors`_.
 =================================== ======== ===== ===========================================================================================
 
 UART Service
@@ -488,6 +490,47 @@ Battery status and virtual sensors are expressed in a packed 8-bit (1-byte) fiel
 +------+--------------------------------------+
 || 2-8 || `Virtual Sensors`_                  |
 ||     || 7 bit field                         |
++------+--------------------------------------+
+
+Overheating Sensors
+-------------------
+
+Overheating sensors are expressed in a packed 8-bit (1-byte) field. The MSB is T8, LSB is T1:
+
++------+--------------------------------------+
+| Bits | Description                          |
++======+======================================+
+|| 1   || T8 Status:                          |
+||     || * ``0``: OK                         |
+||     || * ``1``: Overheating                |
++------+--------------------------------------+
+|| 2   || T7 Status:                          |
+||     || * ``0``: OK                         |
+||     || * ``1``: Overheating                |
++------+--------------------------------------+
+|| 3   || T6 Status:                          |
+||     || * ``0``: OK                         |
+||     || * ``1``: Overheating                |
++------+--------------------------------------+
+|| 4   || T5 Status:                          |
+||     || * ``0``: OK                         |
+||     || * ``1``: Overheating                |
++------+--------------------------------------+
+|| 5   || T4 Status:                          |
+||     || * ``0``: OK                         |
+||     || * ``1``: Overheating                |
++------+--------------------------------------+
+|| 6   || T3 Status:                          |
+||     || * ``0``: OK                         |
+||     || * ``1``: Overheating                |
++------+--------------------------------------+
+|| 7   || T2 Status:                          |
+||     || * ``0``: OK                         |
+||     || * ``1``: Overheating                |
++------+--------------------------------------+
+|| 8   || T1 Status:                          |
+||     || * ``0``: OK                         |
+||     || * ``1``: Overheating                |
 +------+--------------------------------------+
 
 Prediction Log
