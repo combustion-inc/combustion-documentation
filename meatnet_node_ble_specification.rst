@@ -366,6 +366,49 @@ Response Payload
 
 The Reset Food Safe Response message has no payload.
 
+Set Power Mode (``0x09``)
+*************************
+
+After receiving this message, the probe will update its power mode, which
+determines whether the device will automatically power off in a charger or
+remain on.
+
+Request Payload
+~~~~~~~~~~~~~~~
+
+==================== ========= ===== =======================================
+Value                Format    Bytes Description
+==================== ========= ===== =======================================
+Probe Serial Number  uint32_t  4     Probe serial number
+Power Mode           uint8_t   1     See `Power Mode`_
+==================== ========= ===== =======================================
+
+Response Payload
+~~~~~~~~~~~~~~~~
+
+The Set Power Mode Response message has no payload.
+
+
+Reset Thermometer (``0x0A``)
+****************************
+
+This causes the thermometer to reset itself, clearing its prediction and its data buffers and starting
+a new cook session immediately.
+
+Request Payload
+~~~~~~~~~~~~~~~
+
+===================== ======== ===== =============================
+Value                 Format   Bytes Description
+===================== ======== ===== =============================
+Probe Serial Number   uint32_t 4     Probe serial number
+===================== ======== ===== =============================
+
+Response Payload
+~~~~~~~~~~~~~~~~
+
+The Reset Thermometer Response message has no payload.
+
 
 Device Connected (``0x40``)
 ***************************
@@ -549,6 +592,7 @@ Food Safe Data                     uint8_t  10    See `Food Safe Data`_.
 Food Safe Status                   uint8_t  8     See `Food Safe Status`_.
 Network Information                uint8_t  1     See `Network Information`_.
 Overheating Sensors                uint8_t  1     See `Overheating Sensors`_.
+Thermometer Preferences            uint8_t  1     See `Thermometer Preferences`_.
 ================================== ======== ===== ===========================================================================================
 
 
@@ -913,6 +957,33 @@ Overheating sensors are expressed in a packed 8-bit (1-byte) field. The MSB is T
 ||     || * ``0``: OK                         |
 ||     || * ``1``: Overheating                |
 +------+--------------------------------------+
+
+Thermometer Preferences
+-----------------------
+
+Thermometer preferences are expressed in a packed 8-bit (1-byte) field:
+
++------+-------------------+
+| Bits | Description       |
++======+===================+
+| 1-2  | See `Power Mode`_ |
++------+-------------------+
+| 3-8  | Reserved          |
++------+-------------------+
+
+Power Mode
+**********
+
+Power Mode is expressed as a 2-bit enumerated field.
+
++------+--------------------------------+
+| Bits | Description                    |
++======+================================+
+|| 1-2 || Power mode:                   |
+||     || * ``0``: Normal               |
+||     || * ``1``: Always On            |
+||     || * ``2-3``: Reserved           |
++------+--------------------------------+
 
 Prediction Log
 ------------------------------
