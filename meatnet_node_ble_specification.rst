@@ -67,7 +67,7 @@ Raw Temperature Data               13    See `Raw Temperature Data`_.
 Mode/ID                            1     See `Mode and ID Data`_.
 Battery Status and Virtual Sensors 1     See `Battery Status and Virtual Sensors`_.
 Network Information                1     See `Network Information`_.
-Reserved                           1     Reserved
+Overheating Sensors                1     Overheating sensors mask
 ================================== ===== =========================================
 
 GATT Services and Characteristics
@@ -777,11 +777,16 @@ data and characteristic data.
 Product Type
 ------------
 
-The product type is an enumerated value in an 8-bit (1-byte) field:
+The product type is an enumerated value in an 8-bit (1-byte) field and gives
+direction how to interpret the rest of the data in this message. Note that some
+devices interleave messages with different 'Product Type' values.
+
+Possible values:
 
 * ``0``: Unknown
 * ``1``: Predictive Probe
 * ``2``: MeatNet Repeater Node (Kitchen Timer, Charger, etc.)
+* ``3``: Giant Grill Gauge
 
 Raw Temperature Data
 --------------------

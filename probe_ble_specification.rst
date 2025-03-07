@@ -37,7 +37,7 @@ Manufacturer Specific Data 24    See `Manufacturer Specific Data`_.
 Legacy (BLE 4.0) Scan Response
 ------------------------------
 
-============ ===== ============================
+============ ===== ===========================
 Field        Bytes Value
 ============ ===== ============================
 Service UUID 16    `Probe Status Service`_ UUID
@@ -409,11 +409,16 @@ data and characteristic data.
 Product Type
 ------------
  
-The product type is an enumerated value in an 8-bit (1-byte) field:
+The product type is an enumerated value in an 8-bit (1-byte) field and gives
+direction how to interpret the rest of the data in this message. Note that some
+devices interleave messages with different 'Product Type' values.
 
-- * ``0``: Unknown  
-- * ``1``: Predictive Probe 
-- * ``2``: Kitchen Timer  
+Possible values:
+
+* ``0``: Unknown
+* ``1``: Predictive Probe
+* ``2``: MeatNet Repeater Node (Kitchen Timer, Charger, etc.)
+* ``3``: Giant Grill Gauge
 
 Raw Temperature Data
 --------------------
