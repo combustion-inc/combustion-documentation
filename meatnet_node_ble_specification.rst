@@ -36,6 +36,8 @@ Field                      Bytes Value
 Manufacturer Specific Data 22    See `Manufacturer Specific Data`_.
 ========================== ===== ==================================
 
+.. _node_scan_response:
+
 BLE 4.0 Scan Response
 ------------------------------
 
@@ -1053,6 +1055,7 @@ The prediction status is expressed in a packed 56-bit (7-byte) field:
 ||       || 11 bit field (0 - 1023)             |
 +--------+--------------------------------------+
 
+.. _node_network_information:
 
 Network Information
 -------------------
