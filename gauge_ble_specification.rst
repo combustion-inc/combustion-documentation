@@ -1,3 +1,5 @@
+:orphan:
+
 *************************************
 Gauge Bluetooth Low Energy (BLE) Spec
 *************************************
@@ -47,37 +49,123 @@ Manufacturer Specific Data
 Field                              Bytes Value
 ================================== ===== =========================================
 Vendor ID                          2     ``0x09C7`` (see `Bluetooth company IDs`_)
-Product Type                       1     See `Product Type`_. (Gauge = `3`)
-Serial Number                      10    Gauge serial number
+Product Type                       1     See :ref:`meatnet_product_type`. (Gauge = ``3``)
+Serial Number                      10    Gauge serial number (alphanumeric)
 Raw Temperature Data               2     See `Raw Temperature Data`_.
 Gauge Status                       1     See `Gauge Status`_.
-Battery Percentage                 1     0 - 100, interpreted as a percentage.
+Battery Percentage                 1     See `Battery Percentage`_.
 High-Low Alarm Status              4     See `High-Low Alarm Status`_.
-Network Information                1     See `Network Information`_.
-Reserved                           2     Reserved
+Reserved                           3     Reserved
 ================================== ===== =========================================
+
+
+GATT Services and Characteristics
+#################################
+
+:ref:`See MeatNet Node GATT Services and Characteristics <node_gatt_services_and_characteristics>`
 
 
 UART Messages
 #############
 
-Relevant messages are included in the MeatNet Node BLE Specification, as they are
-included in the repeater network's messaging protocol.
+Gauge is a MeatNet repeater Node and supports all messages in
+:ref:`MeatNet Node UART Messages <node_uart_messages>`.
+
+Gauge-specific UART Messages
+----------------------------
+
+Gauge Status (``0x60``)
+***********************
+
+Sends notification with a Gauge's status. There is no response for this message.
+
+Request Payload
+~~~~~~~~~~~~~~~
+
+================================== ======== ===== =====================================================
+Value                              Format   Bytes Description
+================================== ======== ===== =====================================================
+Serial Number                      uint8_t  10    Gauge serial number
+Raw Temperature Data               uint16_t 2     See `Raw Temperature Data`_.
+Gauge Status                       uint8_t  1     See `Gauge Status`_.
+Log Range                          uint32_t 8     See `Log Range`_.
+Battery Percentage                 uint8_t  1     See `Battery Percentage`_.
+High-Low Alarm Status              uint32_t 4     See `High-Low Alarm Status`_.
+New Record Flag                    uint8_t  1     1 if data corresponds to a new log record, 0 if not
+================================== ======== ===== =====================================================
 
 
-Product Type
-------------
- 
-The product type is an enumerated value in an 8-bit (1-byte) field and gives
-direction how to interpret the rest of the data in this message. Note that some
-devices interleave messages with different 'Product Type' values.
+Set High Low Alarm (``0x61``)
+*****************************
 
-Possible values:
+Configures high/low alarms on the Gauge. Note that the ``Tripped`` bit is 
+ignored in each alarm's configuration, as it's read-only.
 
-* ``0``: Unknown
-* ``1``: Predictive Probe
-* ``2``: MeatNet Repeater Node (Kitchen Timer, Charger, etc.)
-* ``3``: Giant Grill Gauge
+Request Payload
+~~~~~~~~~~~~~~~
+
+================================== ======== ===== =====================================================
+Value                              Format   Bytes Description
+================================== ======== ===== =====================================================
+Serial Number                      uint8_t  10    Gauge serial number
+High Alarm Status                  uint8_t  2     See `Alarm Status`_. ``Tripped`` is don't-care.
+Low Alarm Status                   uint8_t  2     See `Alarm Status`_. ``Tripped`` is don't-care.
+================================== ======== ===== =====================================================
+
+Response Payload
+~~~~~~~~~~~~~~~~
+
+This response has no payload.
+
+
+Read Gauge Logs (``0x62``)
+**************************
+
+Requests logs from the Gauge. The Gauge will respond with a sequence of 
+``Read Gauge Logs`` response messages.
+
+Request Payload
+~~~~~~~~~~~~~~~
+
+===================== ======== ===== =======================
+Value                 Format   Bytes Description
+===================== ======== ===== =======================
+Serial Number         uint8_t  10    Gauge serial number
+Start sequence number uint32_t 4     The first log requested
+End sequence number   uint32_t 4     The last log requested
+===================== ======== ===== =======================
+
+Response Payload
+~~~~~~~~~~~~~~~~
+
+===================== ======== ===== ============================
+Value                 Format   Bytes Description
+===================== ======== ===== ============================
+Serial Number         uint8_t  10    Gauge serial number
+Log Sequence Number   uint32_t 4     The log sequence number
+Raw Temperature Data  uint16_t 2     See `Raw Temperature Data`_.
+===================== ======== ===== ============================
+
+
+
+Common Data Formats
+###################
+
+This document defines several data formats that are common between advertising
+data and characteristic data.
+
+Log Range
+---------
+
+The log range is a packed 64-bit (8-byte) field that contains the range of
+log sequence numbers available on the Gauge.
+
+====== ===========================
+Bits   Description
+====== ===========================
+1-32   Minimum log sequence number
+33-64  Maximum log sequence number
+====== ===========================
 
 
 Battery Percentage
@@ -125,19 +213,19 @@ Bits   Description
 ====== ========================
 
 Sensor Present
-~~~~~~~~~~~~~~
+**************
 
 1 if the Gauge's temperature sensor is connected.
 0 if not.
 
 Sensor Overheating
-~~~~~~~~~~~~~~~~~~
+******************
 
 1 if the Gauge's temperature sensor is overheating.
 0 if not.
 
 Low Battery
-~~~~~~~~~~~
+************
 
 1 if the Gauge's battery is low.  0 if not.
 
@@ -156,8 +244,9 @@ Bits   Description
 17-32  Low `Alarm Status`_
 ====== ========================
 
+
 Alarm Status
-~~~~~~~~~~~~
+************
 
 The alarm status is a packed 16-bit (2-byte) field that contains information
 about the configuration and status for an individual alarm.
@@ -172,22 +261,22 @@ Bits   Description
 ====== ========================
 
 Set
-~~~
+***
 
 1 if the alarm is set. 0 if not.
 
 Tripped
-~~~~~~~
+*******
 
 1 if the alarm is currently tripped. 0 if not.
 
 Alarming
-~~~~~~~~
+********
 
 1 if the alarm is currently alarming. 0 if it is off or has been silenced.
 
 Alarm Temperature
-~~~~~~~~~~~~~~~~~
+*****************
 
 The alarm temperature is a packed 13-bit field that represents the alarm
 temperature in 0.1°C steps. It uses the same encoding as the 
