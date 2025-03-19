@@ -10,7 +10,7 @@ The [Predictive Probe BLE Specification](probe_ble_specification.rst) describes 
 
 The [Node BLE Specification](meatnet_node_ble_specification.rst) describes how MeatNet nodes (Displays, Boosters, etc.) send and receive data over BLE.
 
-The [Gauge BLE Specification](gauge_node_ble_specification.rst) describes additional BLE communication performed by the Giant Grill Gauge, in addition to that in the [Node BLE Specification](meatnet_node_ble_specification.rst).
+The [Gauge BLE Specification](gauge_ble_specification.rst) describes additional BLE communication performed by the Giant Grill Gauge, in addition to that in the [Node BLE Specification](meatnet_node_ble_specification.rst).
 
 ## About Combustion Inc.
 
