@@ -8,8 +8,13 @@ This document describes how Combustion Inc. Giant Grill Gauges send and receive
 data over BLE.
 
 Gauge is Combustion's first product that is a Repeater Node, and also has additional
-functionality. This means it conforms to the MeatNet Node BLE Specification in 
+functionality. This means it conforms to the MeatNet Node BLE Specification in:
+
+Sphinx link:
 :doc:`/meatnet_node_ble_specification`.
+
+GitHub link:
+`MeatNet Node BLE Specification <./meatnet_node_ble_specification.rst>`_
 
 This document details additional features and differences specific to the Gauge
 beyond what's included in the MeatNet Node BLE Specification.
