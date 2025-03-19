@@ -172,7 +172,7 @@ Sphinx link:
 :ref:`See Product Type <meatnet_product_type>`
 
 GitHub link:
-`See Node Scan Response <./meatnet_node_ble_specification.rst#product-type>`_
+`See Product Type <./meatnet_node_ble_specification.rst#product-type>`_
 
 Log Range
 ---------
