@@ -68,7 +68,7 @@ Sphinx link:
 :ref:`See MeatNet Node GATT Services and Characteristics <node_gatt_services_and_characteristics>`
 
 GitHub link:
-`See MeatNet Node GATT Services and Characteristics <./meatnet_node_ble_specification.rst#gatt-services-and-characteristics>`
+`See MeatNet Node GATT Services and Characteristics <./meatnet_node_ble_specification.rst#gatt-services-and-characteristics>`_
 
 
 UART Messages
@@ -80,7 +80,7 @@ Sphinx link:
 :ref:`MeatNet Node UART Messages <node_uart_messages>`.
 
 GitHub link:
-`MeatNet Node UART Messages <./meatnet_node_ble_specification.rst#uart-messages>`
+`MeatNet Node UART Messages <./meatnet_node_ble_specification.rst#uart-messages>`_
 
 Gauge-specific UART Messages
 ----------------------------
