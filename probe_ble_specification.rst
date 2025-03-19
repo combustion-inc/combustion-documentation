@@ -409,7 +409,11 @@ data and characteristic data.
 Product Type
 ------------
 
+Sphinx link:
 :ref:`See Product Type <meatnet_product_type>`
+
+GitHub link:
+`See Node Scan Response <./meatnet_node_ble_specification.rst#product-type>`_
  
 Raw Temperature Data
 --------------------

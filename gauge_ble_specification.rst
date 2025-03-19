@@ -35,7 +35,11 @@ Manufacturer Specific Data 24    See `Manufacturer Specific Data`_.
 BLE 4.0 Scan Response
 ---------------------
 
+Sphinx link:
 :ref:`See Node Scan Response <node_scan_response>`
+
+GitHub link:
+`See Node Scan Response <./meatnet_node_ble_specification.rst#ble-4-0-scan-response>`_
 
 
 Manufacturer Specific Data
@@ -47,7 +51,7 @@ Manufacturer Specific Data
 Field                              Bytes Value
 ================================== ===== =========================================
 Vendor ID                          2     ``0x09C7`` (see `Bluetooth company IDs`_)
-Product Type                       1     See :ref:`meatnet_product_type`. (Gauge = ``3``)
+Product Type                       1     See `Product Type`_ (Gauge = ``3``)
 Serial Number                      10    Gauge serial number (alphanumeric)
 Raw Temperature Data               2     See `Raw Temperature Data`_.
 Gauge Status                       1     See `Gauge Status`_.
@@ -60,14 +64,23 @@ Reserved                           3     Reserved
 GATT Services and Characteristics
 #################################
 
+Sphinx link:
 :ref:`See MeatNet Node GATT Services and Characteristics <node_gatt_services_and_characteristics>`
+
+GitHub link:
+`See MeatNet Node GATT Services and Characteristics <./meatnet_node_ble_specification.rst#gatt-services-and-characteristics>`
 
 
 UART Messages
 #############
 
-Gauge is a MeatNet repeater Node and supports all messages in
+Gauge is a MeatNet repeater Node and supports all messages in:
+
+Sphinx link:
 :ref:`MeatNet Node UART Messages <node_uart_messages>`.
+
+GitHub link:
+`MeatNet Node UART Messages <./meatnet_node_ble_specification.rst#uart-messages>`
 
 Gauge-specific UART Messages
 ----------------------------
@@ -151,6 +164,15 @@ Common Data Formats
 
 This document defines several data formats that are common between advertising
 data and characteristic data.
+
+Product Type
+------------
+
+Sphinx link:
+:ref:`See Product Type <meatnet_product_type>`
+
+GitHub link:
+`See Node Scan Response <./meatnet_node_ble_specification.rst#product-type>`_
 
 Log Range
 ---------
@@ -283,5 +305,9 @@ temperature in 0.1°C steps. It uses the same encoding as the
 Network Information
 -------------------
 
-:ref:`See Network Information in MeatNet Node Network Specification <node_network_information>`
+Sphinx link:
+:ref:`See MeatNet Node Network Specification <node_network_information>`
+
+GitHub link:
+`See MeatNet Node Network Specification <./meatnet_node_ble_specification.rst#network-information>`_
 
