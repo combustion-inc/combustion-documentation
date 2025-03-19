@@ -102,6 +102,7 @@ Request Payload
 Value                              Format   Bytes Description
 ================================== ======== ===== =====================================================
 Serial Number                      uint8_t  10    Gauge serial number
+Session ID                         uint32_t 4     See `Session ID`_
 Raw Temperature Data               uint16_t 2     See `Raw Temperature Data`_.
 Gauge Status                       uint8_t  1     See `Gauge Status`_.
 Log Range                          uint32_t 8     See `Log Range`_.
@@ -199,6 +200,13 @@ Battery Percentage
 The battery percentage is an 8-bit (1-byte) field that indicates the battery
 percentage remaining in the device. The value is interpreted as a percentage
 from 0 to 100.
+
+Session ID
+----------
+
+The session ID is a packed 32-bit (4-byte) field that contains a random session
+ID for the Gauge. The session ID is used to identify the current session for
+the Gauge.
 
 Raw Temperature Data
 ---------------------
