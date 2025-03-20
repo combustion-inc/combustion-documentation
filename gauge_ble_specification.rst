@@ -161,7 +161,8 @@ Value                 Format   Bytes Description
 ===================== ======== ===== ============================
 Serial Number         uint8_t  10    Gauge serial number
 Log Sequence Number   uint32_t 4     The log sequence number
-Raw Temperature Data  uint16_t 2     See `Raw Temperature Data`_.
+Raw Temperature Data  uint16_t 2     See `Raw Temperature Data`_
+Sensor Present        uint8_t  1     See `Sensor Present`_
 ===================== ======== ===== ============================
 
 
@@ -228,8 +229,8 @@ steps of 0.1°C::
 
     Temperature = (raw value * 0.1) - 20
 
-Note - If the Gauge sensor is not present as denotoed in `Gauge Status`_., the 
-temperature value will be 0.
+Note - If the Gauge sensor is not present as denotoed in `Gauge Status`_ 
+or `Sensor Present`_, the temperature value will be 0.
 
 Gauge Status
 ------------
