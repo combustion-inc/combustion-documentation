@@ -103,6 +103,7 @@ Value                              Format   Bytes Description
 ================================== ======== ===== =====================================================
 Serial Number                      uint8_t  10    Gauge serial number
 Session ID                         uint32_t 4     See `Session ID`_
+Sample Period                      uint16_t 2     Number of milliseconds between each log
 Raw Temperature Data               uint16_t 2     See `Raw Temperature Data`_.
 Gauge Status                       uint8_t  1     See `Gauge Status`_.
 Log Range                          uint32_t 8     See `Log Range`_.
