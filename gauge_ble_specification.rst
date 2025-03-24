@@ -105,7 +105,7 @@ Serial Number                      uint8_t  10    Gauge serial number
 Session ID                         uint32_t 4     See `Session ID`_
 Sample Period                      uint16_t 2     Number of milliseconds between each log
 Raw Temperature Data               uint16_t 2     See `Raw Temperature Data`_.
-Gauge Status                       uint8_t  1     See `Gauge Status`_.
+Gauge Status Flags                 uint8_t  1     See `Gauge Status Flags`_.
 Log Range                          uint32_t 8     See `Log Range`_.
 Battery Percentage                 uint8_t  1     See `Battery Percentage`_.
 High-Low Alarm Status              uint32_t 4     See `High-Low Alarm Status`_.
@@ -232,10 +232,10 @@ steps of 0.1°C::
 Note - If the Gauge sensor is not present as denotoed in `Gauge Status`_ 
 or `Sensor Present`_, the temperature value will be 0.
 
-Gauge Status
-------------
+Gauge Status Flags
+------------------
 
-Gauge status is a packed 8-bit (1-byte) field that contains various status
+Gauge Status Flags is a packed 8-bit (1-byte) field that contains various status
 flags for the Gauge.
 
 ====== ========================
