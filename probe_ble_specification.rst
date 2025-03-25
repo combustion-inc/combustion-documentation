@@ -408,13 +408,13 @@ data and characteristic data.
 
 Product Type
 ------------
+
+Sphinx link:
+:ref:`See Product Type <meatnet_product_type>`
+
+GitHub link:
+`See Product Type <./meatnet_node_ble_specification.rst#product-type>`_
  
-The product type is an enumerated value in an 8-bit (1-byte) field:
-
-- * ``0``: Unknown  
-- * ``1``: Predictive Probe 
-- * ``2``: Kitchen Timer  
-
 Raw Temperature Data
 --------------------
 
