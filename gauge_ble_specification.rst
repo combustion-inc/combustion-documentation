@@ -59,7 +59,7 @@ Vendor ID                          2     ``0x09C7`` (see `Bluetooth company IDs`
 Product Type                       1     See `Product Type`_ (Gauge = ``3``)
 Serial Number                      10    Gauge serial number (alphanumeric)
 Raw Temperature Data               2     See `Raw Temperature Data`_.
-Gauge Status                       1     See `Gauge Status`_.
+Gauge Status Flags                 1     See `Gauge Status Flags`_.
 Battery Percentage                 1     See `Battery Percentage`_.
 High-Low Alarm Status              4     See `High-Low Alarm Status`_.
 Reserved                           3     Reserved
@@ -110,6 +110,7 @@ Log Range                          uint32_t 8     See `Log Range`_.
 Battery Percentage                 uint8_t  1     See `Battery Percentage`_.
 High-Low Alarm Status              uint32_t 4     See `High-Low Alarm Status`_.
 New Record Flag                    uint8_t  1     1 if data corresponds to a new log record, 0 if not
+Network Information                uint8_t  1     See `Network Information`_.
 ================================== ======== ===== =====================================================
 
 
