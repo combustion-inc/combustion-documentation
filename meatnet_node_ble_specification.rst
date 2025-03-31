@@ -775,7 +775,7 @@ Response Payload
 This response has no payload.
 
 
-Silence Alarms (``0x4C``)
+Silence Alarms (``0x57``)
 *************************
 
 This command causes all alarms on this device, or on the entire repeater network,
