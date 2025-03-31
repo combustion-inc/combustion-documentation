@@ -113,8 +113,8 @@ New Record Flag                    uint8_t  1     1 if data corresponds to a new
 ================================== ======== ===== =====================================================
 
 
-Set High Low Alarm (``0x61``)
-*****************************
+Set Gauge High Low Alarm (``0x61``)
+***********************************
 
 Configures high/low alarms on the Gauge. Note that the ``Tripped`` bit is 
 ignored in each alarm's configuration, as it's read-only.
