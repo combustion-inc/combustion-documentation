@@ -123,6 +123,8 @@ Food Safe Data                      uint8_t  10    See `Food Safe Data`_
 Food Safe Status                    uint8_t  8     See `Food Safe Status`_
 Overheating Sensors                 uint8_t  1     See `Overheating Sensors`_.
 Thermometer Preferences             uint8_t  1     See `Thermometer Preferences`_.
+High Alarm Status array             uint16_t 22    High alarm status for each alarm (T1, T2, T3, T4, T5, T6, T7, T8, Core, Surface, Ambient). See `Alarm Status`_.
+Low Alarm Status array              uint16_t 22    Low alarm status for each alarm (T1, T2, T3, T4, T5, T6, T7, T8, Core, Surface, Ambient). See `Alarm Status`_.
 =================================== ======== ===== ===========================================================================================
 
 UART Service
