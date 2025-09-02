@@ -123,6 +123,8 @@ Food Safe Data                      uint8_t  10    See `Food Safe Data`_
 Food Safe Status                    uint8_t  8     See `Food Safe Status`_
 Overheating Sensors                 uint8_t  1     See `Overheating Sensors`_.
 Thermometer Preferences             uint8_t  1     See `Thermometer Preferences`_.
+High Alarm Status array             uint16_t 22    High alarm status for each alarm (T1, T2, T3, T4, T5, T6, T7, T8, Core, Surface, Ambient). See `Alarm Status`_.
+Low Alarm Status array              uint16_t 22    Low alarm status for each alarm (T1, T2, T3, T4, T5, T6, T7, T8, Core, Surface, Ambient). See `Alarm Status`_.
 =================================== ======== ===== ===========================================================================================
 
 UART Service
@@ -398,6 +400,28 @@ Response Payload
 ~~~~~~~~~~~~~~~~
 
 The Reset Thermometer Response message has no payload.
+
+
+Set Probe High Low Alarm (``0x0B``)
+***********************************
+
+Configures high/low alarms on the Probe. Note that the ``Tripped`` bit is 
+ignored in each alarm's configuration, as it's read-only.
+
+Request Payload
+~~~~~~~~~~~~~~~
+
+================================== ======== ===== =====================================================
+Value                              Format   Bytes Description
+================================== ======== ===== =====================================================
+High Alarm Status array            uint16_t  22    High alarm status for each alarm (T1, T2, T3, T4, T5, T6, T7, T8, Core, Surface, Ambient). See `Alarm Status`_. ``Tripped`` is don't-care.
+Low Alarm Status array             uint16_t  22    Low alarm status for each alarm (T1, T2, T3, T4, T5, T6, T7, T8, Core, Surface, Ambient). See `Alarm Status`_. ``Tripped`` is don't-care.
+================================== ======== ===== =====================================================
+
+Response Payload
+~~~~~~~~~~~~~~~~
+
+This response has no payload.
 
 
 Common Data Formats
@@ -905,3 +929,42 @@ Integrated food safe program. The log reduction is expressed in units of
 In Simplified mode, this value will always be 0.
 
     Log Reduction = (raw value * 0.1)
+
+
+Alarm Status
+----------------
+
+The alarm status is a packed 16-bit (2-byte) field that contains information
+about the configuration and status for an individual alarm.
+
+====== ========================
+Bits   Description
+====== ========================
+1      `Set`_
+2      `Tripped`_
+3      `Alarming`_
+4-16   `Alarm Temperature`_
+====== ========================
+
+Set
+***
+
+1 if the alarm is set. 0 if not.
+
+Tripped
+*******
+
+1 if the alarm is currently tripped. 0 if not.
+
+Alarming
+********
+
+1 if the alarm is currently alarming. 0 if it is off or has been silenced.
+
+Alarm Temperature
+*****************
+
+The alarm temperature is a packed 13-bit field that represents the alarm
+temperature in 0.1°C steps with a range of -20 to 799 degrees Celsius.
+
+    Alarm Temperature = (raw value * 0.1 C) - 20 C.
