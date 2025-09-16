@@ -60,7 +60,7 @@ Product Type                       1     See `Product Type`_ (Gauge = ``3``)
 Serial Number                      10    Gauge serial number (alphanumeric)
 Raw Temperature Data               2     See `Raw Temperature Data`_.
 Gauge Status Flags                 1     See `Gauge Status Flags`_.
-Battery Percentage                 1     See `Battery Percentage`_.
+Reserved                           1     Reserved
 High-Low Alarm Status              4     See `High-Low Alarm Status`_.
 Reserved                           3     Reserved
 ================================== ===== =========================================
@@ -107,7 +107,7 @@ Sample Period                      uint16_t 2     Number of milliseconds between
 Raw Temperature Data               uint16_t 2     See `Raw Temperature Data`_.
 Gauge Status Flags                 uint8_t  1     See `Gauge Status Flags`_.
 Log Range                          uint32_t 8     See `Log Range`_.
-Battery Percentage                 uint8_t  1     See `Battery Percentage`_.
+Reserved                           uint8_t  1     Reserved
 High-Low Alarm Status              uint32_t 4     See `High-Low Alarm Status`_.
 New Record Flag                    uint8_t  1     1 if data corresponds to a new log record, 0 if not
 Network Information                uint8_t  1     See `Network Information`_.
@@ -196,13 +196,6 @@ Bits   Description
 33-64  Maximum log sequence number
 ====== ===========================
 
-
-Battery Percentage
-------------------
-
-The battery percentage is an 8-bit (1-byte) field that indicates the battery
-percentage remaining in the device. The value is interpreted as a percentage
-from 0 to 100.
 
 Session ID
 ----------
