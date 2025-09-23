@@ -457,6 +457,10 @@ Probe Serial Number   uint8_t  10    Probe Serial number, if Global = ``0`` and 
 Node Serial Number    uint8_t  10    Serial number, if Global = ``0`` and product type is not Probe
 ===================== ======== ===== =========================================================
 
+.. note::
+   Only one of "Probe Serial Number" or "Node Serial Number" should be
+   populated based on the product type.
+
 Response Payload
 ~~~~~~~~~~~~~~~~
 

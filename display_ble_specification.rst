@@ -7,7 +7,7 @@ Display Bluetooth Low Energy (BLE) Spec
 This document describes how Combustion Inc. Displays send and receive 
 data over BLE.
 
-Display is is a Repeater Node, and also has additional functionality. This
+Display is a Repeater Node, and also has additional functionality. This
 means it conforms to the MeatNet Node BLE Specification in:
 
 Sphinx link:
@@ -78,23 +78,6 @@ Common Data Formats
 
 This document defines several data formats that are common between advertising
 data and characteristic data.
-
-Product Type
-------------
-Sphinx link:
-:ref:`See Product Type <meatnet_product_type>`
-
-GitHub link:
-`See Product Type <./meatnet_node_ble_specification.rst#product-type>`_
-
-Network Information
--------------------
-
-Sphinx link:
-:ref:`See MeatNet Node Network Specification <node_network_information>`
-
-GitHub link:
-`See MeatNet Node Network Specification <./meatnet_node_ble_specification.rst#network-information>`_
 
 Timer Status
 ------------
