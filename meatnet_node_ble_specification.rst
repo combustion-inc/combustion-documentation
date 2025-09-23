@@ -453,7 +453,7 @@ Value                 Format   Bytes Description
 ===================== ======== ===== =========================================================
 Global                uint8_t  1     ``1`` for all Nodes/Probes, or ``0`` for only Node/Probe Serial Number
 Product Type          uint8_t  1     See `Product Type`_
-Probe Serial Number   uint8_t  10    Probe Serial number, if Global = ``0`` and product type is Probe
+Probe Serial Number   uint32_t 4     Probe Serial number, if Global = ``0`` and product type is Probe
 Node Serial Number    uint8_t  10    Serial number, if Global = ``0`` and product type is not Probe
 ===================== ======== ===== =========================================================
 
