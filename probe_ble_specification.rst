@@ -423,6 +423,22 @@ Response Payload
 
 This response has no payload.
 
+Silence Alarms (``0x0C``)
+*************************
+
+This command causes all alarms on this probe to be silenced. Alarms triggered
+by overheat will not be silenced since that is a critical event.
+
+Request Payload
+~~~~~~~~~~~~~~~
+
+This request has no payload.
+
+Response Payload
+~~~~~~~~~~~~~~~~
+
+This response has no payload.
+
 
 Common Data Formats
 ###################
