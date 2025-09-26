@@ -70,6 +70,7 @@ Value                              Format   Bytes Description
 ================================== ======== ===== =====================================================
 Serial Number                      uint8_t  10    Display serial number
 Timer Status                       uint8_t  13    See `Timer Status`_
+Battery Status                     uint8_t  2     See `Battery Status`_
 ================================== ======== ===== =====================================================
 
 
@@ -108,4 +109,23 @@ The timer status is expressed in a packed 13-byte field. All time values are in 
 ||         || * ``1``: timer running    |
 +----------+----------------------------+
 || 101-104 || Reserved                  |
++----------+----------------------------+
+
+Battery Status
+--------------
+
+The battery status is expressed in a packed 2-byte field.
+
++----------+----------------------------+
+| Bits     | Description                |
++==========+============================+
+|| 1-8     || Battery Level             |
+||         || * ``0``: OK               |
+||         || * ``1``: Low              |
+||         || * ``2``: Critical         |
++----------+----------------------------+
+|| 9-16    || Battery State             |
+||         || * ``0``: Not charging     |
+||         || * ``1``: Charging         |
+||         || * ``2``: Fully charged    |
 +----------+----------------------------+
