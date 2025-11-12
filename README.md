@@ -12,6 +12,8 @@ The [Node BLE Specification](meatnet_node_ble_specification.rst) describes how M
 
 The [Gauge BLE Specification](gauge_ble_specification.rst) describes additional BLE communication performed by the Giant Grill Gauge, in addition to that in the [Node BLE Specification](meatnet_node_ble_specification.rst).
 
+The [Engine BLE Specification](engine_ble_specification.rst) describes additional BLE communication performed by the Engine, in addition to that in the [Node BLE Specification](meatnet_node_ble_specification.rst).
+
 ## About Combustion Inc.
 
 We build nice things that make cooking more enjoyable. Like a thermometer that's wireless, oven-safe, and uses machine learning to do what no other thermometer can: predict your food’s cooking and resting times with uncanny accuracy.
