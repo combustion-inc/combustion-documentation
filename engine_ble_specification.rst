@@ -233,22 +233,10 @@ Bits   Description
 3-8    Reserved
 ====== ========================
 
-Lid Open
-********
-
-1 if the Engine detects that the lid is open.
-0 if not.
-
 APP Mode
 ********
 
 1 if the Engine's is in app mode, meaning the temperature set value is controlled by an app.
-0 if not.
-
-Fan Enabled
-***********
-
-1 if the Engine's fan is enabled.
 0 if not.
 
 Control Device Connected
