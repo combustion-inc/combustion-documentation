@@ -59,7 +59,7 @@ Vendor ID                          2     ``0x09C7`` (see `Bluetooth company IDs`
 Product Type                       1     See `Product Type`_ (Engine = ``6``)
 Serial Number                      10    Engine serial number (alphanumeric)
 TODO BJC
-Temperature Set Point              2     See `Temperature Set Point`_.
+Temperature Set Point              2     See `Temperature Point`_.
 Engine Status Flags                1     See `Engine Status Flags`_.
 ================================== ===== =========================================
 
@@ -100,7 +100,7 @@ Request Payload
 Value                              Format   Bytes Description
 ================================== ======== ===== =====================================================
 Serial Number                      uint8_t  10    Engine serial number
-Battery Status                     uint8_t  2     See `Battery Status`_.  
+Battery Status                     uint8_t  2     See `Battery Status`_.
 Temperature Set Point              uint16_t 2     See `Temperature Point`_.
 Control Temperature                uint16_t 2     See `Temperature Point`_.
 Control Device Type                uint8_t  1     The type of control device. See `Product Type`_.
@@ -195,7 +195,7 @@ steps of 0.1°C::
 
     Temperature = (raw value * 0.1) - 20
 
-Note - If the Gauge sensor is not present as denotoed in `Gauge Status`_ 
+Note - If the Gauge sensor is not present as denoted in `Gauge Status`_ 
 or `Sensor Present`_, the temperature value will be 0.
 
 
@@ -223,7 +223,7 @@ Engine Status Flags
 ------------------
 
 Engine Status Flags is a packed 8-bit (1-byte) field that contains various status
-flags for the Gauge.
+flags for the Engine.
 
 ====== ========================
 Bits   Description
