@@ -100,18 +100,20 @@ Request Payload
 Value                              Format   Bytes Description
 ================================== ======== ===== =====================================================
 Serial Number                      uint8_t  10    Engine serial number
-Temperature Set Point              uint16_t 2     See `Temperature Set Point`_.
 Battery Status                     uint8_t  2     See `Battery Status`_.  
+Temperature Set Point              uint16_t 2     See `Temperature Point`_.
+Control Temperature                uint16_t 2     See `Temperature Point`_.
 Control Device Type                uint8_t  1     The type of control device. See `Product Type`_.
 Control Device Serial Number       uint8_t  10    Control device serial number (alphanumeric)
 Engine Status Flags                uint8_t  1     See `Engine Status Flags`_.
-Fan Speed Status                   uint8_t  3     See `Fan Speed Status`_.
+Fan Status                         uint8_t  12    See `Fan Status`_.
 Network Information                uint8_t  1     See `Network Information`_.
 ================================== ======== ===== =====================================================
 
 
 Set Engine Temperature Set Point (``0x71``)
-****************************************
+*******************************************
+
 Sends a command to set the Engine's temperature set point. The Engine
 responds with an acknowledgment. This command only works if the Engine is in app mode.
 
@@ -122,9 +124,36 @@ Request Payload
 Value                      Format   Bytes Description
 ========================== ======== ===== ==================================
 Serial Number              uint8_t  10    Engine serial number
-Temperature Set Point      uint16_t 2     See `Temperature Set Point`_.
+Temperature Set Point      uint16_t 2     See `Temperature Point`_.
 ========================== ======== ===== ==================================
 
+
+Response Payload
+~~~~~~~~~~~~~~~~
+
+The response is an acknowledgment with no payload.
+
+Set Engine Control Device (``0x72``)
+************************************
+
+Sends a command to set the Engine's control device. The control device is
+either a probe or a gauge that will be used as in input to control the
+Engine's fan speed to keep the target temperature.
+
+Request Payload
+~~~~~~~~~~~~~~~
+
+========================== ======== ===== ==================================
+Value                      Format   Bytes Description
+========================== ======== ===== ==================================
+Serial Number              uint8_t  10    Engine serial number
+Control Device Type        uint8_t  1     The type of control device. See `Product Type`_.
+Probe Serial Number        uint32_t 4     Control device serial number (probe only - numeric)
+Node Serial Number         uint8_t  10    Control device serial number (node only - alphanumeric)
+
+.. note::
+   Only one of "Probe Serial Number" or "Node Serial Number" should be
+   populated based on the product type.
 
 Response Payload
 ~~~~~~~~~~~~~~~~
@@ -146,18 +175,18 @@ Sphinx link:
 GitHub link:
 `See Product Type <./meatnet_node_ble_specification.rst#product-type>`_
 
-Temperature Set Point
+Temperature Point
 ---------------------
 
-The temperature set point data is a packed 16-bit (2-byte) field that
+The temperature point data is a packed 16-bit (2-byte) field that
 represents the temperature set point data for the engine. The
-value is 
-encoded as a 13-bit packed unsigned integer with 0.1 degrees C resolution.
+value is encoded as a 13-bit packed unsigned integer with 0.1 degrees C
+resolution.
 
 ====== ========================
 Bits   Description
 ====== ========================
-1-13   Temperature Set Point
+1-13   Temperature Point
 14-16  Padding/Reserved
 ====== ========================
 
@@ -199,10 +228,9 @@ flags for the Gauge.
 ====== ========================
 Bits   Description
 ====== ========================
-1      `Lid open`_
-2      `App Mode`_
-3      `Fan Enabled`_
-4-8    Reserved
+1      `App Mode`_
+2      `Control device connected`_
+3-8    Reserved
 ====== ========================
 
 Lid Open
@@ -219,22 +247,36 @@ APP Mode
 
 Fan Enabled
 ***********
+
 1 if the Engine's fan is enabled.
 0 if not.
 
-Fan Speed Status
+Control Device Connected
+************************
+
+1 if the Engine has a control device connected, meaning the Engine can see the
+status of the control device over BLE.
+0 if not.
+
+Fan Status
 ----------------
 
-The fan speed status is expressed in a packed 3-byte field.
-
-TODO - the measured fan speed needs to be updated
+The fan status is expressed in a packed 12-byte field.
 
 ========== =============================
 Bits       Description                
 ========== =============================
-1-8        Duty Cycle (0-100 percentage)
-9-16       Commanded speed (0-100 percentage)
-17-24      Measured Speed (0-255 RPM)
+1-8        Fan state
+            * ``0``: Power down
+            * ``1``: Paused
+            * ``2``: Lid open
+            * ``3``: Fan Off
+            * ``4``: Fan On
+9-16       Duty Cycle (0-100 percentage)
+17-24      Commanded speed (0-100 percentage)
+25-32      Measured Speed (0-100 percentage)
+33-64      Fan off time in each time window (milliseconds)
+65-96      Fan on time in each time window (milliseconds)
 ========== =============================
 
 
