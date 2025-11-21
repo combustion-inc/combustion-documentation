@@ -58,7 +58,6 @@ Field                              Bytes Value
 Vendor ID                          2     ``0x09C7`` (see `Bluetooth company IDs`_)
 Product Type                       1     See `Product Type`_ (Engine = ``6``)
 Serial Number                      10    Engine serial number (alphanumeric)
-TODO BJC
 Temperature Set Point              2     See `Temperature Point`_.
 Engine Status Flags                1     See `Engine Status Flags`_.
 ================================== ===== =========================================
