@@ -196,10 +196,6 @@ steps of 0.1°C::
 
     Temperature = (raw value * 0.1) - 20
 
-Note - If the Gauge sensor is not present as denoted in `Gauge Status`_ 
-or `Sensor Present`_, the temperature value will be 0.
-
-
 Battery Status
 --------------
 
