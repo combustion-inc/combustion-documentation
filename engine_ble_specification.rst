@@ -103,7 +103,8 @@ Battery Status                     uint8_t  2     See `Battery Status`_.
 Temperature Set Point              uint16_t 2     See `Temperature Point`_.
 Control Temperature                uint16_t 2     See `Temperature Point`_.
 Control Device Type                uint8_t  1     The type of control device. See `Product Type`_.
-Control Device Serial Number       uint8_t  10    Control device serial number (alphanumeric)
+Control Device Serial Number       uint32_t 4     Control device serial number (probe only - alphanumeric)
+Control Device Serial Number       uint8_t  10    Control device serial number (node only - alphanumeric)
 Engine Status Flags                uint8_t  1     See `Engine Status Flags`_.
 Fan Status                         uint8_t  12    See `Fan Status`_.
 Network Information                uint8_t  1     See `Network Information`_.
@@ -149,6 +150,7 @@ Serial Number              uint8_t  10    Engine serial number
 Control Device Type        uint8_t  1     The type of control device. See `Product Type`_.
 Probe Serial Number        uint32_t 4     Control device serial number (probe only - numeric)
 Node Serial Number         uint8_t  10    Control device serial number (node only - alphanumeric)
+========================== ======== ===== ==================================
 
 .. note::
    Only one of "Probe Serial Number" or "Node Serial Number" should be
