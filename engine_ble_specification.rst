@@ -99,12 +99,15 @@ Request Payload
 Value                              Format   Bytes Description
 ================================== ======== ===== =====================================================
 Serial Number                      uint8_t  10    Engine serial number
+Session ID                         uint32_t 4     See `Session ID`_.
+Sample Period                      uint16_t 2     Number of milliseconds between samples.
+Log Range                          uint32_t 8     See `Log Range`_.
 Battery Status                     uint8_t  2     See `Battery Status`_.
 Temperature Set Point              uint16_t 2     See `Temperature Point`_.
 Control Temperature                uint16_t 2     See `Temperature Point`_.
 Control Device Type                uint8_t  1     The type of control device. See `Product Type`_.
-Control Device Serial Number       uint32_t 4     Control device serial number (probe only - alphanumeric)
-Control Device Serial Number       uint8_t  10    Control device serial number (node only - alphanumeric)
+Probe Serial Number                uint32_t 4     Control device serial number, if device type is probe
+Node Serial Number                 uint8_t  10    Control device serial number, if device type is node (gauge)
 Engine Status Flags                uint8_t  1     See `Engine Status Flags`_.
 Fan Status                         uint8_t  12    See `Fan Status`_.
 Network Information                uint8_t  1     See `Network Information`_.
@@ -126,7 +129,6 @@ Value                      Format   Bytes Description
 Serial Number              uint8_t  10    Engine serial number
 Temperature Set Point      uint16_t 2     See `Temperature Point`_.
 ========================== ======== ===== ==================================
-
 
 Response Payload
 ~~~~~~~~~~~~~~~~
@@ -176,6 +178,26 @@ Sphinx link:
 GitHub link:
 `See Product Type <./meatnet_node_ble_specification.rst#product-type>`_
 
+Session ID
+----------
+
+The session ID is a packed 32-bit (4-byte) field that contains a random session
+ID for the Engine. The session ID is used to identify the current session for
+the Engine.
+
+Log Range
+---------
+
+The log range is a packed 64-bit (8-byte) field that contains the range of
+log sequence numbers available on the Gauge.
+
+====== ===========================
+Bits   Description
+====== ===========================
+1-32   Minimum log sequence number
+33-64  Maximum log sequence number
+====== ===========================
+
 Temperature Point
 ---------------------
 
@@ -217,7 +239,7 @@ The battery status is expressed in a packed 2-byte field.
 
 
 Engine Status Flags
-------------------
+-------------------
 
 Engine Status Flags is a packed 8-bit (1-byte) field that contains various status
 flags for the Engine.
