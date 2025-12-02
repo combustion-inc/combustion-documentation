@@ -148,8 +148,8 @@ Value                      Format   Bytes Description
 ========================== ======== ===== ==================================
 Serial Number              uint8_t  10    Engine serial number
 Control Device Type        uint8_t  1     The type of control device. See `Product Type`_.
-Probe Serial Number        uint32_t 4     Control device serial number (probe only - numeric)
-Node Serial Number         uint8_t  10    Control device serial number (node only - alphanumeric)
+Probe Serial Number        uint32_t 4     Control device serial number, if device type is probe
+Node Serial Number         uint8_t  10    Control device serial number, if device type is node (gauge)
 ========================== ======== ===== ==================================
 
 .. note::
