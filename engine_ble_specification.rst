@@ -248,14 +248,16 @@ flags for the Engine.
 Bits   Description
 ====== ========================
 1      `App Mode`_
-2      `Control device connected`_
-3-8    Reserved
+2      `Control Device Connected`_
+3      `Lid Open`_
+4      `Fixed Speed`_
+5-8    Reserved
 ====== ========================
 
-APP Mode
+App Mode
 ********
 
-1 if the Engine's is in app mode, meaning the temperature set value is controlled by an app.
+1 if the Engine is in app mode, meaning the temperature set value is controlled by an app.
 0 if not.
 
 Control Device Connected
@@ -264,6 +266,18 @@ Control Device Connected
 1 if the Engine has a control device connected, meaning the Engine can see the
 status of the control device over BLE.
 0 if not.
+
+Lid Open
+********
+
+1 if the Engine detects that the grill lid is open.
+0 if the lid is closed.
+
+Fixed Speed
+***********
+
+1 if the Engine fan is running at a fixed speed (not using PID control to a setpoint).
+0 if the fan is using normal PID temperature control.
 
 Fan Status
 ----------------
