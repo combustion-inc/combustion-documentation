@@ -49,8 +49,8 @@ Field                               Bytes Value
 Vendor ID                           2     ``0x09C7`` (see `Bluetooth company IDs`_)
 Product Type                        1     ``0x05`` (Booster)
 Serial Number                       10    Node serial number
-Reserved                            11    Reserved
 Booster Preferences                 1     See `Booster Preferences`_.
+Reserved                            11    Reserved
 =================================== ===== ==========================================
 
 

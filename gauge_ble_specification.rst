@@ -62,8 +62,8 @@ Raw Temperature Data               2     See `Raw Temperature Data`_.
 Gauge Status Flags                 1     See `Gauge Status Flags`_.
 Reserved                           1     Reserved
 High-Low Alarm Status              4     See `High-Low Alarm Status`_.
-Reserved                           3     Reserved
 Gauge Preferences                  1     See `Gauge Preferences`_.
+Reserved                           3     Reserved
 ================================== ===== =========================================
 
 
