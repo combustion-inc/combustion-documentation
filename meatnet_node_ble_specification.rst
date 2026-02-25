@@ -56,8 +56,13 @@ The Node advertises the current state of all Combustion Inc. Probes connected
 to its network.
 
 It continually interleaves advertisements with the manufacturing data for
-each of the probes on the repeater network, cycling through them one-by-one
-with each advertisement.
+each of the probes on the repeater network, cycling through them one-by-one,
+along with device-specific advertisements for the Node itself.
+
+Repeated Probe Data
+*******************
+
+When advertising repeated Probe data, the Node uses the following format:
 
 ================================== ===== =========================================
 Field                              Bytes Value
@@ -71,7 +76,6 @@ Battery Status and Virtual Sensors 1     See `Battery Status and Virtual Sensors
 Network Information                1     See `Network Information`_.
 Overheating Sensors                1     Overheating sensors mask
 ================================== ===== =========================================
-
 
 .. _node_gatt_services_and_characteristics:
 
@@ -861,6 +865,7 @@ Possible values:
 * ``3``: Giant Grill Gauge
 * ``4``: Display (Timer)
 * ``5``: Booster (Charger)
+* ``6``: Engine
 
 Raw Temperature Data
 --------------------

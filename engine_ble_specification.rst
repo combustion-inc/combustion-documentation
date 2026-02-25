@@ -60,6 +60,8 @@ Product Type                       1     See `Product Type`_ (Engine = ``6``)
 Serial Number                      10    Engine serial number (alphanumeric)
 Temperature Set Point              2     See `Temperature Point`_.
 Engine Status Flags                1     See `Engine Status Flags`_.
+Engine Preferences                 1     See `Engine Preferences`_.
+Reserved                           8     Reserved
 ================================== ===== =========================================
 
 
@@ -300,6 +302,33 @@ Bits       Description
 65-96      Fan on time in each time window (milliseconds)
 ========== =============================
 
+
+Engine Preferences
+------------------
+
+Engine preferences are expressed in a packed 8-bit (1-byte) field:
+
++------+---------------------------+
+| Bits | Description               |
++======+===========================+
+| 1    | `High Radio Power`_       |
++------+---------------------------+
+| 2-8  | Reserved                  |
++------+---------------------------+
+
+High Radio Power
+****************
+
+High Radio Power is expressed as a 1-bit boolean field that indicates whether
+the device transmits at high radio power (+8 dBm) or normal power (+0 dBm).
+
++------+--------------------------------------------------+
+| Bit  | Description                                      |
++======+==================================================+
+|| 1   || High Radio Power:                               |
+||     || * ``0``: Normal power (+0 dBm)                  |
+||     || * ``1``: High power (+8 dBm)                    |
++------+--------------------------------------------------+
 
 Network Information
 -------------------

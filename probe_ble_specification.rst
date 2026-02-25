@@ -31,7 +31,7 @@ Legacy (BLE 4.0) Advertisement Packet
 ========================== ===== ==================================
 Field                      Bytes Value
 ========================== ===== ==================================
-Manufacturer Specific Data 24    See `Manufacturer Specific Data`_.
+Manufacturer Specific Data 25    See `Manufacturer Specific Data`_.
 ========================== ===== ==================================
 
 Legacy (BLE 4.0) Scan Response
@@ -59,6 +59,7 @@ Mode/ID                             1     See `Mode and ID Data`_.
 Battery Status and Virtual Sensors  1     See `Battery Status and Virtual Sensors`_.
 Network Information                 1     Unused by Probe, D/C
 Overheating Sensors                 1     See `Overheating Sensors`_.
+Thermometer Preferences             1     See `Thermometer Preferences`_.
 =================================== ===== ==========================================
 
 GATT Services and Characteristics
