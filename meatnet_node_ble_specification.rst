@@ -56,8 +56,13 @@ The Node advertises the current state of all Combustion Inc. Probes connected
 to its network.
 
 It continually interleaves advertisements with the manufacturing data for
-each of the probes on the repeater network, cycling through them one-by-one
-with each advertisement.
+each of the probes on the repeater network, cycling through them one-by-one,
+along with device-specific advertisements for the Node itself.
+
+Repeated Probe Data
+*******************
+
+When advertising repeated Probe data, the Node uses the following format:
 
 ================================== ===== =========================================
 Field                              Bytes Value
@@ -71,7 +76,6 @@ Battery Status and Virtual Sensors 1     See `Battery Status and Virtual Sensors
 Network Information                1     See `Network Information`_.
 Overheating Sensors                1     Overheating sensors mask
 ================================== ===== =========================================
-
 
 .. _node_gatt_services_and_characteristics:
 
@@ -861,6 +865,7 @@ Possible values:
 * ``3``: Giant Grill Gauge
 * ``4``: Display (Timer)
 * ``5``: Booster (Charger)
+* ``6``: Engine
 
 Raw Temperature Data
 --------------------
@@ -1042,13 +1047,15 @@ Thermometer Preferences
 
 Thermometer preferences are expressed in a packed 8-bit (1-byte) field:
 
-+------+-------------------+
-| Bits | Description       |
-+======+===================+
-| 1-2  | See `Power Mode`_ |
-+------+-------------------+
-| 3-8  | Reserved          |
-+------+-------------------+
++------+---------------------------+
+| Bits | Description               |
++======+===========================+
+| 1-2  | See `Power Mode`_         |
++------+---------------------------+
+| 3    | See `High Radio Power`_   |
++------+---------------------------+
+| 4-8  | Reserved                  |
++------+---------------------------+
 
 Power Mode
 **********
@@ -1063,6 +1070,23 @@ Power Mode is expressed as a 2-bit enumerated field.
 ||     || * ``1``: Always On            |
 ||     || * ``2-3``: Reserved           |
 +------+--------------------------------+
+
+High Radio Power
+****************
+
+High Radio Power is expressed as a 1-bit boolean field that indicates whether the device transmits at high radio power (+8 dBm) or normal power (+0 dBm).
+
++------+--------------------------------------------------+
+| Bit  | Description                                      |
++======+==================================================+
+|| 3   || High Radio Power:                               |
+||     || * ``0``: Normal power (+0 dBm)                  |
+||     || * ``1``: High power (+8 dBm)                    |
++------+--------------------------------------------------+
+
+**Note:** MeatNet Node devices (Display, Booster, Gauge, Engine) transmit at high power (+8 dBm, bit=1) for improved range and MeatNet mesh reliability. When Nodes forward Probe status via MeatNet, they preserve the original Probe's high radio power bit value.
+
+**RSSI Adjustment:** When using RSSI for proximity detection or MeatNet association, applications should adjust thresholds based on this bit. High power devices (+8 dBm) will show approximately 8 dB higher (less negative) RSSI values at the same physical distance compared to normal power devices.
 
 Prediction Log
 ------------------------------

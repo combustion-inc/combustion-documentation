@@ -62,6 +62,7 @@ Raw Temperature Data               2     See `Raw Temperature Data`_.
 Gauge Status Flags                 1     See `Gauge Status Flags`_.
 Reserved                           1     Reserved
 High-Low Alarm Status              4     See `High-Low Alarm Status`_.
+Gauge Preferences                  1     See `Gauge Preferences`_.
 Reserved                           3     Reserved
 ================================== ===== =========================================
 
@@ -310,6 +311,33 @@ Alarm Temperature
 The alarm temperature is a packed 13-bit field that represents the alarm
 temperature in 0.1°C steps. It uses the same encoding as the 
 `Raw Temperature Data`_.
+
+Gauge Preferences
+-----------------
+
+Gauge preferences are expressed in a packed 8-bit (1-byte) field:
+
++------+---------------------------+
+| Bits | Description               |
++======+===========================+
+| 1    | `High Radio Power`_       |
++------+---------------------------+
+| 2-8  | Reserved                  |
++------+---------------------------+
+
+High Radio Power
+****************
+
+High Radio Power is expressed as a 1-bit boolean field that indicates whether
+the device transmits at high radio power (+8 dBm) or normal power (+0 dBm).
+
++------+--------------------------------------------------+
+| Bit  | Description                                      |
++======+==================================================+
+|| 1   || High Radio Power:                               |
+||     || * ``0``: Normal power (+0 dBm)                  |
+||     || * ``1``: High power (+8 dBm)                    |
++------+--------------------------------------------------+
 
 Network Information
 -------------------

@@ -31,7 +31,7 @@ Legacy (BLE 4.0) Advertisement Packet
 ========================== ===== ==================================
 Field                      Bytes Value
 ========================== ===== ==================================
-Manufacturer Specific Data 24    See `Manufacturer Specific Data`_.
+Manufacturer Specific Data 25    See `Manufacturer Specific Data`_.
 ========================== ===== ==================================
 
 Legacy (BLE 4.0) Scan Response
@@ -59,6 +59,7 @@ Mode/ID                             1     See `Mode and ID Data`_.
 Battery Status and Virtual Sensors  1     See `Battery Status and Virtual Sensors`_.
 Network Information                 1     Unused by Probe, D/C
 Overheating Sensors                 1     See `Overheating Sensors`_.
+Thermometer Preferences             1     See `Thermometer Preferences`_.
 =================================== ===== ==========================================
 
 GATT Services and Characteristics
@@ -618,13 +619,15 @@ Thermometer Preferences
 
 Thermometer preferences are expressed in a packed 8-bit (1-byte) field:
 
-+------+-------------------+
-| Bits | Description       |
-+======+===================+
-| 1-2  | See `Power Mode`_ |
-+------+-------------------+
-| 3-8  | Reserved          |
-+------+-------------------+
++------+---------------------------+
+| Bits | Description               |
++======+===========================+
+| 1-2  | See `Power Mode`_         |
++------+---------------------------+
+| 3    | See `High Radio Power`_   |
++------+---------------------------+
+| 4-8  | Reserved                  |
++------+---------------------------+
 
 Power Mode
 **********
@@ -640,6 +643,23 @@ Power Mode is expressed as a 2-bit enumerated field.
 ||     || * ``1``: Always On            |
 ||     || * ``2-3``: Reserved           |
 +------+--------------------------------+
+
+High Radio Power
+****************
+
+High Radio Power is expressed as a 1-bit boolean field that indicates whether the device transmits at high radio power (+8 dBm) or normal power (+0 dBm).
+
++------+--------------------------------------------------+
+| Bit  | Description                                      |
++======+==================================================+
+|| 3   || High Radio Power:                               |
+||     || * ``0``: Normal power (+0 dBm)                  |
+||     || * ``1``: High power (+8 dBm)                    |
++------+--------------------------------------------------+
+
+**Note:** Probe V1 devices transmit at normal power (+0 dBm, bit=0). Probe V2 and later transmit at high power (+8 dBm, bit=1) for improved range and connection reliability.
+
+**RSSI Adjustment:** When using RSSI for proximity detection, applications should adjust thresholds based on this bit. High power devices (+8 dBm) will show approximately 8 dB higher (less negative) RSSI values at the same physical distance compared to normal power devices.
 
 Prediction Log
 ------------------------------

@@ -24,13 +24,34 @@ beyond what's included in the MeatNet Node BLE Specification.
 Advertising
 ###########
 
-The Display uses the base MeatNet Node advertising format as defined in:
+The Display interleaves Display-specific advertisements between MeatNet Node advertisements.
+MeatNet Node advertisements contain the repeated data for probes. Display advertisements
+include information specific to this device.
+
+For the base MeatNet Node advertising format, see:
 
 Sphinx link:
 :doc:`/meatnet_node_ble_specification#advertising`.
 
 GitHub link:
 `MeatNet Node BLE Specification <./meatnet_node_ble_specification.rst#advertising>`_
+
+Display Device Info
+-------------------
+
+When advertising its own device info, the Display uses the following format:
+
+.. _bluetooth company ids: https://www.bluetooth.com/specifications/assigned-numbers/company-identifiers/
+
+=================================== ===== ==========================================
+Field                               Bytes Value
+=================================== ===== ==========================================
+Vendor ID                           2     ``0x09C7`` (see `Bluetooth company IDs`_)
+Product Type                        1     ``0x04`` (Display)
+Serial Number                       10    Node serial number
+Display Preferences                 1     See `Display Preferences`_.
+Reserved                            11    Reserved
+=================================== ===== ==========================================
 
 
 GATT Services and Characteristics
@@ -79,6 +100,33 @@ Common Data Formats
 
 This document defines several data formats that are common between advertising
 data and characteristic data.
+
+Display Preferences
+-------------------
+
+Display preferences are expressed in a packed 8-bit (1-byte) field:
+
++------+---------------------------+
+| Bits | Description               |
++======+===========================+
+| 1    | `High Radio Power`_       |
++------+---------------------------+
+| 2-8  | Reserved                  |
++------+---------------------------+
+
+High Radio Power
+****************
+
+High Radio Power is expressed as a 1-bit boolean field that indicates whether
+the device transmits at high radio power (+8 dBm) or normal power (+0 dBm).
+
++------+--------------------------------------------------+
+| Bit  | Description                                      |
++======+==================================================+
+|| 1   || High Radio Power:                               |
+||     || * ``0``: Normal power (+0 dBm)                  |
+||     || * ``1``: High power (+8 dBm)                    |
++------+--------------------------------------------------+
 
 Timer Status
 ------------
