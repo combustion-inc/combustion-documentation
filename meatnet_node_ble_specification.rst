@@ -842,6 +842,229 @@ Response Payload
 This response has no payload.
 
 
+Read Linked Devices (``0x73``)
+******************************
+
+Gets a paginated list of all devices that are linked to this Node. Start by requesting
+page 0, then increment the page number until ``page == totalPages - 1``.
+
+Request Payload
+~~~~~~~~~~~~~~~
+
+===================== ======== ===== ========================
+Value                 Format   Bytes Description
+===================== ======== ===== ========================
+Page                  uint8_t  1     Page number (0-indexed)
+===================== ======== ===== ========================
+
+Response Payload
+~~~~~~~~~~~~~~~~
+
+Each page contains up to 4 linked device entries.
+
+=========================== ======== ===== ====================================================
+Value                       Format   Bytes Description
+=========================== ======== ===== ====================================================
+Page                        uint8_t  1     Requested page number
+Total Pages                 uint8_t  1     Total number of pages available
+Total Count                 uint8_t  1     Total number of linked devices across all pages
+Count On Page               uint8_t  1     Number of devices on this page (0-4)
+Device 1 Product Type       uint8_t  1     See `Product Type`_
+Device 1 Serial Number      uint8_t  10    Product serial number (see `Product Serial Number`_)
+Device 1 Timestamp          uint32_t 4     Unix timestamp of when device was linked (0 if unavailable)
+Device 2 Product Type       uint8_t  1     See `Product Type`_
+Device 2 Serial Number      uint8_t  10    Product serial number (see `Product Serial Number`_)
+Device 2 Timestamp          uint32_t 4     Unix timestamp of when device was linked (0 if unavailable)
+Device 3 Product Type       uint8_t  1     See `Product Type`_
+Device 3 Serial Number      uint8_t  10    Product serial number (see `Product Serial Number`_)
+Device 3 Timestamp          uint32_t 4     Unix timestamp of when device was linked (0 if unavailable)
+Device 4 Product Type       uint8_t  1     See `Product Type`_
+Device 4 Serial Number      uint8_t  10    Product serial number (see `Product Serial Number`_)
+Device 4 Timestamp          uint32_t 4     Unix timestamp of when device was linked (0 if unavailable)
+=========================== ======== ===== ====================================================
+
+
+Read Unlinked Devices (``0x74``)
+********************************
+
+Gets a paginated list of all devices that have been explicitly unlinked from this Node.
+Uses the same request and response format as `Read Linked Devices (0x73)`_.
+
+Request Payload
+~~~~~~~~~~~~~~~
+
+===================== ======== ===== ========================
+Value                 Format   Bytes Description
+===================== ======== ===== ========================
+Page                  uint8_t  1     Page number (0-indexed)
+===================== ======== ===== ========================
+
+Response Payload
+~~~~~~~~~~~~~~~~
+
+Each page contains up to 4 unlinked device entries.
+
+=========================== ======== ===== ====================================================
+Value                       Format   Bytes Description
+=========================== ======== ===== ====================================================
+Page                        uint8_t  1     Requested page number
+Total Pages                 uint8_t  1     Total number of pages available
+Total Count                 uint8_t  1     Total number of unlinked devices across all pages
+Count On Page               uint8_t  1     Number of devices on this page (0-4)
+Device 1 Product Type       uint8_t  1     See `Product Type`_
+Device 1 Serial Number      uint8_t  10    Product serial number (see `Product Serial Number`_)
+Device 1 Timestamp          uint32_t 4     Unix timestamp of when device was unlinked (0 if unavailable)
+Device 2 Product Type       uint8_t  1     See `Product Type`_
+Device 2 Serial Number      uint8_t  10    Product serial number (see `Product Serial Number`_)
+Device 2 Timestamp          uint32_t 4     Unix timestamp of when device was unlinked (0 if unavailable)
+Device 3 Product Type       uint8_t  1     See `Product Type`_
+Device 3 Serial Number      uint8_t  10    Product serial number (see `Product Serial Number`_)
+Device 3 Timestamp          uint32_t 4     Unix timestamp of when device was unlinked (0 if unavailable)
+Device 4 Product Type       uint8_t  1     See `Product Type`_
+Device 4 Serial Number      uint8_t  10    Product serial number (see `Product Serial Number`_)
+Device 4 Timestamp          uint32_t 4     Unix timestamp of when device was unlinked (0 if unavailable)
+=========================== ======== ===== ====================================================
+
+
+Link Device (``0x75``)
+**********************
+
+Explicitly links a device by its serial number. After processing the request, the Node
+broadcasts a `Device Linked (0x77)`_ notification to all other connected Nodes.
+
+Request Payload
+~~~~~~~~~~~~~~~
+
+===================== ======== ===== ========================
+Value                 Format   Bytes Description
+===================== ======== ===== ========================
+Product Type          uint8_t  1     See `Product Type`_
+Serial Number         uint8_t  10    Product serial number (see `Product Serial Number`_)
+Timestamp             uint32_t 4     Unix timestamp of link operation (0 if unavailable)
+===================== ======== ===== ========================
+
+Response Payload
+~~~~~~~~~~~~~~~~
+
+This response has no payload.
+
+
+Unlink Device (``0x76``)
+************************
+
+Explicitly unlinks a device by its serial number. After processing the request, the Node
+broadcasts a `Device Unlinked (0x78)`_ notification to all other connected Nodes.
+
+Request Payload
+~~~~~~~~~~~~~~~
+
+===================== ======== ===== ========================
+Value                 Format   Bytes Description
+===================== ======== ===== ========================
+Product Type          uint8_t  1     See `Product Type`_
+Serial Number         uint8_t  10    Product serial number (see `Product Serial Number`_)
+Timestamp             uint32_t 4     Unix timestamp of unlink operation (0 if unavailable)
+===================== ======== ===== ========================
+
+Response Payload
+~~~~~~~~~~~~~~~~
+
+This response has no payload.
+
+
+Device Linked (``0x77``)
+************************
+
+Notification sent by a Node when a device has been linked. This message follows the same
+fire-and-forget pattern as `Device Connected (0x40)`_. Other Nodes rebroadcast this
+notification to synchronize link state across the network. There is no response for this
+message.
+
+Request Payload
+~~~~~~~~~~~~~~~
+
+===================== ======== ===== ========================
+Value                 Format   Bytes Description
+===================== ======== ===== ========================
+Product Type          uint8_t  1     See `Product Type`_
+Serial Number         uint8_t  10    Product serial number (see `Product Serial Number`_)
+Timestamp             uint32_t 4     Unix timestamp of when device was linked (0 if unavailable)
+===================== ======== ===== ========================
+
+
+Device Unlinked (``0x78``)
+**************************
+
+Notification sent by a Node when a device has been unlinked. This message follows the same
+fire-and-forget pattern as `Device Connected (0x40)`_. Other Nodes rebroadcast this
+notification to synchronize unlink state across the network. There is no response for this
+message.
+
+Request Payload
+~~~~~~~~~~~~~~~
+
+===================== ======== ===== ========================
+Value                 Format   Bytes Description
+===================== ======== ===== ========================
+Product Type          uint8_t  1     See `Product Type`_
+Serial Number         uint8_t  10    Product serial number (see `Product Serial Number`_)
+Timestamp             uint32_t 4     Unix timestamp of when device was unlinked (0 if unavailable)
+===================== ======== ===== ========================
+
+
+Set Proximity Linking (``0x79``)
+********************************
+
+Enables or disables proximity-based auto-linking on this Node. When enabled, devices
+within close proximity are automatically linked.
+
+Request Payload
+~~~~~~~~~~~~~~~
+
+===================== ======== ===== ========================
+Value                 Format   Bytes Description
+===================== ======== ===== ========================
+Enabled               uint8_t  1     1 to enable, 0 to disable
+===================== ======== ===== ========================
+
+Response Payload
+~~~~~~~~~~~~~~~~
+
+This response has no payload.
+
+
+Read Proximity Linking (``0x7A``)
+*********************************
+
+Queries the current state of proximity-based auto-linking on this Node.
+
+Request Payload
+~~~~~~~~~~~~~~~
+
+This request has no payload.
+
+Response Payload
+~~~~~~~~~~~~~~~~
+
+===================== ======== ===== ========================
+Value                 Format   Bytes Description
+===================== ======== ===== ========================
+Enabled               uint8_t  1     1 if enabled, 0 if disabled
+===================== ======== ===== ========================
+
+
+.. _product_serial_number:
+
+Product Serial Number
+---------------------
+
+The product serial number is a 10-byte field. Its interpretation depends on the
+product type:
+
+* **Predictive Probe** (Product Type ``1``): 4-byte ``uint32_t`` probe serial number, with 6 bytes of padding.
+* **All other products**: 10-byte alphanumeric serial number (``uint8_t[10]``).
+
+
 Common Data Formats
 ###################
 
