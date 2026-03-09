@@ -154,8 +154,7 @@ Value                      Format   Bytes Description
 ========================== ======== ===== ==================================
 Serial Number              uint8_t  10    Engine serial number
 Control Device Type        uint8_t  1     The type of control device. See `Product Type`_.
-Probe Serial Number        uint32_t 4     Control device serial number, if device type is probe
-Node Serial Number         uint8_t  10    Control device serial number, if device type is node (gauge)
+Product Serial Number      uint8_t  10    See `Product Serial Number`_.
 ========================== ======== ===== ==================================
 
 .. note::
@@ -181,6 +180,15 @@ Sphinx link:
 
 GitHub link:
 `See Product Type <./meatnet_node_ble_specification.rst#product-type>`_
+
+Product Serial Number
+---------------------
+
+Sphinx link:
+:ref:`See Product Serial Number <meatnet_product_serial_number>`
+
+GitHub link:
+`See Product Serial Number <./meatnet_node_ble_specification.rst#product-serial-number>`_
 
 Session ID
 ----------
