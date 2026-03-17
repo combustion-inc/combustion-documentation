@@ -867,6 +867,17 @@ Possible values:
 * ``5``: Booster (Charger)
 * ``6``: Engine
 
+.. _meatnet_product_serial_number:
+
+Product Serial Number
+---------------------
+
+This 10-byte field contains a representation of the product serial number. This field is
+a ``union``, which can be either a ``uint32_t`` Probe serial number (only the first 
+4 bytes are used), or a ``char[10]`` alphanumeric Node serial number. Any time this field
+is present, the appropriate `Product Type`_ must also be present so it can be decoded
+correctly.
+
 Raw Temperature Data
 --------------------
 

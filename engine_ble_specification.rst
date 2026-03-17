@@ -113,6 +113,8 @@ Node Serial Number                 uint8_t  10    Control device serial number, 
 Engine Status Flags                uint8_t  1     See `Engine Status Flags`_.
 Fan Status                         uint8_t  12    See `Fan Status`_.
 Network Information                uint8_t  1     See `Network Information`_.
+Knob Voltage                       uint16_t 2     See `Knob Status`_.
+Knob Angle                         uint16_t 2     See `Knob Status`_.
 ================================== ======== ===== =====================================================
 
 
@@ -152,8 +154,7 @@ Value                      Format   Bytes Description
 ========================== ======== ===== ==================================
 Serial Number              uint8_t  10    Engine serial number
 Control Device Type        uint8_t  1     The type of control device. See `Product Type`_.
-Probe Serial Number        uint32_t 4     Control device serial number, if device type is probe
-Node Serial Number         uint8_t  10    Control device serial number, if device type is node (gauge)
+Product Serial Number      uint8_t  10    See `Product Serial Number`_.
 ========================== ======== ===== ==================================
 
 .. note::
@@ -179,6 +180,15 @@ Sphinx link:
 
 GitHub link:
 `See Product Type <./meatnet_node_ble_specification.rst#product-type>`_
+
+Product Serial Number
+---------------------
+
+Sphinx link:
+:ref:`See Product Serial Number <meatnet_product_serial_number>`
+
+GitHub link:
+`See Product Serial Number <./meatnet_node_ble_specification.rst#product-serial-number>`_
 
 Session ID
 ----------
@@ -301,6 +311,28 @@ Bits       Description
 33-64      Fan off time in each time window (milliseconds)
 65-96      Fan on time in each time window (milliseconds)
 ========== =============================
+
+
+Knob Status
+-----------
+
+Knob Voltage
+************
+
+The knob voltage is a 16-bit unsigned integer representing the raw potentiometer
+voltage in millivolts (0-3300 mV)::
+
+    Voltage (V) = raw value / 1000.0
+
+Knob Angle
+**********
+
+The knob angle is a 16-bit unsigned integer representing the calculated knob
+position in tenths of degrees (0-3599)::
+
+    Angle (degrees) = raw value / 10.0
+
+The angle is measured clockwise from the Off position (0 degrees).
 
 
 Engine Preferences
