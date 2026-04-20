@@ -111,7 +111,7 @@ Control Device Type                uint8_t  1     The type of control device. Se
 Control Device Serial Number       uint8_t  10    See `Product Serial Number`_.
 Engine Status Flags                uint8_t  1     See `Engine Status Flags`_.
 Fan Status                         uint8_t  12    See `Fan Status`_.
-Controller Status                   uint8_t  8     See `Controller Status`_.
+Controller Status                  uint8_t  8     See `Controller Status`_.
 Network Information                uint8_t  1     See `Network Information`_.
 Knob Voltage                       uint16_t 2     See `Knob Status`_.
 Knob Angle                         uint16_t 2     See `Knob Status`_.
