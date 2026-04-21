@@ -154,7 +154,7 @@ Value                      Format   Bytes Description
 ========================== ======== ===== ==================================
 Serial Number              uint8_t  10    Engine serial number
 Control Device Type        uint8_t  1     The type of control device. See `Product Type`_.
-Product Serial Number      uint8_t  10    See `Product Serial Number`_.
+Product Serial Number      uint8_t  12    See `Product Serial Number`_.
 ========================== ======== ===== ==================================
 
 .. note::
