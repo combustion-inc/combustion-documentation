@@ -870,16 +870,16 @@ Total Pages                 uint8_t  1     Total number of pages available
 Total Count                 uint8_t  1     Total number of linked devices across all pages
 Count On Page               uint8_t  1     Number of devices on this page (0-4)
 Device 1 Product Type       uint8_t  1     See `Product Type`_
-Device 1 Serial Number      uint8_t  10    Product serial number (see `Product Serial Number`_)
+Device 1 Serial Number      uint8_t  12    Product serial number (see `Product Serial Number`_)
 Device 1 Timestamp          uint32_t 4     Unix timestamp of when device was linked (0 if unavailable)
 Device 2 Product Type       uint8_t  1     See `Product Type`_
-Device 2 Serial Number      uint8_t  10    Product serial number (see `Product Serial Number`_)
+Device 2 Serial Number      uint8_t  12    Product serial number (see `Product Serial Number`_)
 Device 2 Timestamp          uint32_t 4     Unix timestamp of when device was linked (0 if unavailable)
 Device 3 Product Type       uint8_t  1     See `Product Type`_
-Device 3 Serial Number      uint8_t  10    Product serial number (see `Product Serial Number`_)
+Device 3 Serial Number      uint8_t  12    Product serial number (see `Product Serial Number`_)
 Device 3 Timestamp          uint32_t 4     Unix timestamp of when device was linked (0 if unavailable)
 Device 4 Product Type       uint8_t  1     See `Product Type`_
-Device 4 Serial Number      uint8_t  10    Product serial number (see `Product Serial Number`_)
+Device 4 Serial Number      uint8_t  12    Product serial number (see `Product Serial Number`_)
 Device 4 Timestamp          uint32_t 4     Unix timestamp of when device was linked (0 if unavailable)
 =========================== ======== ===== ====================================================
 
@@ -912,16 +912,16 @@ Total Pages                 uint8_t  1     Total number of pages available
 Total Count                 uint8_t  1     Total number of unlinked devices across all pages
 Count On Page               uint8_t  1     Number of devices on this page (0-4)
 Device 1 Product Type       uint8_t  1     See `Product Type`_
-Device 1 Serial Number      uint8_t  10    Product serial number (see `Product Serial Number`_)
+Device 1 Serial Number      uint8_t  12    Product serial number (see `Product Serial Number`_)
 Device 1 Timestamp          uint32_t 4     Unix timestamp of when device was unlinked (0 if unavailable)
 Device 2 Product Type       uint8_t  1     See `Product Type`_
-Device 2 Serial Number      uint8_t  10    Product serial number (see `Product Serial Number`_)
+Device 2 Serial Number      uint8_t  12    Product serial number (see `Product Serial Number`_)
 Device 2 Timestamp          uint32_t 4     Unix timestamp of when device was unlinked (0 if unavailable)
 Device 3 Product Type       uint8_t  1     See `Product Type`_
-Device 3 Serial Number      uint8_t  10    Product serial number (see `Product Serial Number`_)
+Device 3 Serial Number      uint8_t  12    Product serial number (see `Product Serial Number`_)
 Device 3 Timestamp          uint32_t 4     Unix timestamp of when device was unlinked (0 if unavailable)
 Device 4 Product Type       uint8_t  1     See `Product Type`_
-Device 4 Serial Number      uint8_t  10    Product serial number (see `Product Serial Number`_)
+Device 4 Serial Number      uint8_t  12    Product serial number (see `Product Serial Number`_)
 Device 4 Timestamp          uint32_t 4     Unix timestamp of when device was unlinked (0 if unavailable)
 =========================== ======== ===== ====================================================
 
@@ -939,7 +939,7 @@ Request Payload
 Value                 Format   Bytes Description
 ===================== ======== ===== ========================
 Product Type          uint8_t  1     See `Product Type`_
-Serial Number         uint8_t  10    Product serial number (see `Product Serial Number`_)
+Serial Number         uint8_t  12    Product serial number (see `Product Serial Number`_)
 Timestamp             uint32_t 4     Unix timestamp of link operation (0 if unavailable)
 ===================== ======== ===== ========================
 
@@ -962,7 +962,7 @@ Request Payload
 Value                 Format   Bytes Description
 ===================== ======== ===== ========================
 Product Type          uint8_t  1     See `Product Type`_
-Serial Number         uint8_t  10    Product serial number (see `Product Serial Number`_)
+Serial Number         uint8_t  12    Product serial number (see `Product Serial Number`_)
 Timestamp             uint32_t 4     Unix timestamp of unlink operation (0 if unavailable)
 ===================== ======== ===== ========================
 
@@ -987,7 +987,7 @@ Request Payload
 Value                 Format   Bytes Description
 ===================== ======== ===== ========================
 Product Type          uint8_t  1     See `Product Type`_
-Serial Number         uint8_t  10    Product serial number (see `Product Serial Number`_)
+Serial Number         uint8_t  12    Product serial number (see `Product Serial Number`_)
 Timestamp             uint32_t 4     Unix timestamp of when device was linked (0 if unavailable)
 ===================== ======== ===== ========================
 
@@ -1007,7 +1007,7 @@ Request Payload
 Value                 Format   Bytes Description
 ===================== ======== ===== ========================
 Product Type          uint8_t  1     See `Product Type`_
-Serial Number         uint8_t  10    Product serial number (see `Product Serial Number`_)
+Serial Number         uint8_t  12    Product serial number (see `Product Serial Number`_)
 Timestamp             uint32_t 4     Unix timestamp of when device was unlinked (0 if unavailable)
 ===================== ======== ===== ========================
 
@@ -1058,11 +1058,13 @@ Enabled               uint8_t  1     1 if enabled, 0 if disabled
 Product Serial Number
 ---------------------
 
-The product serial number is a 10-byte field. Its interpretation depends on the
-product type:
+The product serial number is a 12-byte field. Its size comes from a C ``union``
+of a 10-byte ``NodeSerialNumber`` and a 4-byte ``uint32_t`` probe serial number;
+the ``uint32_t`` member forces 4-byte alignment on the union, adding 2 bytes of
+trailing padding. Its interpretation depends on the product type:
 
-* **Predictive Probe** (Product Type ``1``): 4-byte ``uint32_t`` probe serial number, with 6 bytes of padding.
-* **All other products**: 10-byte alphanumeric serial number (``uint8_t[10]``).
+* **Predictive Probe** (Product Type ``1``): 4-byte ``uint32_t`` probe serial number in bytes 0-3, with bytes 4-11 as padding (firmware sets these to ``0xFF``).
+* **All other products**: 10-byte alphanumeric serial number (``uint8_t[10]``) in bytes 0-9, with bytes 10-11 as alignment padding.
 
 
 Common Data Formats
@@ -1095,11 +1097,12 @@ Possible values:
 Product Serial Number
 ---------------------
 
-This 10-byte field contains a representation of the product serial number. This field is
-a ``union``, which can be either a ``uint32_t`` Probe serial number (only the first 
-4 bytes are used), or a ``char[10]`` alphanumeric Node serial number. Any time this field
-is present, the appropriate `Product Type`_ must also be present so it can be decoded
-correctly.
+This 12-byte field contains a representation of the product serial number. This field is
+a ``union`` of a ``uint32_t`` Probe serial number (first 4 bytes, bytes 4-11 padded) and
+a ``char[10]`` alphanumeric Node serial number (bytes 0-9, bytes 10-11 are alignment
+padding). The ``uint32_t`` member forces 4-byte alignment on the union, giving it a
+12-byte size. Any time this field is present, the appropriate `Product Type`_ must also
+be present so it can be decoded correctly.
 
 Raw Temperature Data
 --------------------
