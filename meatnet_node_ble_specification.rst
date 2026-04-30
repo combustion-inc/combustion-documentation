@@ -860,7 +860,7 @@ Page                  uint8_t  1     Page number (0-indexed)
 Response Payload
 ~~~~~~~~~~~~~~~~
 
-Each page contains up to 4 linked device entries.
+Each page contains up to 4 linked device entries (18 bytes each).
 
 =========================== ======== ===== ====================================================
 Value                       Format   Bytes Description
@@ -872,16 +872,27 @@ Count On Page               uint8_t  1     Number of devices on this page (0-4)
 Device 1 Product Type       uint8_t  1     See `Product Type`_
 Device 1 Serial Number      uint8_t  12    Product serial number (see `Product Serial Number`_)
 Device 1 Timestamp          uint32_t 4     Unix timestamp of when device was linked (0 if unavailable)
+Device 1 Legacy             uint8_t  1     ``1`` = legacy v1 entry (MAC in first 6 bytes of Serial Number); ``0`` = resolved v2 entry
 Device 2 Product Type       uint8_t  1     See `Product Type`_
 Device 2 Serial Number      uint8_t  12    Product serial number (see `Product Serial Number`_)
 Device 2 Timestamp          uint32_t 4     Unix timestamp of when device was linked (0 if unavailable)
+Device 2 Legacy             uint8_t  1     ``1`` = legacy v1 entry (MAC in first 6 bytes of Serial Number); ``0`` = resolved v2 entry
 Device 3 Product Type       uint8_t  1     See `Product Type`_
 Device 3 Serial Number      uint8_t  12    Product serial number (see `Product Serial Number`_)
 Device 3 Timestamp          uint32_t 4     Unix timestamp of when device was linked (0 if unavailable)
+Device 3 Legacy             uint8_t  1     ``1`` = legacy v1 entry (MAC in first 6 bytes of Serial Number); ``0`` = resolved v2 entry
 Device 4 Product Type       uint8_t  1     See `Product Type`_
 Device 4 Serial Number      uint8_t  12    Product serial number (see `Product Serial Number`_)
 Device 4 Timestamp          uint32_t 4     Unix timestamp of when device was linked (0 if unavailable)
+Device 4 Legacy             uint8_t  1     ``1`` = legacy v1 entry (MAC in first 6 bytes of Serial Number); ``0`` = resolved v2 entry
 =========================== ======== ===== ====================================================
+
+Legacy entries are devices linked under the v1 (MAC-only) protocol that have
+not yet been resolved to a v2 serial number. When ``Legacy`` is ``1`` the
+first 6 bytes of the ``Serial Number`` field hold the device's BLE MAC
+address and the remaining 6 bytes are ``0xFF`` padding; ``Timestamp`` is
+``0``. Receivers should treat these entries as MAC-keyed and let their local
+v1→v2 resolution path upgrade them when the device is next observed on-air.
 
 
 Read Unlinked Devices (``0x74``)
@@ -902,7 +913,9 @@ Page                  uint8_t  1     Page number (0-indexed)
 Response Payload
 ~~~~~~~~~~~~~~~~
 
-Each page contains up to 4 unlinked device entries.
+Each page contains up to 4 unlinked device entries (18 bytes each). The per-entry
+format matches `Read Linked Devices (0x73)`_; ``Legacy`` is always ``0`` for
+unlinked entries (legacy state is only meaningful for the linked list).
 
 =========================== ======== ===== ====================================================
 Value                       Format   Bytes Description
@@ -914,15 +927,19 @@ Count On Page               uint8_t  1     Number of devices on this page (0-4)
 Device 1 Product Type       uint8_t  1     See `Product Type`_
 Device 1 Serial Number      uint8_t  12    Product serial number (see `Product Serial Number`_)
 Device 1 Timestamp          uint32_t 4     Unix timestamp of when device was unlinked (0 if unavailable)
+Device 1 Legacy             uint8_t  1     Always ``0`` for unlinked entries
 Device 2 Product Type       uint8_t  1     See `Product Type`_
 Device 2 Serial Number      uint8_t  12    Product serial number (see `Product Serial Number`_)
 Device 2 Timestamp          uint32_t 4     Unix timestamp of when device was unlinked (0 if unavailable)
+Device 2 Legacy             uint8_t  1     Always ``0`` for unlinked entries
 Device 3 Product Type       uint8_t  1     See `Product Type`_
 Device 3 Serial Number      uint8_t  12    Product serial number (see `Product Serial Number`_)
 Device 3 Timestamp          uint32_t 4     Unix timestamp of when device was unlinked (0 if unavailable)
+Device 3 Legacy             uint8_t  1     Always ``0`` for unlinked entries
 Device 4 Product Type       uint8_t  1     See `Product Type`_
 Device 4 Serial Number      uint8_t  12    Product serial number (see `Product Serial Number`_)
 Device 4 Timestamp          uint32_t 4     Unix timestamp of when device was unlinked (0 if unavailable)
+Device 4 Legacy             uint8_t  1     Always ``0`` for unlinked entries
 =========================== ======== ===== ====================================================
 
 
@@ -1051,6 +1068,50 @@ Value                 Format   Bytes Description
 ===================== ======== ===== ========================
 Enabled               uint8_t  1     1 if enabled, 0 if disabled
 ===================== ======== ===== ========================
+
+
+Sync Link Table (``0x7B``)
+**************************
+
+Trigger sent by a Node to ask the recipient to pull the sender's link and
+unlink tables. The recipient acknowledges with a response of this same
+opcode and then issues its own `Read Linked Devices (0x73)`_ and
+`Read Unlinked Devices (0x74)`_ requests back to the sender, starting at
+page ``0``.
+
+This trigger exists so that a Node whose link table has been reset can
+recover from a peer that still holds the prior link state. Without it,
+only the side that initiated the connection pulls the peer's tables, and
+a peer with a wiped table would never re-learn the link on its own.
+
+Request Payload
+~~~~~~~~~~~~~~~
+
+This request has no payload.
+
+Response Payload
+~~~~~~~~~~~~~~~~
+
+This response has no payload.
+
+Receiver Behavior
+~~~~~~~~~~~~~~~~~
+
+When merging entries received via `Read Linked Devices (0x73)`_ or
+`Read Unlinked Devices (0x74)`_ — whether triggered by this message or by
+the standard connection-establishment sync — a Node must never write its
+own serial number into its local linked or unlinked table.
+
+If a received entry's ``Serial Number`` matches the receiver's own serial
+(and ``Product Type`` is ``Node``), the receiver must treat the entry as
+if it referred to the **sending** peer's serial, and merge it on that
+basis. If the sender's serial is not yet known to the receiver, the entry
+must be dropped rather than written.
+
+This substitution is what allows a reset Node to recover its link to a
+peer: the peer's table contains the reset Node's own serial, and the
+rewrite causes the reset Node to record the peer (not itself) as linked
+or unlinked.
 
 
 .. _product_serial_number:
