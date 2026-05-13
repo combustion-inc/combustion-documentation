@@ -104,14 +104,14 @@ Serial Number                      uint8_t  10    Engine serial number
 Session ID                         uint32_t 4     See `Session ID`_.
 Sample Period                      uint16_t 2     Number of milliseconds between samples.
 Log Range                          uint32_t 8     See `Log Range`_.
-Battery Status                     uint8_t  2     See `Battery Status`_.
+Battery Status                     uint8_t  3     See `Battery Status`_.
 Temperature Set Point              uint16_t 2     See `Temperature Point`_.
 Control Temperature                uint16_t 2     See `Temperature Point`_.
 Control Device Type                uint8_t  1     The type of control device. See `Product Type`_.
-Probe Serial Number                uint32_t 4     Control device serial number, if device type is probe
-Node Serial Number                 uint8_t  10    Control device serial number, if device type is node (gauge)
+Control Device Serial Number       uint8_t  12    See `Product Serial Number`_.
 Engine Status Flags                uint8_t  1     See `Engine Status Flags`_.
 Fan Status                         uint8_t  12    See `Fan Status`_.
+Controller Status                  uint8_t  8     See `Controller Status`_.
 Network Information                uint8_t  1     See `Network Information`_.
 Knob Voltage                       uint16_t 2     See `Knob Status`_.
 Knob Angle                         uint16_t 2     See `Knob Status`_.
@@ -233,7 +233,7 @@ steps of 0.1°C::
 Battery Status
 --------------
 
-The battery status is expressed in a packed 2-byte field.
+The battery status is expressed in a packed 3-byte field.
 
 +----------+----------------------------+
 | Bits     | Description                |
@@ -248,6 +248,14 @@ The battery status is expressed in a packed 2-byte field.
 ||         || * ``1``: Charging         |
 ||         || * ``2``: Fully charged    |
 +----------+----------------------------+
+|| 17-24   || Battery Voltage           |
+||         || Voltage × 10              |
+||         || Range: 0-25.5V            |
++----------+----------------------------+
+
+::
+
+    Voltage (V) = raw value / 10.0
 
 
 Engine Status Flags
@@ -288,8 +296,8 @@ Lid Open
 Fixed Speed
 ***********
 
-1 if the Engine fan is running at a fixed speed (not using PID control to a setpoint).
-0 if the fan is using normal PID temperature control.
+1 if the Engine fan is running at a fixed speed (not controlling to a setpoint).
+0 if the fan is controlling to a temperature setpoint.
 
 Fan Status
 ----------------
@@ -311,6 +319,52 @@ Bits       Description
 33-64      Fan off time in each time window (milliseconds)
 65-96      Fan on time in each time window (milliseconds)
 ========== =============================
+
+
+Controller Status
+-----------------
+
+The controller status is expressed in a packed 8-byte field.
+
+========== =============================
+Bits       Description
+========== =============================
+1-8        Controller State
+            * ``0``: Idle
+            * ``1``: Startup
+            * ``2``: Probe
+            * ``3``: Observe
+            * ``4``: Rest
+9-16       Response Coefficient
+            Learned response coefficient × 500
+            (0-255 maps to 0.000-0.510)
+17-24      Cycles Completed
+            Number of complete control cycles
+            (0-255)
+25-32      Flags (see `Controller Flags`_)
+33-48      Smoothed Temperature
+            Temperature × 10 in °C
+            (e.g., 1200 = 120.0°C)
+49-56      Time to Peak
+            Estimated time-to-peak in seconds (0-255)
+57-64      Drift Rate
+            Signed drift rate × 1000
+            (-128 to +127 maps to
+            -0.128 to +0.127 °C/s)
+========== =============================
+
+Controller Flags
+****************
+
++------+----------------------------+
+| Bit  | Description                |
++======+============================+
+| 1    | Reached Setpoint           |
++------+----------------------------+
+| 2    | Maintenance Mode           |
++------+----------------------------+
+| 3-8  | Reserved                   |
++------+----------------------------+
 
 
 Knob Status
