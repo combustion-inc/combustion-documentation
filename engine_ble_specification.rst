@@ -115,6 +115,7 @@ Controller Status                  uint8_t  8     See `Controller Status`_.
 Network Information                uint8_t  1     See `Network Information`_.
 Knob Voltage                       uint16_t 2     See `Knob Status`_.
 Knob Angle                         uint16_t 2     See `Knob Status`_.
+Charging Fault                     uint8_t  1     See `Charging Fault`_.
 ================================== ======== ===== =====================================================
 
 
@@ -387,6 +388,34 @@ position in tenths of degrees (0-3599)::
     Angle (degrees) = raw value / 10.0
 
 The angle is measured clockwise from the Off position (0 degrees).
+
+
+Charging Fault
+--------------
+
+The charging fault is expressed in a packed 1-byte field. When several faults
+are active simultaneously, the highest-priority one (the lowest non-zero code)
+is reported.
+
++----------+--------------------------------------+
+| Bits     | Description                          |
++==========+======================================+
+|| 1       || Fault Present                       |
+||         || * ``0``: No fault                   |
+||         || * ``1``: Fault active               |
++----------+--------------------------------------+
+|| 2-8     || Fault Code                          |
+||         || * ``0``: None                       |
+||         || * ``1``: Over temperature           |
+||         || * ``2``: Under temperature          |
+||         || * ``3``: NTC fault (sensor open)    |
+||         || * ``4``: Input fault (USB power)    |
+||         || * ``5``: Battery missing            |
+||         || * ``6``: Charge timer expired       |
+||         || * ``7``: Charge stall               |
++----------+--------------------------------------+
+
+``Fault Present`` is a convenience flag equal to ``Fault Code != 0``.
 
 
 Engine Preferences
