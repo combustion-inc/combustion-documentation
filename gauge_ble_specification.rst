@@ -183,12 +183,12 @@ number rebroadcasts it across the MeatNet network.
 Request Payload
 ~~~~~~~~~~~~~~~
 
-===================== ======== ===== ========================
+===================== ======== ===== ==========================
 Value                 Format   Bytes Description
-===================== ======== ===== ========================
+===================== ======== ===== ==========================
 Serial Number         uint8_t  10    Gauge serial number
-New Gauge ID          uint8_t  1     Gauge identifier # (0-7)
-===================== ======== ===== ========================
+New Gauge ID          uint8_t  1     Gauge identifier # (0-255)
+===================== ======== ===== ==========================
 
 Response Payload
 ~~~~~~~~~~~~~~~~
@@ -383,15 +383,16 @@ Gauge ID
 --------
 
 The Gauge ID is an 8-bit (1-byte) user-assigned identifier that distinguishes
-one Gauge from another. It uses the same zero-based convention as the Probe
-identifier # in the MeatNet Node BLE Specification, so a value of ``0`` is
-presented to the user as "ID 1".
+one Gauge from another. The full range 0-255 is valid: the Gauge stores and
+reports back whatever value it is given, without validation.
+
+It follows the same zero-based convention as the Probe identifier # in the
+MeatNet Node BLE Specification, so a value of ``0`` is presented to the user as
+"ID 1". Unlike a Probe ID, which is a 3-bit field limited to 0-7, a Gauge ID
+occupies a whole byte.
 
 The Gauge ID defaults to ``0`` and is stored persistently, so it survives power
 cycles and firmware updates. Set it with the Set Gauge ID (``0x63``) message.
-
-Note - the Gauge accepts and echoes back any value from 0 to 255; it does not
-reject IDs outside the 0-7 range.
 
 
 Network Information
