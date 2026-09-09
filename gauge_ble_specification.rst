@@ -108,7 +108,7 @@ Session ID                         uint32_t 4     See `Session ID`_
 Sample Period                      uint16_t 2     Number of milliseconds between each log
 Raw Temperature Data               uint16_t 2     See `Raw Temperature Data`_.
 Gauge Status Flags                 uint8_t  1     See `Gauge Status Flags`_.
-Log Range                          uint32_t 8     See `Log Range`_.
+Log Range                          uint32_t 8     See `Log Range`_. Two ``uint32_t`` values.
 Battery Percentage                 uint8_t  1     See `Battery Percentage`_.
 High-Low Alarm Status              uint32_t 4     See `High-Low Alarm Status`_.
 New Record Flag                    uint8_t  1     1 if data corresponds to a new log record, 0 if not
@@ -253,7 +253,7 @@ steps of 0.1°C::
 
     Temperature = (raw value * 0.1) - 20
 
-Note - If the Gauge sensor is not present as denotoed in `Gauge Status`_ 
+Note - If the Gauge sensor is not present as denoted in `Gauge Status Flags`_
 or `Sensor Present`_, the temperature value will be 0.
 
 Gauge Status Flags
