@@ -842,11 +842,41 @@ Response Payload
 This response has no payload.
 
 
+.. _node_link_record_product_type:
+
+Product Type in Link Records
+****************************
+
+Link and unlink records for Nodes are **always stored with a Product Type of**
+``2`` (MeatNet Repeater Node), never the specific product type the device
+advertises for itself (``3`` Gauge, ``4`` Display, ``5`` Booster, ``6`` Engine).
+Link table lookups key on the pair (Serial Number, Product Type), so a record
+stored under a specific product type could never be matched again.
+
+This applies to every message in this section:
+
+* A Node receiving `Link Device (0x75)`_ or `Unlink Device (0x76)`_ with a
+  non-Probe Product Type stores the record as ``2``. Clients should send ``2``.
+* Every non-Probe entry returned by `Read Linked Devices (0x73)`_ and
+  `Read Unlinked Devices (0x74)`_ carries ``2``.
+* The same holds for records conveyed by `Device Linked (0x77)`_ and
+  `Device Unlinked (0x78)`_.
+
+A link record therefore does not identify *which kind* of Node it refers to. A
+client needing that must obtain it elsewhere — for example from the device's own
+advertisement, which carries its specific Product Type.
+
+Probe records are unaffected: they are stored with Product Type ``1``.
+
+
 Read Linked Devices (``0x73``)
 ******************************
 
 Gets a paginated list of all devices that are linked to this Node. Start by requesting
 page 0, then increment the page number until ``page == totalPages - 1``.
+
+Non-Probe entries always carry a Product Type of ``2``; see
+`Product Type in Link Records`_.
 
 Request Payload
 ~~~~~~~~~~~~~~~
@@ -949,6 +979,9 @@ Link Device (``0x75``)
 Explicitly links a device by its serial number. After processing the request, the Node
 broadcasts a `Device Linked (0x77)`_ notification to all other connected Nodes.
 
+When linking a Node, send a Product Type of ``2``; any other non-Probe value is
+stored as ``2``. See `Product Type in Link Records`_.
+
 Request Payload
 ~~~~~~~~~~~~~~~
 
@@ -971,6 +1004,9 @@ Unlink Device (``0x76``)
 
 Explicitly unlinks a device by its serial number. After processing the request, the Node
 broadcasts a `Device Unlinked (0x78)`_ notification to all other connected Nodes.
+
+When unlinking a Node, send a Product Type of ``2``; any other non-Probe value is
+stored as ``2``. See `Product Type in Link Records`_.
 
 Request Payload
 ~~~~~~~~~~~~~~~
