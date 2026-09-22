@@ -60,10 +60,11 @@ Product Type                       1     See `Product Type`_ (Gauge = ``3``)
 Serial Number                      10    Gauge serial number (alphanumeric)
 Raw Temperature Data               2     See `Raw Temperature Data`_.
 Gauge Status Flags                 1     See `Gauge Status Flags`_.
-Reserved                           1     Reserved
+Battery Percentage                 1     See `Battery Percentage`_.
 High-Low Alarm Status              4     See `High-Low Alarm Status`_.
 Gauge Preferences                  1     See `Gauge Preferences`_.
-Reserved                           3     Reserved
+Gauge ID                           1     See `Gauge ID`_.
+Reserved                           1     Reserved
 ================================== ===== =========================================
 
 
@@ -107,11 +108,12 @@ Session ID                         uint32_t 4     See `Session ID`_
 Sample Period                      uint16_t 2     Number of milliseconds between each log
 Raw Temperature Data               uint16_t 2     See `Raw Temperature Data`_.
 Gauge Status Flags                 uint8_t  1     See `Gauge Status Flags`_.
-Log Range                          uint32_t 8     See `Log Range`_.
-Reserved                           uint8_t  1     Reserved
+Log Range                          uint32_t 8     See `Log Range`_. Two ``uint32_t`` values.
+Battery Percentage                 uint8_t  1     See `Battery Percentage`_.
 High-Low Alarm Status              uint32_t 4     See `High-Low Alarm Status`_.
 New Record Flag                    uint8_t  1     1 if data corresponds to a new log record, 0 if not
 Network Information                uint8_t  1     See `Network Information`_.
+Gauge ID                           uint8_t  1     See `Gauge ID`_.
 ================================== ======== ===== =====================================================
 
 
@@ -166,6 +168,33 @@ Log Sequence Number   uint32_t 4     The log sequence number
 Raw Temperature Data  uint16_t 2     See `Raw Temperature Data`_
 Sensor Present        uint8_t  1     See `Sensor Present`_
 ===================== ======== ===== ============================
+
+
+Set Gauge ID (``0x63``)
+***********************
+
+Assigns the Gauge's user-configurable `Gauge ID`_. The Gauge stores the new ID
+persistently and reports it in both its advertising data and its Gauge Status
+(``0x60``) messages.
+
+A Node that receives this message and is not the Gauge named by the serial
+number rebroadcasts it across the MeatNet network.
+
+Request Payload
+~~~~~~~~~~~~~~~
+
+===================== ======== ===== ==========================
+Value                 Format   Bytes Description
+===================== ======== ===== ==========================
+Serial Number         uint8_t  10    Gauge serial number
+New Gauge ID          uint8_t  1     Gauge identifier # (0-255)
+===================== ======== ===== ==========================
+
+Response Payload
+~~~~~~~~~~~~~~~~
+
+This response has no payload. The ``Success`` field of the response header is
+1 only if the Gauge persisted the new ID.
 
 
 
@@ -224,7 +253,7 @@ steps of 0.1°C::
 
     Temperature = (raw value * 0.1) - 20
 
-Note - If the Gauge sensor is not present as denotoed in `Gauge Status`_ 
+Note - If the Gauge sensor is not present as denoted in `Gauge Status Flags`_
 or `Sensor Present`_, the temperature value will be 0.
 
 Gauge Status Flags
@@ -258,6 +287,17 @@ Low Battery
 ************
 
 1 if the Gauge's battery is low.  0 if not.
+
+
+Battery Percentage
+------------------
+
+The battery percentage is an 8-bit (1-byte) field containing the Gauge's
+remaining battery charge, from 0 to 100.
+
+Note - the Gauge's coin cells are loaded too heavily for charge to be
+estimated, so current firmware always reports ``100``. Use `Low Battery`_ to
+detect a depleted battery.
 
 
 High-Low Alarm Status
@@ -338,6 +378,22 @@ the device transmits at high radio power (+8 dBm) or normal power (+0 dBm).
 ||     || * ``0``: Normal power (+0 dBm)                  |
 ||     || * ``1``: High power (+8 dBm)                    |
 +------+--------------------------------------------------+
+
+Gauge ID
+--------
+
+The Gauge ID is an 8-bit (1-byte) user-assigned identifier that distinguishes
+one Gauge from another. The full range 0-255 is valid: the Gauge stores and
+reports back whatever value it is given, without validation.
+
+It follows the same zero-based convention as the Probe identifier # in the
+MeatNet Node BLE Specification, so a value of ``0`` is presented to the user as
+"ID 1". Unlike a Probe ID, which is a 3-bit field limited to 0-7, a Gauge ID
+occupies a whole byte.
+
+The Gauge ID defaults to ``0`` and is stored persistently, so it survives power
+cycles and firmware updates. Set it with the Set Gauge ID (``0x63``) message.
+
 
 Network Information
 -------------------
