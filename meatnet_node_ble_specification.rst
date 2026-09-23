@@ -667,7 +667,23 @@ Overheating Sensors                uint8_t  1     See `Overheating Sensors`_.
 Thermometer Preferences            uint8_t  1     See `Thermometer Preferences`_.
 High Alarm Status Array            uint16_t 22    High alarm status for each alarm (T1, T2, T3, T4, T5, T6, T7, T8, Core, Surface, Ambient). See `Alarm Status`_.
 Low Alarm Status Array             uint16_t 22    Low alarm status for each alarm (T1, T2, T3, T4, T5, T6, T7, T8, Core, Surface, Ambient). See `Alarm Status`_.
+Session ID                         uint32_t 4     Random number that is generated when the Probe is removed from the charger. 0 if not supplied.
+Sample Period                      uint16_t 2     Number of milliseconds between each log.
 ================================== ======== ===== ===========================================================================================
+
+A Session ID of 0 means the field was not supplied, and must be treated as
+normal rather than exceptional. The value is reserved: a Probe never reports 0 as
+a real session ID. It occurs when the Probe's firmware predates
+this field, when the status was derived from advertising, which carries no
+session data, and when the status passed through a Node whose firmware predates
+this field, which re-encodes the message without these two values.
+
+The declared payload length is not a substitute for that check. A payload of 99
+bytes does mean the fields are absent, because the Node that sent it predates
+them. A payload of 105 bytes only means the sending Node understands the fields:
+a Node relaying a Probe whose own firmware predates them re-encodes a full
+105-byte payload carrying a Session ID of 0. Treat the value, not the length, as
+the signal.
 
 
 Probe Firmware Revision (``0x46``)

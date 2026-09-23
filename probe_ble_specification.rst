@@ -126,6 +126,8 @@ Overheating Sensors                 uint8_t  1     See `Overheating Sensors`_.
 Thermometer Preferences             uint8_t  1     See `Thermometer Preferences`_.
 High Alarm Status array             uint16_t 22    High alarm status for each alarm (T1, T2, T3, T4, T5, T6, T7, T8, Core, Surface, Ambient). See `Alarm Status`_.
 Low Alarm Status array              uint16_t 22    Low alarm status for each alarm (T1, T2, T3, T4, T5, T6, T7, T8, Core, Surface, Ambient). See `Alarm Status`_.
+Session ID                          uint32_t 4     See `Session ID`_.
+Sample Period                       uint16_t 2     Number of milliseconds between each log.
 =================================== ======== ===== ===========================================================================================
 
 UART Service
@@ -456,6 +458,27 @@ Sphinx link:
 GitHub link:
 `See Product Type <./meatnet_node_ble_specification.rst#product-type>`_
  
+Session ID
+----------
+
+The session ID is a packed 32-bit (4-byte) field that contains a random session
+ID for the Probe. The session ID is used to identify the current session for the
+Probe. A new session ID is generated each time the Probe is removed from the
+charger, at which point the log sequence numbers restart.
+
+A session ID of 0 means the field was not supplied, and must be treated as
+normal rather than exceptional. The value is reserved: the Probe never reports 0
+as a real session ID. On this characteristic a 0 occurs when the Probe's firmware
+predates this field, and in the status sent when a client first enables
+notifications, which repeats the most recent Normal mode status and reads zero
+until one has been measured.
+
+The same values relayed over MeatNet can read 0 for reasons particular to that
+path; see the Probe Status message in the MeatNet Node BLE specification.
+
+The same values are also available from the Read Session Information
+(``0x03``) UART message, which is unchanged.
+
 Raw Temperature Data
 --------------------
 
