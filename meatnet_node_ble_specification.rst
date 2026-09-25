@@ -33,7 +33,7 @@ BLE 4.0 Advertisement Packet
 ========================== ===== ==================================
 Field                      Bytes Value
 ========================== ===== ==================================
-Manufacturer Specific Data 24    See `Manufacturer Specific Data`_.
+Manufacturer Specific Data 25    See `Manufacturer Specific Data`_.
 ========================== ===== ==================================
 
 .. _node_scan_response:
@@ -59,6 +59,9 @@ It continually interleaves advertisements with the manufacturing data for
 each of the probes on the repeater network, cycling through them one-by-one,
 along with device-specific advertisements for the Node itself.
 
+Every Node manufacturer-specific payload is 25 bytes. Device-specific formats
+shorter than that are padded with reserved bytes.
+
 Repeated Probe Data
 *******************
 
@@ -74,7 +77,8 @@ Raw Temperature Data               13    See `Raw Temperature Data`_.
 Mode/ID                            1     See `Mode and ID Data`_.
 Battery Status and Virtual Sensors 1     See `Battery Status and Virtual Sensors`_.
 Network Information                1     See `Network Information`_.
-Overheating Sensors                1     Overheating sensors mask
+Overheating Sensors                1     See `Overheating Sensors`_.
+Thermometer Preferences            1     See `Thermometer Preferences`_. Nodes currently repeat this byte as ``0``.
 ================================== ===== =========================================
 
 .. _node_gatt_services_and_characteristics:
