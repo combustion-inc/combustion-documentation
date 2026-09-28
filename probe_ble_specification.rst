@@ -468,8 +468,9 @@ charger, at which point the log sequence numbers restart.
 
 A session ID of 0 means the field was not supplied, and must be treated as
 normal rather than exceptional. The value is reserved: the Probe never reports 0
-as a real session ID. On this characteristic a 0 occurs when the Probe's firmware
-predates this field, and in the status sent when a client first enables
+as a real session ID. Probe firmware that predates this field omits it entirely,
+sending a 94-byte notification; clients should treat that the same as 0. On this
+characteristic a 0 also occurs in the status sent when a client first enables
 notifications, which repeats the most recent Normal mode status and reads zero
 until one has been measured.
 
