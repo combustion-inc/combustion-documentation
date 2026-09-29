@@ -34,7 +34,7 @@ BLE 4.0 Advertisement Packet
 ========================== ===== ==================================
 Field                      Bytes Value
 ========================== ===== ==================================
-Manufacturer Specific Data 24    See `Manufacturer Specific Data`_.
+Manufacturer Specific Data 25    See `Manufacturer Specific Data`_.
 ========================== ===== ==================================
 
 BLE 4.0 Scan Response
