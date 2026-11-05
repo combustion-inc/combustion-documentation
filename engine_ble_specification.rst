@@ -309,6 +309,9 @@ so the Engine has no control temperature.
 0 otherwise, including for a Probe.
 Only meaningful when `Control Device Connected`_ is 1.
 
+While this flag is 1, Control Temperature is not valid: it holds the last reading the Engine
+received, or 0 °C if it has received none.
+
 Fan Status
 ----------------
 
