@@ -272,7 +272,8 @@ Bits   Description
 2      `Control Device Connected`_
 3      `Lid Open`_
 4      `Fixed Speed`_
-5-8    Reserved
+5      `Control Device Sensor Missing`_
+6-8    Reserved
 ====== ========================
 
 App Mode
@@ -299,6 +300,17 @@ Fixed Speed
 
 1 if the Engine fan is running at a fixed speed (not controlling to a setpoint).
 0 if the fan is controlling to a temperature setpoint.
+
+Control Device Sensor Missing
+*****************************
+
+1 if the control device is a Gauge reporting that its temperature sensor is not present,
+so the Engine has no control temperature.
+0 otherwise, including for a Probe.
+Only meaningful when `Control Device Connected`_ is 1.
+
+While this flag is 1, Control Temperature is not valid: it holds the last reading the Engine
+received, or 0 °C if it has received none.
 
 Fan Status
 ----------------
